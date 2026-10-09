@@ -1,0 +1,39 @@
+# Promote a tested image to production WITHOUT rebuilding: the prod tags point at the exact same manifest digest.
+# Protect the `production` environment in repo settings (required reviewers) so promotion needs a human approval.
+name: promote
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Immutable image tag to promote (e.g. 20261005-101500-ab12cd3)
+        required: true
+      confirm:
+        description: Tick to confirm you tested this tag in dev
+        type: boolean
+        required: true
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  promote:
+    if: ${{ inputs.confirm }}
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Retag by digest (no rebuild)
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          IMAGE="ghcr.io/${GITHUB_REPOSITORY,,}"
+          docker buildx imagetools inspect "$IMAGE:$TAG" >/dev/null   # fails if the tag does not exist
+          docker buildx imagetools create -t "$IMAGE:prod" -t "$IMAGE:prod-$TAG" "$IMAGE:$TAG"
+          DIGEST="$(docker buildx imagetools inspect "$IMAGE:prod" --format '{{ .Manifest.Digest }}')"
+          echo "### Promoted \`$TAG\` to prod" >> "$GITHUB_STEP_SUMMARY"
+          echo "Digest: \`$DIGEST\`" >> "$GITHUB_STEP_SUMMARY"

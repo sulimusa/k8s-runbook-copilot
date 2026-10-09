@@ -1,0 +1,34 @@
+# DEV: the agent may apply a small set of typed, bounded, reversible fixes automatically.
+# Three layers protect this: the dev kube identity (RBAC), this policy, and verification + auto-rollback.
+environment: dev
+mode: act
+
+# The agent refuses to run through a kubeconfig context that does not look like dev.
+allowed_kube_contexts: ["kind-*", "k3d-*", "minikube", "dev", "dev-*", "*-dev"]
+denied_kube_contexts: ["*prod*", "*uat*", "*stag*"]
+
+allowed_namespaces: ["lab-*", "dev", "dev-*"]
+protected_namespaces: [default, kube-system, kube-public, kube-node-lease, observability, "*prod*"]
+# Opt-in: a namespace must be labelled before the agent may change anything in it:
+#   kubectl label namespace <ns> runbook-copilot/agent=allowed
+require_namespace_label: { key: runbook-copilot/agent, value: allowed }
+
+max_steps: 6            # plan/act iterations per run
+max_writes_per_run: 3   # hard cap on cluster changes per run
+
+verification:
+  settle_seconds: 5
+  poll_seconds: 5
+  timeout_seconds: 120
+  rollback_on_failure: true
+
+actions:
+  scale_deployment:       { allow: true, min_replicas: 1, max_replicas: 5 }
+  rollout_restart:        { allow: true }
+  rollout_undo:           { allow: true }
+  set_resources:          { allow: true, max_memory_limit: 1Gi, max_memory_request: 1Gi, min_memory_limit: 32Mi, max_memory_multiplier: 4,
+                            min_cpu_request: 10m, max_cpu_request: "2" }
+  set_image:              { allow: true, same_repository_only: true, forbid_latest: true }
+  patch_service_selector: { allow: true, must_match_existing_pods: true }
+  patch_probe:            { allow: true }
+  delete_pod:             { allow: true, max_per_run: 1 }

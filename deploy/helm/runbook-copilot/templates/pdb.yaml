@@ -1,0 +1,13 @@
+{{- if .Values.pdb.enabled }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "runbook-copilot.fullname" . }}
+  labels:
+    {{- include "runbook-copilot.labels" . | nindent 4 }}
+spec:
+  minAvailable: {{ .Values.pdb.minAvailable }}
+  selector:
+    matchLabels:
+      {{- include "runbook-copilot.selectorLabels" . | nindent 6 }}
+{{- end }}

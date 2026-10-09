@@ -1,0 +1,6 @@
+apiVersion: v2
+name: runbook-copilot
+description: Read-only, source-cited Kubernetes incident triage assistant
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

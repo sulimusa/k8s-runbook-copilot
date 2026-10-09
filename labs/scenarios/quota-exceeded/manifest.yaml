@@ -1,0 +1,27 @@
+# Expected: only 2 of 4 replicas get created; ReplicaSet events say "forbidden: exceeded quota".
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: lab-quota
+spec:
+  hard:
+    pods: "2"
+    requests.cpu: 500m
+    requests.memory: 128Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capped
+spec:
+  replicas: 4
+  selector: { matchLabels: { app: capped } }
+  template:
+    metadata: { labels: { app: capped } }
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27
+          resources:
+            requests: { cpu: 50m, memory: 32Mi }
+            limits: { cpu: 100m, memory: 64Mi }

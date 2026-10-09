@@ -1,0 +1,72 @@
+# Identities for the agent. RBAC is the layer that still holds if every other layer has a bug.
+#   copilot-agent-readonly : prod. Can read workloads, events and logs. Cannot read secrets or configmaps. Cannot write.
+#   copilot-agent-dev      : dev. Same reads, plus a short list of writes, and ONLY in namespaces where a RoleBinding exists
+#                            (deploy/scripts/agent-access.sh creates it per namespace; there is no cluster-wide write).
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: copilot-agent
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata: { name: copilot-agent-readonly, namespace: copilot-agent }
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata: { name: copilot-agent-dev, namespace: copilot-agent }
+---
+# Namespaces are cluster-scoped: the agent reads a namespace's labels (opt-in label check) and nothing else cluster-wide.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata: { name: copilot-agent-ns-reader }
+rules:
+  - apiGroups: [""]
+    resources: [namespaces]
+    verbs: [get]
+---
+# Namespaced reads. Bind with a RoleBinding (not a ClusterRoleBinding) so it applies to one namespace only.
+# Deliberately absent: secrets, configmaps, pods/exec, pods/portforward.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata: { name: copilot-agent-reader }
+rules:
+  - apiGroups: [""]
+    resources: [pods, pods/log, events, services, endpoints]
+    verbs: [get, list, watch]
+  - apiGroups: [apps]
+    resources: [deployments, replicasets]
+    verbs: [get, list, watch]
+  - apiGroups: [events.k8s.io]
+    resources: [events]
+    verbs: [get, list, watch]
+---
+# The ONLY writes the agent can ever perform, matching the typed actions in src/runbook_copilot/agent/actions.py.
+# No create, no update on arbitrary resources, no delete except single pods, no secrets, no RBAC, no namespaces.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata: { name: copilot-agent-writer }
+rules:
+  - apiGroups: [apps]
+    resources: [deployments]
+    verbs: [patch]            # set_resources, set_image, patch_probe, rollout restart/undo
+  - apiGroups: [apps]
+    resources: [deployments/scale]
+    verbs: [get, patch, update]
+  - apiGroups: [""]
+    resources: [services]
+    verbs: [patch]            # patch_service_selector
+  - apiGroups: [""]
+    resources: [pods]
+    verbs: [delete]           # delete_pod (the policy additionally requires a controller owner)
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata: { name: copilot-agent-readonly-ns-reader }
+roleRef: { apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: copilot-agent-ns-reader }
+subjects: [{ kind: ServiceAccount, name: copilot-agent-readonly, namespace: copilot-agent }]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata: { name: copilot-agent-dev-ns-reader }
+roleRef: { apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: copilot-agent-ns-reader }
+subjects: [{ kind: ServiceAccount, name: copilot-agent-dev, namespace: copilot-agent }]

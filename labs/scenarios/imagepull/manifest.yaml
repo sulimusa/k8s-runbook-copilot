@@ -1,0 +1,14 @@
+# Expected: ErrImagePull -> ImagePullBackOff; events show "manifest unknown"/"not found".
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: badimage
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: badimage } }
+  template:
+    metadata: { labels: { app: badimage } }
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.99.99-does-not-exist

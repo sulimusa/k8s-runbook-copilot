@@ -1,0 +1,68 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/YOUR_GITHUB_USER/k8s-runbook-copilot
+  tag: ""            # defaults to .Chart.AppVersion; CI/promotion sets an immutable tag like 20261005-101500-ab12cd3
+  digest: ""         # optional sha256:... (takes precedence over tag)
+  pullPolicy: IfNotPresent
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
+environment: dev     # exported as APP_ENV and attached to every metric and trace
+
+llm:
+  baseUrl: https://api.openai.com/v1
+  model: gpt-4o-mini
+  existingSecret: ""   # name of a Secret holding the API key (never put keys in values files)
+  secretKey: LLM_API_KEY
+  priceInPer1M: ""     # optional USD per 1M tokens, enables cost metrics
+  priceOutPer1M: ""
+
+retrieval:
+  topK: 6
+  minBm25Score: 4.0
+  minQueryCoverage: 0.4
+  strongMatchScore: 20.0
+  minConfidence: 0.35
+
+otel:
+  enabled: false
+  endpoint: ""         # e.g. http://lgtm.observability.svc.cluster.local:4318
+  protocol: http/protobuf
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  requests: { cpu: 100m, memory: 256Mi }
+  limits: { memory: 512Mi }
+
+podAnnotations: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 10001
+  runAsGroup: 10001
+  fsGroup: 10001
+  seccompProfile: { type: RuntimeDefault }
+
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities: { drop: ["ALL"] }
+
+pdb:
+  enabled: false
+  minAvailable: 1
+
+networkPolicy:
+  enabled: true
+  # Pods/namespaces allowed to call the API. Empty list = any pod in the release namespace.
+  ingressFrom: []
+  # Egress: DNS, HTTPS (LLM provider) and OTLP. Tighten ports/CIDRs for your environment.
+  allowDns: true
+  allowHttps: true
+  otlpPort: 4318

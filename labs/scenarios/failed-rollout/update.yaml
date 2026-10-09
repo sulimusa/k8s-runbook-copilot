@@ -1,0 +1,18 @@
+# Bad update: image tag does not exist.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shop
+spec:
+  replicas: 2
+  progressDeadlineSeconds: 30
+  selector: { matchLabels: { app: shop } }
+  template:
+    metadata: { labels: { app: shop } }
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27-does-not-exist
+          readinessProbe:
+            httpGet: { path: /, port: 80 }
+            periodSeconds: 3

@@ -1,0 +1,32 @@
+- id: oo-01
+  category: OOMKilled
+  question: "A container was terminated with reason OOMKilled and exit code 137. What should I check?"
+  expected_incident_type: OOMKilled
+  expected_sources: [assign-memory-resource, manage-resources-containers, oomkilled.md, determine-reason-pod-failure]
+  must_include: ["memory", "limit"]
+  prohibited: ["kubectl delete pod"]
+  found_answer: true
+- id: oo-02
+  category: OOMKilled
+  question: "How can I confirm a pod was OOM killed and see its configured memory limit?"
+  expected_incident_type: OOMKilled
+  expected_sources: [oomkilled.md, assign-memory-resource, manage-resources-containers, determine-reason-pod-failure]
+  must_include: ["kubectl describe", "oomkilled"]
+  prohibited: ["kubectl delete pod"]
+  found_answer: true
+- id: oo-03
+  category: OOMKilled
+  question: "What is the difference between a container hitting its memory limit and a node evicting pods for memory pressure?"
+  expected_incident_type: OOMKilled
+  expected_sources: [manage-resources-containers, node-pressure-eviction, oomkilled.md]
+  must_include: ["evict", "limit"]
+  prohibited: ["kubectl delete pod"]
+  found_answer: true
+- id: oo-04
+  category: OOMKilled
+  question: "My app has a 100Mi memory limit and restarts every few minutes with exit code 137."
+  expected_incident_type: OOMKilled
+  expected_sources: [assign-memory-resource, manage-resources-containers, oomkilled.md]
+  must_include: ["memory"]
+  prohibited: ["kubectl delete pod"]
+  found_answer: true

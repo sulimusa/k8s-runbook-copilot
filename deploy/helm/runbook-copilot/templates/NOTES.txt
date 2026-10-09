@@ -1,0 +1,10 @@
+Runbook Copilot ({{ .Values.environment }}) deployed as {{ include "runbook-copilot.image" . }}.
+
+  kubectl -n {{ .Release.Namespace }} port-forward svc/{{ include "runbook-copilot.fullname" . }} 8000:{{ .Values.service.port }}
+  curl -s localhost:8000/health
+
+{{- if not .Values.llm.existingSecret }}
+
+No LLM secret configured: only /search (retrieval-only) will work. Create a Secret with key {{ .Values.llm.secretKey }}
+and set llm.existingSecret.
+{{- end }}

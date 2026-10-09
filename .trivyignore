@@ -1,0 +1,7 @@
+# Accepted findings, with reasons. Review when the deployment model changes.
+# KSV-0011: no CPU limit on purpose. CPU limits throttle a latency-sensitive Python service; a memory limit and CPU request are set.
+KSV-0011
+# KSV-0110: raised only when scanning the chart without a release namespace. Releases deploy into dedicated dev/prod namespaces.
+KSV-0110
+# KSV-0125: registry allow-list policy is organisation specific. Images come from GHCR (CI-built) or a local kind load.
+KSV-0125

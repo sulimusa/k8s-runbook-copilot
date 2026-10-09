@@ -1,0 +1,16 @@
+.git
+.github
+.venv
+.env
+**/__pycache__
+.pytest_cache
+.ruff_cache
+data/raw
+data/processed
+data/index
+logs
+eval/reports
+analysis/job_market/.cache
+deploy
+docs
+tests

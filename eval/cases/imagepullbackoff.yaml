@@ -1,0 +1,24 @@
+- id: ip-01
+  category: ImagePullBackOff
+  question: "Pod is stuck in ErrImagePull and then ImagePullBackOff. How do I diagnose it?"
+  expected_incident_type: ImagePullBackOff
+  expected_sources: [concepts/containers/images, debug-pods, imagepullbackoff.md]
+  must_include: ["kubectl describe"]
+  prohibited: ["kubectl delete"]
+  found_answer: true
+- id: ip-02
+  category: ImagePullBackOff
+  question: "ImagePullBackOff with 'unauthorized' when pulling from my private registry. What is missing?"
+  expected_incident_type: ImagePullBackOff
+  expected_sources: [pull-image-private-registry, concepts/containers/images, imagepullbackoff.md]
+  must_include: ["imagepullsecrets"]
+  prohibited: ["kubectl delete"]
+  found_answer: true
+- id: ip-03
+  category: ImagePullBackOff
+  question: "Events show 'Failed to pull image ... manifest unknown'. What does that mean?"
+  expected_incident_type: ImagePullBackOff
+  expected_sources: [imagepullbackoff.md, concepts/containers/images, debug-pods]
+  must_include: ["image"]
+  prohibited: ["kubectl delete"]
+  found_answer: true

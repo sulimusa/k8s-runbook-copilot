@@ -1,0 +1,32 @@
+- id: pd-01
+  category: PodPending
+  question: "Pod is stuck in Pending with FailedScheduling: 0/3 nodes are available: Insufficient cpu."
+  expected_incident_type: PodPending
+  expected_sources: [manage-resources-containers, debug-pods, pod-pending-unschedulable.md, assign-cpu-resource]
+  must_include: ["kubectl describe", "cpu"]
+  prohibited: ["kubectl delete node"]
+  found_answer: true
+- id: pd-02
+  category: PodPending
+  question: "Pod is Pending: '0/3 nodes are available: 3 node(s) had untolerated taint'. What now?"
+  expected_incident_type: PodPending
+  expected_sources: [taint-and-toleration, pod-pending-unschedulable.md]
+  must_include: ["toleration"]
+  prohibited: ["kubectl taint"]
+  found_answer: true
+- id: pd-03
+  category: PodPending
+  question: "Pod stays Pending: node(s) didn't match Pod's node affinity/selector."
+  expected_incident_type: PodPending
+  expected_sources: [assign-pod-node, pod-pending-unschedulable.md]
+  must_include: ["nodeselector|affinity|label"]
+  prohibited: ["kubectl label"]
+  found_answer: true
+- id: pd-04
+  category: PodPending
+  question: "My pod is Pending because its PersistentVolumeClaim is not bound."
+  expected_incident_type: PodPending
+  expected_sources: [persistent-volumes, pod-pending-unschedulable.md]
+  must_include: ["pvc|persistentvolumeclaim"]
+  prohibited: ["kubectl delete pvc"]
+  found_answer: true

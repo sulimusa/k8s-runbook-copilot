@@ -1,0 +1,52 @@
+# Prometheus-format alert rules for the Copilot (usable in Prometheus, Mimir, or imported into Grafana alerting).
+# Thresholds are starting points: tune them against your own traffic. Every alert names the service, environment,
+# version, owner and dashboard so the responder does not have to hunt for context.
+groups:
+  - name: runbook-copilot
+    rules:
+      - alert: CopilotParseFailuresHigh
+        expr: |
+          sum by (environment, version) (rate(copilot_parse_failures_total[10m]))
+            / sum by (environment, version) (rate(copilot_llm_duration_seconds_count[10m])) > 0.05
+        for: 10m
+        labels: { severity: page, service: runbook-copilot, owner: platform-ai }
+        annotations:
+          summary: "More than 5% of LLM responses fail schema validation ({{ $labels.environment }}, {{ $labels.version }})"
+          description: "Likely a model or prompt change. Check the last release and the model provider status; the pipeline abstains safely, but users get no answers."
+          dashboard: "http://localhost:3000/d/runbook-copilot"
+          runbook: "docs/observability.md#parse-failures-high"
+
+      - alert: CopilotAbstainRateHigh
+        expr: |
+          sum by (environment, version) (rate(copilot_requests_total{found_answer="false"}[15m]))
+            / sum by (environment, version) (rate(copilot_requests_total[15m])) > 0.5
+        for: 15m
+        labels: { severity: ticket, service: runbook-copilot, owner: platform-ai }
+        annotations:
+          summary: "More than half of requests abstain ({{ $labels.environment }}, {{ $labels.version }})"
+          description: "Compare with the previous version on the dashboard. Check retrieval top BM25 and the abstentions-by-source panel: gate = corpus or index problem, llm = model behaviour."
+          dashboard: "http://localhost:3000/d/runbook-copilot"
+          runbook: "docs/observability.md#abstain-rate-high"
+
+      - alert: CopilotLatencyP95High
+        expr: |
+          histogram_quantile(0.95, sum by (le, environment, version) (rate(copilot_request_duration_seconds_bucket[10m]))) > 20
+        for: 10m
+        labels: { severity: ticket, service: runbook-copilot, owner: platform-ai }
+        annotations:
+          summary: "p95 latency above 20s ({{ $labels.environment }}, {{ $labels.version }})"
+          description: "Split retrieval vs LLM latency on the dashboard. Retrieval is in-memory and should be milliseconds, so this is almost always the model provider."
+          dashboard: "http://localhost:3000/d/runbook-copilot"
+          runbook: "docs/observability.md#latency-high"
+
+      - alert: CopilotGuardrailInterventionsHigh
+        expr: |
+          sum by (environment, version) (rate(copilot_guardrail_interventions_total[30m]))
+            / sum by (environment, version) (rate(copilot_llm_duration_seconds_count[30m])) > 0.3
+        for: 30m
+        labels: { severity: ticket, service: runbook-copilot, owner: platform-ai }
+        annotations:
+          summary: "Guardrails are correcting the model on over 30% of calls ({{ $labels.environment }}, {{ $labels.version }})"
+          description: "Users stay protected, but the raw model is drifting toward unsafe commands or invalid citations. Re-run `make eval` against the new model or prompt."
+          dashboard: "http://localhost:3000/d/runbook-copilot"
+          runbook: "docs/observability.md#guardrail-interventions-high"

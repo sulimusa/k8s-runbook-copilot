@@ -1,0 +1,13 @@
+# Findings accepted for ONE file only (the plain .trivyignore is global; this one is scoped by path).
+misconfigurations:
+  - id: KSV-0048
+    paths: ["agent-rbac.yaml"]
+    statement: >
+      The dev writer role patches deployments and deletes single pods BY DESIGN (the agent's typed fixes). It is bound only
+      per namespace (RoleBinding, never ClusterRoleBinding), only to namespaces labelled runbook-copilot/agent=allowed, and the
+      policy engine additionally bounds every action. The prod identity has no write verbs at all (tests/test_agent_rbac.py).
+  - id: KSV-0056
+    paths: ["agent-rbac.yaml"]
+    statement: >
+      The dev writer role may PATCH services (patch_service_selector). No create/delete on services, no ingress or network
+      policy access, namespace-scoped binding only. Not present in the prod (read-only) identity.

@@ -1,0 +1,26 @@
+# Local stack: the Copilot API + Grafana's all-in-one OpenTelemetry stack (collector, Prometheus, Loki, Tempo, Grafana).
+#   docker compose up --build        Grafana http://localhost:3000   Copilot http://localhost:8000/docs
+# Pin the lgtm image to a specific version tag before relying on it (latest moves).
+services:
+  copilot:
+    build:
+      context: .
+      args: { APP_VERSION: local }
+    env_file: [{ path: .env, required: false }]
+    environment:
+      APP_ENV: local
+      APP_VERSION: local
+      OTEL_ENABLED: "true"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://lgtm:4318
+      OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+    ports: ["8000:8000"]
+    depends_on: [lgtm]
+    read_only: true
+    tmpfs: [/tmp]
+    volumes: ["./logs:/app/logs"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+
+  lgtm:
+    image: grafana/otel-lgtm:latest
+    ports: ["3000:3000", "4317:4317", "4318:4318"]

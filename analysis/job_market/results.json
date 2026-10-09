@@ -1,0 +1,371 @@
+{
+  "scrapes": [
+    "2026-02-04",
+    "2026-02-27",
+    "2026-03-27",
+    "2026-04-22",
+    "2026-05-29",
+    "2026-06-25",
+    "2026-07-22",
+    "2026-08-25",
+    "2026-09-23"
+  ],
+  "raw_rows": 8051,
+  "unique": 7375,
+  "us": 3160,
+  "non_us": 4215,
+  "headline": {
+    "GenAI": {
+      "RAG": {
+        "us": 0.3778481012658228,
+        "non_us": 0.42562277580071173
+      },
+      "AI Agents": {
+        "us": 0.43575949367088607,
+        "non_us": 0.3995255041518387
+      },
+      "Agentic Workflows": {
+        "us": 0.33860759493670883,
+        "non_us": 0.3077105575326216
+      },
+      "LLM Evaluation": {
+        "us": 0.2762658227848101,
+        "non_us": 0.1981020166073547
+      },
+      "Guardrails": {
+        "us": 0.15822784810126583,
+        "non_us": 0.11174377224199289
+      },
+      "Function Calling": {
+        "us": 0.16867088607594938,
+        "non_us": 0.13001186239620402
+      },
+      "MCP": {
+        "us": 0.14113924050632912,
+        "non_us": 0.1516014234875445
+      },
+      "Prompt Engineering": {
+        "us": 0.3300632911392405,
+        "non_us": 0.366073546856465
+      },
+      "LangChain": {
+        "us": 0.1689873417721519,
+        "non_us": 0.2564650059311981
+      },
+      "LangGraph": {
+        "us": 0.1110759493670886,
+        "non_us": 0.1655990510083037
+      },
+      "Fine-Tuning": {
+        "us": 0.16962025316455695,
+        "non_us": 0.18956109134045077
+      },
+      "Responsible AI": {
+        "us": 0.07879746835443038,
+        "non_us": 0.09869513641755634
+      }
+    },
+    "Languages": {
+      "Python": {
+        "us": 0.6680379746835443,
+        "non_us": 0.7274021352313167
+      },
+      "TypeScript": {
+        "us": 0.23196202531645568,
+        "non_us": 0.17295373665480426
+      },
+      "Java": {
+        "us": 0.15886075949367087,
+        "non_us": 0.18434163701067616
+      },
+      "Go": {
+        "us": 0.14651898734177216,
+        "non_us": 0.08801897983392645
+      },
+      "SQL": {
+        "us": 0.16993670886075948,
+        "non_us": 0.21447212336892052
+      }
+    },
+    "Cloud": {
+      "AWS": {
+        "us": 0.3680379746835443,
+        "non_us": 0.4199288256227758
+      },
+      "Azure": {
+        "us": 0.23196202531645568,
+        "non_us": 0.3402135231316726
+      },
+      "GCP": {
+        "us": 0.24240506329113923,
+        "non_us": 0.2899169632265718
+      },
+      "AWS Bedrock": {
+        "us": 0.06360759493670887,
+        "non_us": 0.08113879003558719
+      }
+    },
+    "Ops": {
+      "CI/CD": {
+        "us": 0.29525316455696204,
+        "non_us": 0.4246737841043891
+      },
+      "Docker": {
+        "us": 0.17974683544303796,
+        "non_us": 0.2918149466192171
+      },
+      "Kubernetes": {
+        "us": 0.19841772151898734,
+        "non_us": 0.2773428232502966
+      },
+      "Observability": {
+        "us": 0.24936708860759493,
+        "non_us": 0.18813760379596678
+      },
+      "Monitoring": {
+        "us": 0.13734177215189874,
+        "non_us": 0.14400948991696322
+      },
+      "MLOps": {
+        "us": 0.12753164556962027,
+        "non_us": 0.19857651245551602
+      },
+      "Model Deployment": {
+        "us": 0.135126582278481,
+        "non_us": 0.1413997627520759
+      },
+      "Terraform": {
+        "us": 0.10158227848101266,
+        "non_us": 0.100355871886121
+      }
+    },
+    "Data stores": {
+      "Vector Databases": {
+        "us": 0.22151898734177214,
+        "non_us": 0.24744958481613286
+      },
+      "PostgreSQL": {
+        "us": 0.11677215189873418,
+        "non_us": 0.10415183867141163
+      },
+      "pgvector": {
+        "us": 0.030379746835443037,
+        "non_us": 0.03368920521945433
+      },
+      "Pinecone": {
+        "us": 0.05443037974683544,
+        "non_us": 0.08469750889679716
+      },
+      "Weaviate": {
+        "us": 0.04050632911392405,
+        "non_us": 0.0564650059311981
+      },
+      "Elasticsearch": {
+        "us": 0.012025316455696202,
+        "non_us": 0.02111506524317912
+      }
+    },
+    "Web": {
+      "APIs": {
+        "us": 0.2708860759493671,
+        "non_us": 0.2607354685646501
+      },
+      "React": {
+        "us": 0.14873417721518986,
+        "non_us": 0.1516014234875445
+      },
+      "FastAPI": {
+        "us": 0.06455696202531645,
+        "non_us": 0.12052194543297746
+      },
+      "REST APIs": {
+        "us": 0.11455696202531646,
+        "non_us": 0.20427046263345194
+      },
+      "Microservices": {
+        "us": 0.09462025316455697,
+        "non_us": 0.1879003558718861
+      }
+    },
+    "Telemetry tools": {
+      "OpenTelemetry": {
+        "us": 0.022151898734177215,
+        "non_us": 0.03202846975088968
+      },
+      "Prometheus": {
+        "us": 0.02531645569620253,
+        "non_us": 0.04223013048635824
+      },
+      "Grafana": {
+        "us": 0.03196202531645569,
+        "non_us": 0.04412811387900356
+      }
+    }
+  },
+  "role_types_us": {
+    "ml-first": 0.037658227848101265,
+    "ai-support": 0.23734177215189872,
+    "ai-first": 0.7177215189873418,
+    "unknown": 0.007278481012658228
+  },
+  "customer_facing_us": 0.21234177215189873,
+  "customer_facing_non_us": 0.1428232502965599,
+  "top_us_employers": [
+    [
+      "Capital One",
+      114
+    ],
+    [
+      "NVIDIA",
+      41
+    ],
+    [
+      "PwC",
+      35
+    ],
+    [
+      "BJAK",
+      28
+    ],
+    [
+      "Microsoft",
+      28
+    ],
+    [
+      "New York Life Insurance Company",
+      27
+    ],
+    [
+      "Life360",
+      25
+    ],
+    [
+      "Photon",
+      22
+    ],
+    [
+      "Thomson Reuters",
+      20
+    ],
+    [
+      "Scale AI",
+      18
+    ]
+  ],
+  "chicago": [
+    [
+      "Applico Capital",
+      "Ontology Engineer - Applied AI & Data Platforms"
+    ],
+    [
+      "DV Trading",
+      "AI Engineer"
+    ],
+    [
+      "DV Trading",
+      "Senior AI Engineer"
+    ],
+    [
+      "DriveWealth",
+      "Principal AI Engineer"
+    ],
+    [
+      "Hudson River Trading",
+      "Experienced Software Engineer - AI Tools"
+    ],
+    [
+      "Ironclad",
+      "AI Engineer"
+    ],
+    [
+      "Ironclad",
+      "Staff Software Engineer - Applied AI"
+    ],
+    [
+      "Okta",
+      "Senior Software Engineer, AI Agentic Experience (Auth0)"
+    ],
+    [
+      "OneStream Software",
+      "Associate AI Engineer"
+    ],
+    [
+      "Ovative Group",
+      "AI Engineer"
+    ],
+    [
+      "Ovative Group",
+      "Lead AI Engineer"
+    ],
+    [
+      "Ovative Group",
+      "Lead Engineer, AI & Business Intelligence"
+    ],
+    [
+      "Qumis",
+      "Founding Staff AI Engineer"
+    ],
+    [
+      "Salesforce",
+      "Lead AI Engineer, Data Solutions"
+    ],
+    [
+      "Salesforce",
+      "Principal AI Engineer"
+    ]
+  ],
+  "us_generic_location": 1714,
+  "k8s_us": {
+    "n": 627,
+    "share": 0.19841772151898734,
+    "ai_first_share": 0.6347687400318979,
+    "co_occurring": [
+      [
+        "Python",
+        0.8261562998405104
+      ],
+      [
+        "LLMs",
+        0.6602870813397129
+      ],
+      [
+        "Docker",
+        0.6427432216905901
+      ],
+      [
+        "AWS",
+        0.6060606060606061
+      ],
+      [
+        "CI/CD",
+        0.532695374800638
+      ],
+      [
+        "GCP",
+        0.44019138755980863
+      ],
+      [
+        "AI Agents",
+        0.44019138755980863
+      ],
+      [
+        "RAG",
+        0.43859649122807015
+      ],
+      [
+        "Machine Learning",
+        0.37320574162679426
+      ],
+      [
+        "Azure",
+        0.37161084529505584
+      ]
+    ]
+  },
+  "remote": {
+    "scrape": "2026-09-23",
+    "us_postings_with_text": 423,
+    "mention_remote": 0.36879432624113473,
+    "mention_hybrid": 0.21040189125295508
+  }
+}

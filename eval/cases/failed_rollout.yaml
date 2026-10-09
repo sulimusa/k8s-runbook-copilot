@@ -1,0 +1,40 @@
+- id: ro-01
+  category: FailedRollout
+  question: "kubectl rollout status never finishes for my Deployment. What is wrong?"
+  expected_incident_type: FailedRollout
+  expected_sources: [workloads/controllers/deployment.md, failed-rollout.md]
+  must_include: ["kubectl rollout status"]
+  prohibited: ["rollout undo"]
+  found_answer: true
+- id: ro-02
+  category: FailedRollout
+  question: "Deployment condition shows ProgressDeadlineExceeded. What does it mean?"
+  expected_incident_type: FailedRollout
+  expected_sources: [workloads/controllers/deployment.md, failed-rollout.md]
+  must_include: ["progressdeadline|progress deadline"]
+  prohibited: ["rollout undo"]
+  found_answer: true
+- id: ro-03
+  category: FailedRollout
+  question: "After updating my Deployment the new ReplicaSet is not scaling up and the old pods are still running."
+  expected_incident_type: FailedRollout
+  expected_sources: [workloads/controllers/deployment.md, failed-rollout.md]
+  must_include: ["replicaset"]
+  prohibited: ["kubectl delete rs", "kubectl delete replicaset"]
+  found_answer: true
+- id: ro-04
+  category: FailedRollout
+  question: "KubeDeploymentReplicasMismatch alert is firing. How do I investigate?"
+  expected_incident_type: FailedRollout
+  expected_sources: [KubeDeploymentReplicasMismatch, failed-rollout.md]
+  must_include: ["kubectl"]
+  prohibited: ["kubectl delete"]
+  found_answer: true
+- id: ro-05
+  category: FailedRollout
+  question: "My StatefulSet rolling update is stuck on one pod."
+  expected_incident_type: FailedRollout
+  expected_sources: [KubeStatefulSetUpdateNotRolledOut, debug-statefulset, statefulset.md]
+  must_include: ["statefulset"]
+  prohibited: ["kubectl delete statefulset"]
+  found_answer: true

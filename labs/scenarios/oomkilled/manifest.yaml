@@ -1,0 +1,19 @@
+# Expected: Last State Terminated Reason OOMKilled, exit code 137 (250M allocation vs 100Mi limit).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: memhog
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: memhog } }
+  template:
+    metadata: { labels: { app: memhog } }
+    spec:
+      containers:
+        - name: stress
+          image: polinux/stress
+          command: ["stress"]
+          args: ["--vm", "1", "--vm-bytes", "250M", "--vm-hang", "1"]
+          resources:
+            requests: { memory: 50Mi }
+            limits: { memory: 100Mi }

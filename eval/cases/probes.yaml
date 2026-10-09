@@ -1,0 +1,32 @@
+- id: pr-01
+  category: ProbeFailure
+  question: "Readiness probe failed: connection refused and the pod shows 0/1 READY. Why?"
+  expected_incident_type: ProbeFailure
+  expected_sources: [configure-liveness-readiness-startup-probes, probe-failures.md, pod-lifecycle]
+  must_include: ["readiness", "kubectl describe"]
+  prohibited: ["kubectl delete pod"]
+  found_answer: true
+- id: pr-02
+  category: ProbeFailure
+  question: "My liveness probe keeps failing and the container restarts again and again."
+  expected_incident_type: ProbeFailure
+  expected_sources: [configure-liveness-readiness-startup-probes, probe-failures.md, pod-lifecycle]
+  must_include: ["liveness"]
+  prohibited: ["kubectl delete pod"]
+  found_answer: true
+- id: pr-03
+  category: ProbeFailure
+  question: "My slow-starting Java app gets killed by the liveness probe before it finishes starting."
+  expected_incident_type: ProbeFailure
+  expected_sources: [configure-liveness-readiness-startup-probes, probe-failures.md]
+  must_include: ["startup probe|startupprobe|initialdelayseconds"]
+  prohibited: ["kubectl delete pod"]
+  found_answer: true
+- id: pr-04
+  category: ProbeFailure
+  question: "The readiness probe gets HTTP 404 on the health endpoint, so the pod receives no traffic."
+  expected_incident_type: ProbeFailure
+  expected_sources: [configure-liveness-readiness-startup-probes, probe-failures.md]
+  must_include: ["path|port"]
+  prohibited: ["kubectl delete pod"]
+  found_answer: true

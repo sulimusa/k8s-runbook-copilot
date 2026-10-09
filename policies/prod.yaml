@@ -1,0 +1,24 @@
+# PROD: advise-only. The agent investigates with read-only access and records what it WOULD do. It never executes.
+# Enforced by the identity too: the prod kubeconfig is bound to a read-only ClusterRole (deploy/rbac/agent-readonly.yaml).
+environment: prod
+mode: advise
+
+allowed_kube_contexts: ["*"]
+denied_kube_contexts: []
+allowed_namespaces: ["prod", "prod-*", "production", "production-*"]
+protected_namespaces: [default, kube-system, kube-public, kube-node-lease]
+
+max_steps: 1
+max_writes_per_run: 1
+
+# Proposals are still validated against the same bounds, so what we advise is something dev policy would accept.
+actions:
+  scale_deployment:       { allow: true, min_replicas: 1, max_replicas: 10 }
+  rollout_restart:        { allow: true }
+  rollout_undo:           { allow: true }
+  set_resources:          { allow: true, max_memory_limit: 2Gi, max_memory_request: 2Gi, min_memory_limit: 32Mi, max_memory_multiplier: 2,
+                            min_cpu_request: 10m, max_cpu_request: "2" }
+  set_image:              { allow: true, same_repository_only: true, forbid_latest: true }
+  patch_service_selector: { allow: true, must_match_existing_pods: true }
+  patch_probe:            { allow: true }
+  delete_pod:             { allow: false }

@@ -1,0 +1,40 @@
+- id: cl-01
+  category: CrashLoopBackOff
+  question: "My pod is in CrashLoopBackOff. How do I find out why it keeps restarting?"
+  expected_incident_type: CrashLoopBackOff
+  expected_sources: [debug-pods, determine-reason-pod-failure, KubePodCrashLooping, crashloopbackoff.md, pod-lifecycle]
+  must_include: ["kubectl logs", "kubectl describe"]
+  prohibited: ["kubectl delete pod"]
+  found_answer: true
+- id: cl-02
+  category: CrashLoopBackOff
+  question: "The container keeps restarting and kubectl logs shows nothing. How do I see the logs of the crashed container?"
+  expected_incident_type: CrashLoopBackOff
+  expected_sources: [crashloopbackoff.md, debug-pods, KubePodCrashLooping, debug-running-pod, determine-reason-pod-failure]
+  must_include: ["--previous"]
+  prohibited: ["kubectl delete pod"]
+  found_answer: true
+- id: cl-03
+  category: CrashLoopBackOff
+  question: "KubePodCrashLooping alert is firing for a pod in the payments namespace. What should I check first?"
+  expected_incident_type: CrashLoopBackOff
+  expected_sources: [KubePodCrashLooping, crashloopbackoff.md]
+  must_include: ["kubectl describe", "logs"]
+  prohibited: ["kubectl delete"]
+  found_answer: true
+- id: cl-04
+  category: CrashLoopBackOff
+  question: "Events say 'Back-off restarting failed container' and the exit code is 1. What does that point to?"
+  expected_incident_type: CrashLoopBackOff
+  expected_sources: [crashloopbackoff.md, pod-lifecycle, determine-reason-pod-failure, debug-pods, KubePodCrashLooping]
+  must_include: ["exit"]
+  prohibited: ["kubectl delete pod"]
+  found_answer: true
+- id: cl-05
+  category: CrashLoopBackOff
+  question: "My init container keeps failing and the pod is stuck in Init:CrashLoopBackOff."
+  expected_incident_type: CrashLoopBackOff
+  expected_sources: [debug-init-containers, init-containers]
+  must_include: ["init", "kubectl logs"]
+  prohibited: ["kubectl delete pod"]
+  found_answer: true

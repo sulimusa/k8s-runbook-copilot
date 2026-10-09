@@ -1,0 +1,79 @@
+# Source manifest. Every remote source is fetched with git at a PINNED commit so the corpus is
+# reproducible. To update: change `commit`, run `make ingest`, re-run `make eval-retrieval`.
+sources:
+  - id: k8s-docs
+    description: Official Kubernetes documentation (kubernetes/website)
+    repo: https://github.com/kubernetes/website.git
+    commit: 1c7aa9955e884879397ed15de88605f05eb61d1f   # fetched 2026-10-05
+    license: CC-BY-4.0
+    root: content/en/docs
+    url_base: https://kubernetes.io/docs/
+    paths:
+      - content/en/docs/tasks/debug/
+      - content/en/docs/concepts/workloads/pods/pod-lifecycle.md
+      - content/en/docs/concepts/workloads/pods/init-containers.md
+      - content/en/docs/concepts/workloads/controllers/deployment.md
+      - content/en/docs/concepts/workloads/controllers/statefulset.md
+      - content/en/docs/concepts/containers/images.md
+      - content/en/docs/concepts/configuration/manage-resources-containers.md
+      - content/en/docs/concepts/scheduling-eviction/assign-pod-node.md
+      - content/en/docs/concepts/scheduling-eviction/taint-and-toleration.md
+      - content/en/docs/concepts/scheduling-eviction/node-pressure-eviction.md
+      - content/en/docs/concepts/scheduling-eviction/pod-priority-preemption.md
+      - content/en/docs/concepts/services-networking/service.md
+      - content/en/docs/concepts/services-networking/dns-pod-service.md
+      - content/en/docs/concepts/services-networking/endpoint-slices.md
+      - content/en/docs/concepts/services-networking/network-policies.md
+      - content/en/docs/concepts/policy/resource-quotas.md
+      - content/en/docs/concepts/policy/limit-range.md
+      - content/en/docs/concepts/storage/persistent-volumes.md
+      - content/en/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes.md
+      - content/en/docs/tasks/configure-pod-container/pull-image-private-registry.md
+      - content/en/docs/tasks/configure-pod-container/assign-memory-resource.md
+      - content/en/docs/tasks/configure-pod-container/assign-cpu-resource.md
+      - content/en/docs/tasks/configure-pod-container/quality-service-pod.md
+      - content/en/docs/tasks/administer-cluster/dns-debugging-resolution.md
+      - content/en/docs/tasks/administer-cluster/manage-resources/quota-memory-cpu-namespace.md
+    enabled: true
+
+  - id: k8s-runbooks
+    description: Prometheus Operator community runbooks (kubernetes-mixin / kube-prometheus alerts)
+    repo: https://github.com/prometheus-operator/runbooks.git
+    commit: a685d14cf5128bb30e2bf935c3983decd772d885   # fetched 2026-10-05
+    license: Apache-2.0
+    root: content/runbooks
+    url_base: https://runbooks.prometheus-operator.dev/runbooks/
+    lowercase_url: true
+    paths:
+      - content/runbooks/kubernetes/
+      - content/runbooks/node/
+    enabled: true
+
+  - id: chaos-mesh
+    description: Chaos Mesh docs (fault-injection context for lab scenarios)
+    repo: https://github.com/chaos-mesh/website.git
+    commit: e1da01441bf5cc337afd6b262c001aef052a1684   # fetched 2026-10-05
+    license: Apache-2.0   # VERIFY before enabling: no LICENSE file was visible at the repo root
+    root: docs
+    url_base: https://chaos-mesh.org/docs/
+    paths:
+      - docs/simulate-pod-chaos-on-kubernetes.md
+      - docs/simulate-heavy-stress-on-kubernetes.md
+      - docs/simulate-network-chaos-on-kubernetes.md
+      - docs/simulate-dns-chaos-on-kubernetes.md
+    enabled: false
+
+  # Your own material (committed in this repo, so no fetch step)
+  - id: lab-runbooks
+    description: Markdown runbooks written for this project from public docs and lab evidence
+    local_path: data/lab_runbooks
+    license: Apache-2.0
+    url_base: https://github.com/YOUR_GITHUB_USER/k8s-runbook-copilot/blob/main/data/lab_runbooks/
+    enabled: true
+
+  - id: lab-evidence
+    description: kubectl output captured from my own kind/k3d scenarios (labs/capture.sh)
+    local_path: data/lab_evidence
+    license: Apache-2.0
+    url_base: https://github.com/YOUR_GITHUB_USER/k8s-runbook-copilot/blob/main/data/lab_evidence/
+    enabled: true

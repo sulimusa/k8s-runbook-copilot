@@ -1,0 +1,63 @@
+name: ci
+on:
+  push: { branches: [main] }
+  pull_request:
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: { python: ["3.10", "3.12"] }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ matrix.python }}", cache: pip }
+      - run: pip install -e ".[api,otel,dev]"
+      - run: ruff check src app eval tests analysis observability
+      - run: pytest -q
+      - name: Static analysis and dependency audit
+        run: |
+          bandit -q -r src app eval analysis -x tests
+          pip-audit .
+      - name: Build corpus and run the retrieval eval gate (no LLM needed)
+        run: |
+          make ingest
+          python -m eval.run_eval --mode retrieval --min-hit5 0.9
+      - name: Dashboard JSON is up to date
+        run: |
+          python observability/build_dashboard.py
+          git diff --exit-code observability/dashboards/copilot.json
+
+  helm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4
+      - name: Lint (dev and prod values)
+        run: |
+          helm lint deploy/helm/runbook-copilot -f deploy/helm/runbook-copilot/values-dev.yaml
+          helm lint deploy/helm/runbook-copilot -f deploy/helm/runbook-copilot/values-prod.yaml
+      - name: Render and validate against the Kubernetes schemas
+        run: |
+          for v in dev prod; do
+            helm template copilot deploy/helm/runbook-copilot -n "$v" -f "deploy/helm/runbook-copilot/values-$v.yaml" \
+              | docker run -i --rm ghcr.io/yannh/kubeconform:latest -strict -summary -
+          done
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Trivy misconfiguration scan (Dockerfile + Helm chart; the lab-only manifest in deploy/k8s is excluded)
+        run: |
+          docker run --rm -v "$PWD:/w" -w /w aquasec/trivy:0.75.0 config \
+            --ignorefile .trivyignore --exit-code 1 --severity MEDIUM,HIGH,CRITICAL \
+            --helm-values deploy/helm/runbook-copilot/values-prod.yaml deploy/helm/runbook-copilot
+          docker run --rm -v "$PWD:/w" -w /w aquasec/trivy:0.75.0 config \
+            --ignorefile .trivyignore --exit-code 1 --severity MEDIUM,HIGH,CRITICAL Dockerfile
+      - name: Trivy scan of the agent RBAC (writer-role findings accepted per file, see .trivyignore.yaml)
+        run: |
+          docker run --rm -v "$PWD:/w" -w /w aquasec/trivy:0.75.0 config \
+            --ignorefile .trivyignore.yaml --exit-code 1 --severity MEDIUM,HIGH,CRITICAL deploy/rbac

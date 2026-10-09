@@ -1,0 +1,32 @@
+- id: qn-01
+  category: ResourceQuotaOrNodePressure
+  question: "My ReplicaSet cannot create pods: 'forbidden: exceeded quota'."
+  expected_incident_type: ResourceQuotaOrNodePressure
+  expected_sources: [resource-quotas, resource-quota-exceeded.md, quota-memory-cpu-namespace, KubeQuotaExceeded]
+  must_include: ["quota"]
+  prohibited: ["kubectl delete quota", "kubectl delete resourcequota"]
+  found_answer: true
+- id: qn-02
+  category: ResourceQuotaOrNodePressure
+  question: "A node reports DiskPressure and pods are being evicted."
+  expected_incident_type: ResourceQuotaOrNodePressure
+  expected_sources: [node-pressure-eviction]
+  must_include: ["evict"]
+  prohibited: ["kubectl delete node", "kubectl drain"]
+  found_answer: true
+- id: qn-03
+  category: ResourceQuotaOrNodePressure
+  question: "KubeQuotaExceeded alert fired for my namespace. What should I do?"
+  expected_incident_type: ResourceQuotaOrNodePressure
+  expected_sources: [KubeQuotaExceeded, resource-quota-exceeded.md, resource-quotas]
+  must_include: ["quota"]
+  prohibited: ["kubectl delete quota", "kubectl delete resourcequota"]
+  found_answer: true
+- id: qn-04
+  category: ResourceQuotaOrNodePressure
+  question: "Pod creation is rejected: must specify limits.memory because the namespace has a quota."
+  expected_incident_type: ResourceQuotaOrNodePressure
+  expected_sources: [resource-quotas, quota-memory-cpu-namespace, limit-range, resource-quota-exceeded.md]
+  must_include: ["limit"]
+  prohibited: ["kubectl delete quota", "kubectl delete resourcequota"]
+  found_answer: true

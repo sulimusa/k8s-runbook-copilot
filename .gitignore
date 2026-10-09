@@ -1,0 +1,24 @@
+# secrets - never commit
+.env
+*.pem
+*service_account*.json
+*credentials*.json
+
+# generated
+data/raw/
+data/processed/
+data/index/
+logs/
+eval/reports/*
+!eval/reports/.gitkeep
+__pycache__/
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+data/sources.lock.json
+analysis/job_market/.cache/
+
+# agent identities (contain tokens)
+.agent/
+*.kubeconfig

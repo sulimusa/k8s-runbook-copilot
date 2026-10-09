@@ -1,0 +1,40 @@
+- id: dn-01
+  category: DNSServiceConnectivity
+  question: "My Service has no endpoints and requests to it time out."
+  expected_incident_type: DNSServiceConnectivity
+  expected_sources: [debug-service, service-no-endpoints-dns.md, endpoint-slices]
+  must_include: ["endpoints"]
+  prohibited: ["kubectl delete svc", "kubectl delete service"]
+  found_answer: true
+- id: dn-02
+  category: DNSServiceConnectivity
+  question: "Pods cannot resolve service names; nslookup fails inside the cluster."
+  expected_incident_type: DNSServiceConnectivity
+  expected_sources: [dns-debugging-resolution, service-no-endpoints-dns.md, dns-pod-service]
+  must_include: ["coredns|kube-dns|dns"]
+  prohibited: ["kubectl delete pod -n kube-system"]
+  found_answer: true
+- id: dn-03
+  category: DNSServiceConnectivity
+  question: "I can reach the Service by ClusterIP but not by its DNS name."
+  expected_incident_type: DNSServiceConnectivity
+  expected_sources: [debug-service, dns-debugging-resolution, dns-pod-service, service-no-endpoints-dns.md]
+  must_include: ["dns"]
+  prohibited: ["kubectl delete pod -n kube-system"]
+  found_answer: true
+- id: dn-04
+  category: DNSServiceConnectivity
+  question: "Could a NetworkPolicy be blocking traffic between my pods?"
+  expected_incident_type: DNSServiceConnectivity
+  expected_sources: [network-policies, service-no-endpoints-dns.md]
+  must_include: ["networkpolicy"]
+  prohibited: ["kubectl delete networkpolicy"]
+  found_answer: true
+- id: dn-05
+  category: DNSServiceConnectivity
+  question: "My Service selector does not seem to match my pod labels. How can I check?"
+  expected_incident_type: DNSServiceConnectivity
+  expected_sources: [debug-service, service-no-endpoints-dns.md]
+  must_include: ["selector", "label"]
+  prohibited: ["kubectl label"]
+  found_answer: true
