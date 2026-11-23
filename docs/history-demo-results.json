@@ -1,0 +1,3097 @@
+{
+  "fixture_sha256": "b7ce71b4af7decd8fcad99302e76f92e2089c7a17af214fbe705799384c2bb27",
+  "code_sha256": "79cac1ec77bbbf99e27d8ef7604243ef3b1a11aef20d042d2bf3040b956f23a1",
+  "description": "Same agent, bounded history/current tools, fixed synthetic clock; operational retrieval enabled/disabled. Demonstration, not held-out evaluation.",
+  "cases": {
+    "cache-rollout": {
+      "evidence": {
+        "run_id": "3f99bd02-6d1d-4544-aa14-32ceff4af5c3",
+        "type": "cluster_history_chat",
+        "namespace": "prod-capstone",
+        "cluster_uid": "synthetic-history-only",
+        "days": 7,
+        "coverage": {
+          "cluster": "runbook-capstone-demo",
+          "cluster_uid": "synthetic-history-only",
+          "namespace": "prod-capstone",
+          "history_available_since": "2026-11-14T12:00:00+00:00",
+          "healthy": true,
+          "limits": "Synthetic snapshot; observation timestamps, no audit actors, application logs, allocation profiles or metrics. No infrastructure actions.",
+          "streams": [
+            {
+              "kind": "Pod",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Deployment",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "ReplicaSet",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Service",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "EndpointSlice",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Event",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            }
+          ],
+          "gaps": []
+        },
+        "question": "Why did cache-api start restarting after the rollout this week? What can we establish and what should we check before choosing a mitigation?",
+        "trace": [
+          {
+            "step": {
+              "action": "history",
+              "kind": "Pod",
+              "name": "cache-api-abc",
+              "query": null,
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "records": [
+                {
+                  "id": "H2",
+                  "kind": "Pod",
+                  "name": "cache-api-abc",
+                  "namespace": "prod-capstone",
+                  "uid": "Pod-cache-api-abc",
+                  "rv": "2",
+                  "operation": "ADDED",
+                  "observed_at": "2026-11-19T10:06:00+00:00",
+                  "before": null,
+                  "after": {
+                    "kind": "Pod",
+                    "name": "cache-api-abc",
+                    "namespace": "prod-capstone",
+                    "uid": "Pod-cache-api-abc",
+                    "labels": {
+                      "app": "cache-api"
+                    },
+                    "resource_version": "2",
+                    "containers": [
+                      {
+                        "name": "api",
+                        "image": "fictional/cache-api:v2",
+                        "resources": {
+                          "limits": {
+                            "memory": "512Mi"
+                          }
+                        }
+                      }
+                    ],
+                    "container_status": [
+                      {
+                        "name": "api",
+                        "ready": false,
+                        "restart_count": 3,
+                        "last_termination": {
+                          "reason": "OOMKilled",
+                          "exitCode": 137
+                        }
+                      }
+                    ],
+                    "owners": [
+                      {
+                        "kind": "ReplicaSet",
+                        "name": "cache-api-rs",
+                        "uid": "ReplicaSet-cache-api-rs",
+                        "controller": true
+                      }
+                    ]
+                  }
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            }
+          },
+          {
+            "step": {
+              "action": "current",
+              "kind": "Deployment",
+              "name": "cache-api",
+              "query": null,
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "items": [
+                {
+                  "kind": "Deployment",
+                  "name": "cache-api",
+                  "namespace": "prod-capstone",
+                  "uid": "Deployment-cache-api",
+                  "labels": {
+                    "app": "cache-api"
+                  },
+                  "resource_version": "2",
+                  "containers": [
+                    {
+                      "name": "api",
+                      "image": "fictional/cache-api:v2",
+                      "resources": {
+                        "limits": {
+                          "memory": "512Mi"
+                        }
+                      }
+                    }
+                  ],
+                  "replicas": 1,
+                  "selector": {
+                    "app": "cache-api"
+                  },
+                  "template_labels": {
+                    "app": "cache-api"
+                  },
+                  "evidence_id": "C1-0"
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            }
+          },
+          {
+            "step": {
+              "action": "current",
+              "kind": "Pod",
+              "name": "cache-api-abc",
+              "query": null,
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "items": [
+                {
+                  "kind": "Pod",
+                  "name": "cache-api-abc",
+                  "namespace": "prod-capstone",
+                  "uid": "Pod-cache-api-abc",
+                  "labels": {
+                    "app": "cache-api"
+                  },
+                  "resource_version": "2",
+                  "containers": [
+                    {
+                      "name": "api",
+                      "image": "fictional/cache-api:v2",
+                      "resources": {
+                        "limits": {
+                          "memory": "512Mi"
+                        }
+                      }
+                    }
+                  ],
+                  "container_status": [
+                    {
+                      "name": "api",
+                      "ready": false,
+                      "restart_count": 3,
+                      "last_termination": {
+                        "reason": "OOMKilled",
+                        "exitCode": 137
+                      }
+                    }
+                  ],
+                  "owners": [
+                    {
+                      "kind": "ReplicaSet",
+                      "name": "cache-api-rs",
+                      "uid": "ReplicaSet-cache-api-rs",
+                      "controller": true
+                    }
+                  ],
+                  "evidence_id": "C2-0"
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            }
+          },
+          {
+            "step": {
+              "action": "history",
+              "kind": "Deployment",
+              "name": "cache-api",
+              "query": null,
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "records": [
+                {
+                  "id": "H1",
+                  "kind": "Deployment",
+                  "name": "cache-api",
+                  "namespace": "prod-capstone",
+                  "uid": "Deployment-cache-api",
+                  "rv": "1",
+                  "operation": "MODIFIED",
+                  "observed_at": "2026-11-19T10:00:00+00:00",
+                  "before": {
+                    "kind": "Deployment",
+                    "name": "cache-api",
+                    "namespace": "prod-capstone",
+                    "uid": "Deployment-cache-api",
+                    "labels": {
+                      "app": "cache-api"
+                    },
+                    "resource_version": "2",
+                    "containers": [
+                      {
+                        "name": "api",
+                        "image": "fictional/cache-api:v1",
+                        "resources": {
+                          "limits": {
+                            "memory": "512Mi"
+                          }
+                        }
+                      }
+                    ],
+                    "replicas": 1,
+                    "selector": {
+                      "app": "cache-api"
+                    },
+                    "template_labels": {
+                      "app": "cache-api"
+                    }
+                  },
+                  "after": {
+                    "kind": "Deployment",
+                    "name": "cache-api",
+                    "namespace": "prod-capstone",
+                    "uid": "Deployment-cache-api",
+                    "labels": {
+                      "app": "cache-api"
+                    },
+                    "resource_version": "2",
+                    "containers": [
+                      {
+                        "name": "api",
+                        "image": "fictional/cache-api:v2",
+                        "resources": {
+                          "limits": {
+                            "memory": "512Mi"
+                          }
+                        }
+                      }
+                    ],
+                    "replicas": 1,
+                    "selector": {
+                      "app": "cache-api"
+                    },
+                    "template_labels": {
+                      "app": "cache-api"
+                    }
+                  }
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            }
+          }
+        ],
+        "attempts": [
+          {
+            "action": "history",
+            "kind": "Pod",
+            "name": "cache-api-abc",
+            "query": null,
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "current",
+            "kind": "Deployment",
+            "name": "cache-api",
+            "query": null,
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "current",
+            "kind": "Pod",
+            "name": "cache-api-abc",
+            "query": null,
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "history",
+            "kind": "Deployment",
+            "name": "cache-api",
+            "query": null,
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "finish",
+            "kind": null,
+            "name": null,
+            "query": null,
+            "answer": null,
+            "citations": [
+              "H1",
+              "H2",
+              "C2-0",
+              "C1-0"
+            ],
+            "final": {
+              "assessment": "hypothesis",
+              "observed_impact": "Pod cache-api-abc (fictional/cache-api:v2) has restarted 3 times due to OOMKilled since the rollout on 2026-11-19. User or business impact is unknown from available evidence.",
+              "timeline": [
+                {
+                  "evidence_id": "H1",
+                  "observed_at": "2026-11-19T10:00:00+00:00",
+                  "observation": "Deployment cache-api updated: image changed from fictional/cache-api:v1 to fictional/cache-api:v2, memory limit unchanged at 512Mi."
+                },
+                {
+                  "evidence_id": "H2",
+                  "observed_at": "2026-11-19T10:06:00+00:00",
+                  "observation": "Pod cache-api-abc created by new ReplicaSet after rollout; container not ready, restart_count=3, last termination reason OOMKilled (exit code 137)."
+                }
+              ],
+              "observations": "After the rollout to fictional/cache-api:v2, the new Pod repeatedly restarted with OOMKilled. The memory limit remained at 512Mi before and after the rollout. No direct evidence of user/business impact or actual memory usage is available. No application logs or metrics are present to confirm the cause or effect.",
+              "explanation": "The temporal association between the rollout to v2 and the onset of OOMKilled restarts suggests the new image may have increased memory usage beyond the configured 512Mi limit, but this is not confirmed without runtime allocation or traffic evidence.",
+              "alternatives": "Other possible causes include a change in workload, traffic spike, or a latent bug triggered by the new version. Without memory allocation metrics or application logs, these cannot be excluded.",
+              "missing_evidence": "No runtime memory allocation data, application logs, traffic metrics, or user/business impact evidence is available. No evidence from before the rollout to confirm if OOMKilled was already occurring.",
+              "next_check": "Obtain runtime memory usage metrics or application logs for cache-api:v2 to confirm if memory use exceeds 512Mi. Check for user/business impact via application monitoring or support channels.",
+              "mitigation_conditions": "If confirmed that v2 exceeds the memory limit, consider increasing the memory limit or reverting to v1. Ensure v1 is compatible and safe to roll back to by reviewing version compatibility and rollback guidance.",
+              "verification_and_stop": "After mitigation, verify Pod stability (no OOMKilled restarts) and confirm application functionality via HTTP checks. Stop if memory usage is within limits and no further restarts occur."
+            }
+          },
+          {
+            "action": "finish",
+            "kind": null,
+            "name": null,
+            "query": null,
+            "answer": null,
+            "citations": [
+              "H1",
+              "H2",
+              "C2-0",
+              "C1-0"
+            ],
+            "final": {
+              "assessment": "hypothesis",
+              "observed_impact": "Pod cache-api-abc (fictional/cache-api:v2) has restarted 3 times since the rollout on 2026-11-19; the last reported termination was OOMKilled. User or business impact is unknown from available evidence.",
+              "timeline": [
+                {
+                  "evidence_id": "H1",
+                  "observed_at": "2026-11-19T10:00:00+00:00",
+                  "observation": "Deployment cache-api updated: image changed from fictional/cache-api:v1 to fictional/cache-api:v2, memory limit unchanged at 512Mi."
+                },
+                {
+                  "evidence_id": "H2",
+                  "observed_at": "2026-11-19T10:06:00+00:00",
+                  "observation": "Pod cache-api-abc created by new ReplicaSet after rollout; container not ready, restart_count=3, last termination reason OOMKilled (exit code 137)."
+                }
+              ],
+              "observations": "After the rollout to fictional/cache-api:v2, the new Pod restarted 3 times. Only the last termination is evidenced as OOMKilled; earlier restart reasons are unknown. The memory limit remained at 512Mi before and after the rollout. No direct evidence of user/business impact or actual memory usage is available. No application logs or metrics are present to confirm the cause or effect.",
+              "explanation": "The temporal association between the rollout to v2 and the onset of repeated restarts, with the last termination OOMKilled, suggests the new image may have increased memory usage beyond the configured 512Mi limit, but this is not confirmed without runtime allocation or traffic evidence. Earlier restart causes are unknown.",
+              "alternatives": "Other possible causes include a change in workload, traffic spike, or a latent bug triggered by the new version. Without memory allocation metrics or application logs, these cannot be excluded. Earlier restarts may have had different causes.",
+              "missing_evidence": "No runtime memory allocation data, application logs, traffic metrics, or user/business impact evidence is available. No evidence from before the rollout to confirm if OOMKilled or other restart reasons were already occurring.",
+              "next_check": "Obtain runtime memory usage metrics or application logs for cache-api:v2 to confirm if memory use exceeds 512Mi. Check for user/business impact via application monitoring or support channels.",
+              "mitigation_conditions": "If confirmed that v2 exceeds the memory limit, consider increasing the memory limit or reverting to v1. Ensure v1 is compatible and safe to roll back to by reviewing version compatibility and rollback guidance.",
+              "verification_and_stop": "After mitigation, verify Pod stability (no OOMKilled or repeated restarts) and confirm application functionality via HTTP checks. Stop if memory usage is within limits and no further restarts occur."
+            }
+          }
+        ],
+        "instruction_version": "history-sre-v6",
+        "knowledge_enabled": false,
+        "data_origin": "synthetic_history_snapshot",
+        "as_of": "2026-11-20T12:00:00+00:00",
+        "system_prompt_sha256": "bd5d6fb47bfd64aa0e647c427478615000c929dfd447556a0261be9a50b4babc",
+        "verification_note": "Evidence is collected Kubernetes state. End-to-end connectivity and application behavior have not been tested.",
+        "claim_corrections": [
+          [
+            "Only the last termination reason is evidenced. Report the restart count separately from last termination OOMKilled; do not assign OOM to every/repeated restart. Earlier reasons are unknown. Apply this correction in every field."
+          ]
+        ],
+        "answer": "**Assessment**\nhypothesis\n\n**Observed impact**\nPod cache-api-abc (fictional/cache-api:v2) has restarted 3 times since the rollout on 2026-11-19; the last reported termination was OOMKilled. User or business impact is unknown from available evidence.\n\n**Timeline**\n- Observed at 2026-11-19T10:00:00+00:00: Deployment cache-api updated: image changed from fictional/cache-api:v1 to fictional/cache-api:v2, memory limit unchanged at 512Mi. [H1]\n- Observed at 2026-11-19T10:06:00+00:00: Pod cache-api-abc created by new ReplicaSet after rollout; container not ready, restart_count=3, last termination reason OOMKilled (exit code 137). [H2]\n\n**Observations**\nAfter the rollout to fictional/cache-api:v2, the new Pod restarted 3 times. Only the last termination is evidenced as OOMKilled; earlier restart reasons are unknown. The memory limit remained at 512Mi before and after the rollout. No direct evidence of user/business impact or actual memory usage is available. No application logs or metrics are present to confirm the cause or effect.\n\n**Explanation**\nThe temporal association between the rollout to v2 and the onset of repeated restarts, with the last termination OOMKilled, suggests the new image may have increased memory usage beyond the configured 512Mi limit, but this is not confirmed without runtime allocation or traffic evidence. Earlier restart causes are unknown.\n\n**Alternatives**\nOther possible causes include a change in workload, traffic spike, or a latent bug triggered by the new version. Without memory allocation metrics or application logs, these cannot be excluded. Earlier restarts may have had different causes.\n\n**Missing evidence**\nNo runtime memory allocation data, application logs, traffic metrics, or user/business impact evidence is available. No evidence from before the rollout to confirm if OOMKilled or other restart reasons were already occurring.\n\n**Next check**\nObtain runtime memory usage metrics or application logs for cache-api:v2 to confirm if memory use exceeds 512Mi. Check for user/business impact via application monitoring or support channels.\n\n**Mitigation conditions**\nIf confirmed that v2 exceeds the memory limit, consider increasing the memory limit or reverting to v1. Ensure v1 is compatible and safe to roll back to by reviewing version compatibility and rollback guidance.\n\n**Verification and stop conditions**\nAfter mitigation, verify Pod stability (no OOMKilled or repeated restarts) and confirm application functionality via HTTP checks. Stop if memory usage is within limits and no further restarts occur.",
+        "structured": {
+          "assessment": "hypothesis",
+          "observed_impact": "Pod cache-api-abc (fictional/cache-api:v2) has restarted 3 times since the rollout on 2026-11-19; the last reported termination was OOMKilled. User or business impact is unknown from available evidence.",
+          "timeline": [
+            {
+              "evidence_id": "H1",
+              "observed_at": "2026-11-19T10:00:00+00:00",
+              "observation": "Deployment cache-api updated: image changed from fictional/cache-api:v1 to fictional/cache-api:v2, memory limit unchanged at 512Mi."
+            },
+            {
+              "evidence_id": "H2",
+              "observed_at": "2026-11-19T10:06:00+00:00",
+              "observation": "Pod cache-api-abc created by new ReplicaSet after rollout; container not ready, restart_count=3, last termination reason OOMKilled (exit code 137)."
+            }
+          ],
+          "observations": "After the rollout to fictional/cache-api:v2, the new Pod restarted 3 times. Only the last termination is evidenced as OOMKilled; earlier restart reasons are unknown. The memory limit remained at 512Mi before and after the rollout. No direct evidence of user/business impact or actual memory usage is available. No application logs or metrics are present to confirm the cause or effect.",
+          "explanation": "The temporal association between the rollout to v2 and the onset of repeated restarts, with the last termination OOMKilled, suggests the new image may have increased memory usage beyond the configured 512Mi limit, but this is not confirmed without runtime allocation or traffic evidence. Earlier restart causes are unknown.",
+          "alternatives": "Other possible causes include a change in workload, traffic spike, or a latent bug triggered by the new version. Without memory allocation metrics or application logs, these cannot be excluded. Earlier restarts may have had different causes.",
+          "missing_evidence": "No runtime memory allocation data, application logs, traffic metrics, or user/business impact evidence is available. No evidence from before the rollout to confirm if OOMKilled or other restart reasons were already occurring.",
+          "next_check": "Obtain runtime memory usage metrics or application logs for cache-api:v2 to confirm if memory use exceeds 512Mi. Check for user/business impact via application monitoring or support channels.",
+          "mitigation_conditions": "If confirmed that v2 exceeds the memory limit, consider increasing the memory limit or reverting to v1. Ensure v1 is compatible and safe to roll back to by reviewing version compatibility and rollback guidance.",
+          "verification_and_stop": "After mitigation, verify Pod stability (no OOMKilled or repeated restarts) and confirm application functionality via HTTP checks. Stop if memory usage is within limits and no further restarts occur."
+        },
+        "citations": {
+          "C1-0": {
+            "kind": "Deployment",
+            "name": "cache-api",
+            "namespace": "prod-capstone",
+            "uid": "Deployment-cache-api",
+            "labels": {
+              "app": "cache-api"
+            },
+            "resource_version": "2",
+            "containers": [
+              {
+                "name": "api",
+                "image": "fictional/cache-api:v2",
+                "resources": {
+                  "limits": {
+                    "memory": "512Mi"
+                  }
+                }
+              }
+            ],
+            "replicas": 1,
+            "selector": {
+              "app": "cache-api"
+            },
+            "template_labels": {
+              "app": "cache-api"
+            },
+            "evidence_id": "C1-0"
+          },
+          "C2-0": {
+            "kind": "Pod",
+            "name": "cache-api-abc",
+            "namespace": "prod-capstone",
+            "uid": "Pod-cache-api-abc",
+            "labels": {
+              "app": "cache-api"
+            },
+            "resource_version": "2",
+            "containers": [
+              {
+                "name": "api",
+                "image": "fictional/cache-api:v2",
+                "resources": {
+                  "limits": {
+                    "memory": "512Mi"
+                  }
+                }
+              }
+            ],
+            "container_status": [
+              {
+                "name": "api",
+                "ready": false,
+                "restart_count": 3,
+                "last_termination": {
+                  "reason": "OOMKilled",
+                  "exitCode": 137
+                }
+              }
+            ],
+            "owners": [
+              {
+                "kind": "ReplicaSet",
+                "name": "cache-api-rs",
+                "uid": "ReplicaSet-cache-api-rs",
+                "controller": true
+              }
+            ],
+            "evidence_id": "C2-0"
+          },
+          "H1": {
+            "id": "H1",
+            "kind": "Deployment",
+            "name": "cache-api",
+            "namespace": "prod-capstone",
+            "uid": "Deployment-cache-api",
+            "rv": "1",
+            "operation": "MODIFIED",
+            "observed_at": "2026-11-19T10:00:00+00:00",
+            "before": {
+              "kind": "Deployment",
+              "name": "cache-api",
+              "namespace": "prod-capstone",
+              "uid": "Deployment-cache-api",
+              "labels": {
+                "app": "cache-api"
+              },
+              "resource_version": "2",
+              "containers": [
+                {
+                  "name": "api",
+                  "image": "fictional/cache-api:v1",
+                  "resources": {
+                    "limits": {
+                      "memory": "512Mi"
+                    }
+                  }
+                }
+              ],
+              "replicas": 1,
+              "selector": {
+                "app": "cache-api"
+              },
+              "template_labels": {
+                "app": "cache-api"
+              }
+            },
+            "after": {
+              "kind": "Deployment",
+              "name": "cache-api",
+              "namespace": "prod-capstone",
+              "uid": "Deployment-cache-api",
+              "labels": {
+                "app": "cache-api"
+              },
+              "resource_version": "2",
+              "containers": [
+                {
+                  "name": "api",
+                  "image": "fictional/cache-api:v2",
+                  "resources": {
+                    "limits": {
+                      "memory": "512Mi"
+                    }
+                  }
+                }
+              ],
+              "replicas": 1,
+              "selector": {
+                "app": "cache-api"
+              },
+              "template_labels": {
+                "app": "cache-api"
+              }
+            }
+          },
+          "H2": {
+            "id": "H2",
+            "kind": "Pod",
+            "name": "cache-api-abc",
+            "namespace": "prod-capstone",
+            "uid": "Pod-cache-api-abc",
+            "rv": "2",
+            "operation": "ADDED",
+            "observed_at": "2026-11-19T10:06:00+00:00",
+            "before": null,
+            "after": {
+              "kind": "Pod",
+              "name": "cache-api-abc",
+              "namespace": "prod-capstone",
+              "uid": "Pod-cache-api-abc",
+              "labels": {
+                "app": "cache-api"
+              },
+              "resource_version": "2",
+              "containers": [
+                {
+                  "name": "api",
+                  "image": "fictional/cache-api:v2",
+                  "resources": {
+                    "limits": {
+                      "memory": "512Mi"
+                    }
+                  }
+                }
+              ],
+              "container_status": [
+                {
+                  "name": "api",
+                  "ready": false,
+                  "restart_count": 3,
+                  "last_termination": {
+                    "reason": "OOMKilled",
+                    "exitCode": 137
+                  }
+                }
+              ],
+              "owners": [
+                {
+                  "kind": "ReplicaSet",
+                  "name": "cache-api-rs",
+                  "uid": "ReplicaSet-cache-api-rs",
+                  "controller": true
+                }
+              ]
+            }
+          }
+        },
+        "status": "completed",
+        "calls": [
+          {
+            "prompt_sha256": "8398d1d05408c5276f75bf7a10e8acb61ccc614820555b40df7442dc1384bc5d",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.04815,
+            "input_tokens": 2296,
+            "output_tokens": 32,
+            "cost_usd": 0.004848,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHAq8ip7VP7hVbIeeiP1teyEraLt",
+            "duration_ms": 1017.0
+          },
+          {
+            "prompt_sha256": "8b32bc196c6c772eabd296628f0276e70b96202aa33390c77c31ef5b0588ec88",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.05059,
+            "input_tokens": 2627,
+            "output_tokens": 30,
+            "cost_usd": 0.005494,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHArItmZ1Qp0IHttwWWxVtfbwqdP",
+            "duration_ms": 711.8
+          },
+          {
+            "prompt_sha256": "5ad559cd84fb7b109e66ddd4c61791ace3abc3eaf22a86e2b39bbd795fa1b6c6",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.052236,
+            "input_tokens": 2829,
+            "output_tokens": 32,
+            "cost_usd": 0.005914,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHArw1v59AQ498N6w4AAtf1HNWh0",
+            "duration_ms": 655.0
+          },
+          {
+            "prompt_sha256": "3f6377b2f7788d7a4db71c4393b6544c347573bde0836481bc104706bcb4eba8",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.054226,
+            "input_tokens": 3086,
+            "output_tokens": 30,
+            "cost_usd": 0.006412,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHAsuqthES24Xy9rRj2harGR5ZCO",
+            "duration_ms": 633.47
+          },
+          {
+            "prompt_sha256": "3ddb5d64b330f82a5f6c99cdb9562d52197990e9e0ee59e4b184549addd40d21",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.057178,
+            "input_tokens": 3464,
+            "output_tokens": 545,
+            "cost_usd": 0.011288,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHAthRYAqWlvOkxa2LB4PED0Fp7G",
+            "duration_ms": 3978.4
+          },
+          {
+            "prompt_sha256": "aa34d22dace8b1b453340cdf33c3bf40e1e95b037b02beb23c41da7527ded9a8",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.063024,
+            "input_tokens": 4076,
+            "output_tokens": 592,
+            "cost_usd": 0.012888,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHAxCXXdVGByYEyYrBtQmqwZSICR",
+            "duration_ms": 3129.24
+          }
+        ]
+      },
+      "rag": {
+        "run_id": "774a6750-6144-4bc3-8eb7-b1f18c253fa7",
+        "type": "cluster_history_chat",
+        "namespace": "prod-capstone",
+        "cluster_uid": "synthetic-history-only",
+        "days": 7,
+        "coverage": {
+          "cluster": "runbook-capstone-demo",
+          "cluster_uid": "synthetic-history-only",
+          "namespace": "prod-capstone",
+          "history_available_since": "2026-11-14T12:00:00+00:00",
+          "healthy": true,
+          "limits": "Synthetic snapshot; observation timestamps, no audit actors, application logs, allocation profiles or metrics. No infrastructure actions.",
+          "streams": [
+            {
+              "kind": "Pod",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Deployment",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "ReplicaSet",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Service",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "EndpointSlice",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Event",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            }
+          ],
+          "gaps": []
+        },
+        "question": "Why did cache-api start restarting after the rollout this week? What can we establish and what should we check before choosing a mitigation?",
+        "trace": [
+          {
+            "step": {
+              "action": "history",
+              "kind": "Pod",
+              "name": "cache-api-abc",
+              "query": null,
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "records": [
+                {
+                  "id": "H2",
+                  "kind": "Pod",
+                  "name": "cache-api-abc",
+                  "namespace": "prod-capstone",
+                  "uid": "Pod-cache-api-abc",
+                  "rv": "2",
+                  "operation": "ADDED",
+                  "observed_at": "2026-11-19T10:06:00+00:00",
+                  "before": null,
+                  "after": {
+                    "kind": "Pod",
+                    "name": "cache-api-abc",
+                    "namespace": "prod-capstone",
+                    "uid": "Pod-cache-api-abc",
+                    "labels": {
+                      "app": "cache-api"
+                    },
+                    "resource_version": "2",
+                    "containers": [
+                      {
+                        "name": "api",
+                        "image": "fictional/cache-api:v2",
+                        "resources": {
+                          "limits": {
+                            "memory": "512Mi"
+                          }
+                        }
+                      }
+                    ],
+                    "container_status": [
+                      {
+                        "name": "api",
+                        "ready": false,
+                        "restart_count": 3,
+                        "last_termination": {
+                          "reason": "OOMKilled",
+                          "exitCode": 137
+                        }
+                      }
+                    ],
+                    "owners": [
+                      {
+                        "kind": "ReplicaSet",
+                        "name": "cache-api-rs",
+                        "uid": "ReplicaSet-cache-api-rs",
+                        "controller": true
+                      }
+                    ]
+                  }
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            }
+          },
+          {
+            "step": {
+              "action": "history",
+              "kind": "Deployment",
+              "name": "cache-api",
+              "query": null,
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "records": [
+                {
+                  "id": "H1",
+                  "kind": "Deployment",
+                  "name": "cache-api",
+                  "namespace": "prod-capstone",
+                  "uid": "Deployment-cache-api",
+                  "rv": "1",
+                  "operation": "MODIFIED",
+                  "observed_at": "2026-11-19T10:00:00+00:00",
+                  "before": {
+                    "kind": "Deployment",
+                    "name": "cache-api",
+                    "namespace": "prod-capstone",
+                    "uid": "Deployment-cache-api",
+                    "labels": {
+                      "app": "cache-api"
+                    },
+                    "resource_version": "2",
+                    "containers": [
+                      {
+                        "name": "api",
+                        "image": "fictional/cache-api:v1",
+                        "resources": {
+                          "limits": {
+                            "memory": "512Mi"
+                          }
+                        }
+                      }
+                    ],
+                    "replicas": 1,
+                    "selector": {
+                      "app": "cache-api"
+                    },
+                    "template_labels": {
+                      "app": "cache-api"
+                    }
+                  },
+                  "after": {
+                    "kind": "Deployment",
+                    "name": "cache-api",
+                    "namespace": "prod-capstone",
+                    "uid": "Deployment-cache-api",
+                    "labels": {
+                      "app": "cache-api"
+                    },
+                    "resource_version": "2",
+                    "containers": [
+                      {
+                        "name": "api",
+                        "image": "fictional/cache-api:v2",
+                        "resources": {
+                          "limits": {
+                            "memory": "512Mi"
+                          }
+                        }
+                      }
+                    ],
+                    "replicas": 1,
+                    "selector": {
+                      "app": "cache-api"
+                    },
+                    "template_labels": {
+                      "app": "cache-api"
+                    }
+                  }
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            }
+          },
+          {
+            "step": {
+              "action": "current",
+              "kind": "Pod",
+              "name": "cache-api-abc",
+              "query": null,
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "items": [
+                {
+                  "kind": "Pod",
+                  "name": "cache-api-abc",
+                  "namespace": "prod-capstone",
+                  "uid": "Pod-cache-api-abc",
+                  "labels": {
+                    "app": "cache-api"
+                  },
+                  "resource_version": "2",
+                  "containers": [
+                    {
+                      "name": "api",
+                      "image": "fictional/cache-api:v2",
+                      "resources": {
+                        "limits": {
+                          "memory": "512Mi"
+                        }
+                      }
+                    }
+                  ],
+                  "container_status": [
+                    {
+                      "name": "api",
+                      "ready": false,
+                      "restart_count": 3,
+                      "last_termination": {
+                        "reason": "OOMKilled",
+                        "exitCode": 137
+                      }
+                    }
+                  ],
+                  "owners": [
+                    {
+                      "kind": "ReplicaSet",
+                      "name": "cache-api-rs",
+                      "uid": "ReplicaSet-cache-api-rs",
+                      "controller": true
+                    }
+                  ],
+                  "evidence_id": "C2-0"
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            }
+          },
+          {
+            "step": {
+              "action": "runbook",
+              "kind": "Deployment",
+              "name": "cache-api",
+              "query": "rollback safety fictional/cache-api:v1 v2",
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": [
+              {
+                "id": "D-cache-v2",
+                "title": "cache-api v2 operating contract",
+                "url": "",
+                "text": "Fictional cache-api v2 image defaults: four worker processes, each with a maximum cache budget of 192 MiB. These are image defaults, not observed runtime overrides or measured allocations. v1 uses one shared 192 MiB cache. Runtime overrides are possible and not collected by this history service. Check effective worker count and cache settings plus an allocation profile. A potential 4 x 192 = 768 MiB cache budget exceeds a 512 MiB container limit before overhead. This is a hypothesis, not proof of actual use. Reduce cache budgets/workers only after reviewing effective settings, traffic needs and memory headroom; validate allocations, restart counts, latency and throughput. Stop or revert the reviewed configuration change if health worsens. No rollback compatibility statement is available.",
+                "bm25": 10.05851670479215
+              }
+            ]
+          }
+        ],
+        "attempts": [
+          {
+            "action": "history",
+            "kind": "Pod",
+            "name": "cache-api-abc",
+            "query": null,
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "history",
+            "kind": "Deployment",
+            "name": "cache-api",
+            "query": null,
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "current",
+            "kind": "Pod",
+            "name": "cache-api-abc",
+            "query": null,
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "runbook",
+            "kind": "Deployment",
+            "name": "cache-api",
+            "query": "rollback safety fictional/cache-api:v1 v2",
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "finish",
+            "kind": null,
+            "name": null,
+            "query": null,
+            "answer": null,
+            "citations": [
+              "H1",
+              "H2",
+              "C2-0",
+              "D-cache-v2"
+            ],
+            "final": {
+              "assessment": "hypothesis",
+              "observed_impact": "Pod cache-api-abc (fictional/cache-api:v2) is repeatedly OOMKilled after a rollout; readiness is false and restart_count is 3. User or business impact is unknown from available evidence.",
+              "timeline": [
+                {
+                  "evidence_id": "H1",
+                  "observed_at": "2026-11-19T10:00:00+00:00",
+                  "observation": "Deployment cache-api updated: image changed from fictional/cache-api:v1 to v2, memory limit unchanged at 512Mi."
+                },
+                {
+                  "evidence_id": "H2",
+                  "observed_at": "2026-11-19T10:06:00+00:00",
+                  "observation": "Pod cache-api-abc (v2) created, not ready, restart_count 3, last termination OOMKilled (exit 137)."
+                }
+              ],
+              "observations": "After the rollout to v2, the Pod repeatedly OOMKilled with a 512Mi memory limit. The v2 image defaults to four workers each with a 192Mi cache budget (potentially 768Mi total), exceeding the container limit before overhead. v1 used a single 192Mi cache. No runtime overrides, measured allocations, or traffic data are available. No rollback compatibility statement is present for v1/v2.",
+              "explanation": "The most likely cause is that the v2 image's default configuration (four workers, each with a 192Mi cache) exceeds the 512Mi container memory limit, leading to OOMKilled events. This is a hypothesis based on image defaults, not confirmed runtime settings or actual memory use.",
+              "alternatives": "Other causes (e.g., memory leaks, traffic spikes, misconfiguration, or unrelated application bugs) cannot be excluded without runtime allocation profiles, logs, or traffic data.",
+              "missing_evidence": "No runtime allocation profile, Pod logs, or traffic/usage data are available. No confirmation of effective worker count or cache settings. No rollback compatibility statement for v1/v2.",
+              "next_check": "Check the effective worker count and cache budget in the running Pod, and obtain a memory allocation profile to confirm actual use. Review Pod/application logs for further clues. Assess user/business impact via application monitoring or user reports.",
+              "mitigation_conditions": "Before reducing cache budgets or worker count, confirm effective settings and traffic needs. Rollback to v1 only if compatible; test in staging if possible. Monitor for OOMKilled events and application health after any change.",
+              "verification_and_stop": "Verify mitigation by confirming Pod stability (no OOMKilled restarts), readiness, and normal application performance. Stop or revert if health worsens or compatibility issues arise."
+            }
+          },
+          {
+            "action": "finish",
+            "kind": null,
+            "name": null,
+            "query": null,
+            "answer": null,
+            "citations": [
+              "H1",
+              "H2",
+              "C2-0",
+              "D-cache-v2"
+            ],
+            "final": {
+              "assessment": "hypothesis",
+              "observed_impact": "Pod cache-api-abc (fictional/cache-api:v2) is not ready and has restarted 3 times after the rollout; the last termination was OOMKilled. User or business impact is unknown from available evidence.",
+              "timeline": [
+                {
+                  "evidence_id": "H1",
+                  "observed_at": "2026-11-19T10:00:00+00:00",
+                  "observation": "Deployment cache-api updated: image changed from fictional/cache-api:v1 to v2, memory limit unchanged at 512Mi."
+                },
+                {
+                  "evidence_id": "H2",
+                  "observed_at": "2026-11-19T10:06:00+00:00",
+                  "observation": "Pod cache-api-abc (v2) created, not ready, restart_count 3, last termination OOMKilled (exit 137)."
+                }
+              ],
+              "observations": "After the rollout to v2, the Pod is not ready and has restarted 3 times; only the last termination is evidenced as OOMKilled. The v2 image defaults to four workers each with a 192Mi cache budget (potentially 768Mi total), exceeding the 512Mi container limit before overhead. v1 used a single 192Mi cache. No runtime overrides, measured allocations, or traffic data are available. No rollback compatibility statement is present for v1/v2.",
+              "explanation": "The most likely cause is that the v2 image's default configuration (four workers, each with a 192Mi cache) could exceed the 512Mi container memory limit, leading to OOMKilled events. This is a hypothesis based on image defaults and the last observed OOMKilled, not confirmed runtime settings or actual memory use. Earlier restart reasons are unknown.",
+              "alternatives": "Other causes (e.g., memory leaks, traffic spikes, misconfiguration, or unrelated application bugs) cannot be excluded without runtime allocation profiles, logs, or traffic data. Earlier restarts may have had different causes.",
+              "missing_evidence": "No runtime allocation profile, Pod logs, or traffic/usage data are available. No confirmation of effective worker count or cache settings. No rollback compatibility statement for v1/v2. Earlier restart reasons are unknown.",
+              "next_check": "Check the effective worker count and cache budget in the running Pod, and obtain a memory allocation profile to confirm actual use. Review Pod/application logs for further clues. Assess user/business impact via application monitoring or user reports.",
+              "mitigation_conditions": "Before reducing cache budgets or worker count, confirm effective settings and traffic needs. Rollback to v1 only if compatible; test in staging if possible. Monitor for OOMKilled events and application health after any change.",
+              "verification_and_stop": "Verify mitigation by confirming Pod stability (no OOMKilled restarts), readiness, and normal application performance. Stop or revert if health worsens or compatibility issues arise."
+            }
+          }
+        ],
+        "instruction_version": "history-sre-v6",
+        "knowledge_enabled": true,
+        "data_origin": "synthetic_history_snapshot",
+        "as_of": "2026-11-20T12:00:00+00:00",
+        "system_prompt_sha256": "84ceead96d37d6ea4c715de040dbde221f860b4cdfdf9f081818cbf3ad1e1778",
+        "verification_note": "Evidence is collected Kubernetes state. End-to-end connectivity and application behavior have not been tested.",
+        "claim_corrections": [
+          [
+            "Only the last termination reason is evidenced. Report the restart count separately from last termination OOMKilled; do not assign OOM to every/repeated restart. Earlier reasons are unknown. Apply this correction in every field."
+          ]
+        ],
+        "answer": "**Assessment**\nhypothesis\n\n**Observed impact**\nPod cache-api-abc (fictional/cache-api:v2) is not ready and has restarted 3 times after the rollout; the last termination was OOMKilled. User or business impact is unknown from available evidence.\n\n**Timeline**\n- Observed at 2026-11-19T10:00:00+00:00: Deployment cache-api updated: image changed from fictional/cache-api:v1 to v2, memory limit unchanged at 512Mi. [H1]\n- Observed at 2026-11-19T10:06:00+00:00: Pod cache-api-abc (v2) created, not ready, restart_count 3, last termination OOMKilled (exit 137). [H2]\n\n**Observations**\nAfter the rollout to v2, the Pod is not ready and has restarted 3 times; only the last termination is evidenced as OOMKilled. The v2 image defaults to four workers each with a 192Mi cache budget (potentially 768Mi total), exceeding the 512Mi container limit before overhead. v1 used a single 192Mi cache. No runtime overrides, measured allocations, or traffic data are available. No rollback compatibility statement is present for v1/v2.\n\n**Explanation**\nThe most likely cause is that the v2 image's default configuration (four workers, each with a 192Mi cache) could exceed the 512Mi container memory limit, leading to OOMKilled events. This is a hypothesis based on image defaults and the last observed OOMKilled, not confirmed runtime settings or actual memory use. Earlier restart reasons are unknown.\n\n**Alternatives**\nOther causes (e.g., memory leaks, traffic spikes, misconfiguration, or unrelated application bugs) cannot be excluded without runtime allocation profiles, logs, or traffic data. Earlier restarts may have had different causes.\n\n**Missing evidence**\nNo runtime allocation profile, Pod logs, or traffic/usage data are available. No confirmation of effective worker count or cache settings. No rollback compatibility statement for v1/v2. Earlier restart reasons are unknown.\n\n**Next check**\nCheck the effective worker count and cache budget in the running Pod, and obtain a memory allocation profile to confirm actual use. Review Pod/application logs for further clues. Assess user/business impact via application monitoring or user reports.\n\n**Mitigation conditions**\nBefore reducing cache budgets or worker count, confirm effective settings and traffic needs. Rollback to v1 only if compatible; test in staging if possible. Monitor for OOMKilled events and application health after any change.\n\n**Verification and stop conditions**\nVerify mitigation by confirming Pod stability (no OOMKilled restarts), readiness, and normal application performance. Stop or revert if health worsens or compatibility issues arise.",
+        "structured": {
+          "assessment": "hypothesis",
+          "observed_impact": "Pod cache-api-abc (fictional/cache-api:v2) is not ready and has restarted 3 times after the rollout; the last termination was OOMKilled. User or business impact is unknown from available evidence.",
+          "timeline": [
+            {
+              "evidence_id": "H1",
+              "observed_at": "2026-11-19T10:00:00+00:00",
+              "observation": "Deployment cache-api updated: image changed from fictional/cache-api:v1 to v2, memory limit unchanged at 512Mi."
+            },
+            {
+              "evidence_id": "H2",
+              "observed_at": "2026-11-19T10:06:00+00:00",
+              "observation": "Pod cache-api-abc (v2) created, not ready, restart_count 3, last termination OOMKilled (exit 137)."
+            }
+          ],
+          "observations": "After the rollout to v2, the Pod is not ready and has restarted 3 times; only the last termination is evidenced as OOMKilled. The v2 image defaults to four workers each with a 192Mi cache budget (potentially 768Mi total), exceeding the 512Mi container limit before overhead. v1 used a single 192Mi cache. No runtime overrides, measured allocations, or traffic data are available. No rollback compatibility statement is present for v1/v2.",
+          "explanation": "The most likely cause is that the v2 image's default configuration (four workers, each with a 192Mi cache) could exceed the 512Mi container memory limit, leading to OOMKilled events. This is a hypothesis based on image defaults and the last observed OOMKilled, not confirmed runtime settings or actual memory use. Earlier restart reasons are unknown.",
+          "alternatives": "Other causes (e.g., memory leaks, traffic spikes, misconfiguration, or unrelated application bugs) cannot be excluded without runtime allocation profiles, logs, or traffic data. Earlier restarts may have had different causes.",
+          "missing_evidence": "No runtime allocation profile, Pod logs, or traffic/usage data are available. No confirmation of effective worker count or cache settings. No rollback compatibility statement for v1/v2. Earlier restart reasons are unknown.",
+          "next_check": "Check the effective worker count and cache budget in the running Pod, and obtain a memory allocation profile to confirm actual use. Review Pod/application logs for further clues. Assess user/business impact via application monitoring or user reports.",
+          "mitigation_conditions": "Before reducing cache budgets or worker count, confirm effective settings and traffic needs. Rollback to v1 only if compatible; test in staging if possible. Monitor for OOMKilled events and application health after any change.",
+          "verification_and_stop": "Verify mitigation by confirming Pod stability (no OOMKilled restarts), readiness, and normal application performance. Stop or revert if health worsens or compatibility issues arise."
+        },
+        "citations": {
+          "C2-0": {
+            "kind": "Pod",
+            "name": "cache-api-abc",
+            "namespace": "prod-capstone",
+            "uid": "Pod-cache-api-abc",
+            "labels": {
+              "app": "cache-api"
+            },
+            "resource_version": "2",
+            "containers": [
+              {
+                "name": "api",
+                "image": "fictional/cache-api:v2",
+                "resources": {
+                  "limits": {
+                    "memory": "512Mi"
+                  }
+                }
+              }
+            ],
+            "container_status": [
+              {
+                "name": "api",
+                "ready": false,
+                "restart_count": 3,
+                "last_termination": {
+                  "reason": "OOMKilled",
+                  "exitCode": 137
+                }
+              }
+            ],
+            "owners": [
+              {
+                "kind": "ReplicaSet",
+                "name": "cache-api-rs",
+                "uid": "ReplicaSet-cache-api-rs",
+                "controller": true
+              }
+            ],
+            "evidence_id": "C2-0"
+          },
+          "D-cache-v2": {
+            "id": "D-cache-v2",
+            "title": "cache-api v2 operating contract",
+            "url": "",
+            "text": "Fictional cache-api v2 image defaults: four worker processes, each with a maximum cache budget of 192 MiB. These are image defaults, not observed runtime overrides or measured allocations. v1 uses one shared 192 MiB cache. Runtime overrides are possible and not collected by this history service. Check effective worker count and cache settings plus an allocation profile. A potential 4 x 192 = 768 MiB cache budget exceeds a 512 MiB container limit before overhead. This is a hypothesis, not proof of actual use. Reduce cache budgets/workers only after reviewing effective settings, traffic needs and memory headroom; validate allocations, restart counts, latency and throughput. Stop or revert the reviewed configuration change if health worsens. No rollback compatibility statement is available.",
+            "bm25": 10.05851670479215
+          },
+          "H1": {
+            "id": "H1",
+            "kind": "Deployment",
+            "name": "cache-api",
+            "namespace": "prod-capstone",
+            "uid": "Deployment-cache-api",
+            "rv": "1",
+            "operation": "MODIFIED",
+            "observed_at": "2026-11-19T10:00:00+00:00",
+            "before": {
+              "kind": "Deployment",
+              "name": "cache-api",
+              "namespace": "prod-capstone",
+              "uid": "Deployment-cache-api",
+              "labels": {
+                "app": "cache-api"
+              },
+              "resource_version": "2",
+              "containers": [
+                {
+                  "name": "api",
+                  "image": "fictional/cache-api:v1",
+                  "resources": {
+                    "limits": {
+                      "memory": "512Mi"
+                    }
+                  }
+                }
+              ],
+              "replicas": 1,
+              "selector": {
+                "app": "cache-api"
+              },
+              "template_labels": {
+                "app": "cache-api"
+              }
+            },
+            "after": {
+              "kind": "Deployment",
+              "name": "cache-api",
+              "namespace": "prod-capstone",
+              "uid": "Deployment-cache-api",
+              "labels": {
+                "app": "cache-api"
+              },
+              "resource_version": "2",
+              "containers": [
+                {
+                  "name": "api",
+                  "image": "fictional/cache-api:v2",
+                  "resources": {
+                    "limits": {
+                      "memory": "512Mi"
+                    }
+                  }
+                }
+              ],
+              "replicas": 1,
+              "selector": {
+                "app": "cache-api"
+              },
+              "template_labels": {
+                "app": "cache-api"
+              }
+            }
+          },
+          "H2": {
+            "id": "H2",
+            "kind": "Pod",
+            "name": "cache-api-abc",
+            "namespace": "prod-capstone",
+            "uid": "Pod-cache-api-abc",
+            "rv": "2",
+            "operation": "ADDED",
+            "observed_at": "2026-11-19T10:06:00+00:00",
+            "before": null,
+            "after": {
+              "kind": "Pod",
+              "name": "cache-api-abc",
+              "namespace": "prod-capstone",
+              "uid": "Pod-cache-api-abc",
+              "labels": {
+                "app": "cache-api"
+              },
+              "resource_version": "2",
+              "containers": [
+                {
+                  "name": "api",
+                  "image": "fictional/cache-api:v2",
+                  "resources": {
+                    "limits": {
+                      "memory": "512Mi"
+                    }
+                  }
+                }
+              ],
+              "container_status": [
+                {
+                  "name": "api",
+                  "ready": false,
+                  "restart_count": 3,
+                  "last_termination": {
+                    "reason": "OOMKilled",
+                    "exitCode": 137
+                  }
+                }
+              ],
+              "owners": [
+                {
+                  "kind": "ReplicaSet",
+                  "name": "cache-api-rs",
+                  "uid": "ReplicaSet-cache-api-rs",
+                  "controller": true
+                }
+              ]
+            }
+          }
+        },
+        "status": "completed",
+        "calls": [
+          {
+            "prompt_sha256": "b53b2ef725a808ec6d4388538a89c5e389c17c59a6e108962005f563e3de24db",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.047796,
+            "input_tokens": 2268,
+            "output_tokens": 32,
+            "cost_usd": 0.004792,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHCJpE2EmhLI0xxhuyezc5eQhCIg",
+            "duration_ms": 768.53
+          },
+          {
+            "prompt_sha256": "94bb6f6197185660fd54dad4b170a9e8ee3656c058be199405d35f423e9981e3",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.050236,
+            "input_tokens": 2599,
+            "output_tokens": 30,
+            "cost_usd": 0.005438,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHCKWrWMFeTjVKE7lQYGf9abgnRH",
+            "duration_ms": 546.66
+          },
+          {
+            "prompt_sha256": "6a65f38c21eeeef079293cb0aeaa144764f40a5bd3c407d36c3f80c31242edac",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.053188,
+            "input_tokens": 2977,
+            "output_tokens": 32,
+            "cost_usd": 0.00621,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHCK1BH0dpNphoBUJnhZitWBaiAb",
+            "duration_ms": 613.7
+          },
+          {
+            "prompt_sha256": "d545c595e0a8b865a90b5145ce5c3172e9a823c6935fbf51578415777ef9c4b8",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.055178,
+            "input_tokens": 3234,
+            "output_tokens": 39,
+            "cost_usd": 0.00678,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHCLXgXbsOX9nJ7d9UBWtpBLyP3S",
+            "duration_ms": 825.91
+          },
+          {
+            "prompt_sha256": "7d5b25276b1c2413b54ce32c957d884ba47cb481d2a2b3b3eba78c2974cb83a2",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.057768,
+            "input_tokens": 3509,
+            "output_tokens": 577,
+            "cost_usd": 0.011634,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHCMKVznuBCX4LAUvoqkiqsEOcrf",
+            "duration_ms": 3265.77
+          },
+          {
+            "prompt_sha256": "fdfedb78327f8af4e68e59fc80e75f930b4aa3d96318ca5a58e165eec6c67f8b",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.06379,
+            "input_tokens": 4153,
+            "output_tokens": 620,
+            "cost_usd": 0.013266,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHCPtkRU3NHdKCbP8G1GtxQ40Gar",
+            "duration_ms": 2552.95
+          }
+        ]
+      }
+    },
+    "selector-change": {
+      "evidence": {
+        "run_id": "6b550cdb-2081-44de-b544-000519909d90",
+        "type": "cluster_history_chat",
+        "namespace": "prod-capstone",
+        "cluster_uid": "synthetic-history-only",
+        "days": 7,
+        "coverage": {
+          "cluster": "runbook-capstone-demo",
+          "cluster_uid": "synthetic-history-only",
+          "namespace": "prod-capstone",
+          "history_available_since": "2026-11-14T12:00:00+00:00",
+          "healthy": true,
+          "limits": "Synthetic snapshot; observation timestamps, no audit actors, application logs, allocation profiles or metrics. No infrastructure actions.",
+          "streams": [
+            {
+              "kind": "Pod",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Deployment",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "ReplicaSet",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Service",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "EndpointSlice",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Event",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            }
+          ],
+          "gaps": []
+        },
+        "question": "Why does demo-web have no endpoints? Compare the Service changes, current Pod labels and EndpointSlices this week. Is customer impact known?",
+        "trace": [
+          {
+            "step": {
+              "action": "history",
+              "kind": "Service",
+              "name": "demo-web",
+              "query": null,
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "records": [
+                {
+                  "id": "H1",
+                  "kind": "Service",
+                  "name": "demo-web",
+                  "namespace": "prod-capstone",
+                  "uid": "Service-demo-web",
+                  "rv": "1",
+                  "operation": "MODIFIED",
+                  "observed_at": "2026-11-19T10:00:00+00:00",
+                  "before": {
+                    "kind": "Service",
+                    "name": "demo-web",
+                    "namespace": "prod-capstone",
+                    "uid": "Service-demo-web",
+                    "labels": {
+                      "app": "demo-web"
+                    },
+                    "resource_version": "2",
+                    "selector": {
+                      "app": "demo-web"
+                    },
+                    "selector_complete": true
+                  },
+                  "after": {
+                    "kind": "Service",
+                    "name": "demo-web",
+                    "namespace": "prod-capstone",
+                    "uid": "Service-demo-web",
+                    "labels": {
+                      "app": "demo-web"
+                    },
+                    "resource_version": "2",
+                    "selector": {
+                      "app": "no-matching-pods"
+                    },
+                    "selector_complete": true
+                  }
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            }
+          },
+          {
+            "step": {
+              "action": "current",
+              "kind": "Service",
+              "name": "demo-web",
+              "query": null,
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "items": [
+                {
+                  "kind": "Service",
+                  "name": "demo-web",
+                  "namespace": "prod-capstone",
+                  "uid": "Service-demo-web",
+                  "labels": {
+                    "app": "demo-web"
+                  },
+                  "resource_version": "2",
+                  "selector": {
+                    "app": "no-matching-pods"
+                  },
+                  "selector_complete": true,
+                  "evidence_id": "C1-0"
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            }
+          },
+          {
+            "step": {
+              "action": "current",
+              "kind": "Pod",
+              "name": null,
+              "query": null,
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "items": [
+                {
+                  "kind": "Pod",
+                  "name": "demo-web-abc",
+                  "namespace": "prod-capstone",
+                  "uid": "Pod-demo-web-abc",
+                  "labels": {
+                    "app": "demo-web"
+                  },
+                  "resource_version": "2",
+                  "container_status": [
+                    {
+                      "name": "web",
+                      "ready": true,
+                      "restart_count": 0
+                    }
+                  ],
+                  "evidence_id": "C2-0"
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            }
+          },
+          {
+            "step": {
+              "action": "current",
+              "kind": "EndpointSlice",
+              "name": null,
+              "query": "metadata.name=demo-web-xyz",
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "items": [
+                {
+                  "kind": "EndpointSlice",
+                  "name": "demo-web-xyz",
+                  "namespace": "prod-capstone",
+                  "uid": "EndpointSlice-demo-web-xyz",
+                  "labels": {
+                    "kubernetes.io/service-name": "demo-web"
+                  },
+                  "resource_version": "2",
+                  "endpoints": [],
+                  "evidence_id": "C3-0"
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            }
+          }
+        ],
+        "attempts": [
+          {
+            "action": "history",
+            "kind": "Service",
+            "name": "demo-web",
+            "query": null,
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "current",
+            "kind": "Service",
+            "name": "demo-web",
+            "query": null,
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "current",
+            "kind": "Pod",
+            "name": null,
+            "query": null,
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "current",
+            "kind": "EndpointSlice",
+            "name": null,
+            "query": "metadata.name=demo-web-xyz",
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "finish",
+            "kind": null,
+            "name": null,
+            "query": null,
+            "answer": null,
+            "citations": [
+              "H1",
+              "C1-0",
+              "C2-0",
+              "C3-0"
+            ],
+            "final": {
+              "assessment": "supported_mechanism",
+              "observed_impact": "Customer impact is unknown: no direct evidence of user-facing symptoms or traffic loss is available.",
+              "timeline": [
+                {
+                  "evidence_id": "H1",
+                  "observed_at": "2026-11-19T10:00:00+00:00",
+                  "observation": "Service demo-web selector changed from {\"app\": \"demo-web\"} to {\"app\": \"no-matching-pods\"}."
+                },
+                {
+                  "evidence_id": "C1-0",
+                  "observed_at": "2026-11-20T12:00:00+00:00",
+                  "observation": "Service demo-web currently has selector {\"app\": \"no-matching-pods\"}."
+                },
+                {
+                  "evidence_id": "C2-0",
+                  "observed_at": "2026-11-20T12:00:00+00:00",
+                  "observation": "Pod demo-web-abc exists with label {\"app\": \"demo-web\"} and is ready."
+                },
+                {
+                  "evidence_id": "C3-0",
+                  "observed_at": "2026-11-20T12:00:00+00:00",
+                  "observation": "EndpointSlice demo-web-xyz exists for Service demo-web but contains no endpoints."
+                }
+              ],
+              "observations": "The Service demo-web's selector was changed on 2026-11-19T10:00:00+00:00 from {\"app\": \"demo-web\"} to {\"app\": \"no-matching-pods\"}. The only Pod present has label {\"app\": \"demo-web\"}, so it no longer matches the Service selector. As a result, the EndpointSlice for demo-web contains no endpoints, despite the Pod being ready.",
+              "explanation": "The loss of endpoints is directly explained by the Service selector change: no Pods match the new selector, so no endpoints are registered. This is a supported mechanism for endpoint loss in Kubernetes.",
+              "alternatives": "No evidence suggests Pod failures, readiness issues, or EndpointSlice controller faults. A selector mismatch is the only supported explanation given the current and historical configuration.",
+              "missing_evidence": "No evidence of customer impact, application logs, or traffic data is available. It is unknown whether users were affected or if any requests failed.",
+              "next_check": "To confirm customer impact, inspect application logs, traffic metrics, or user reports for demo-web after the selector change.",
+              "mitigation_conditions": "To restore endpoints, revert the Service selector to match the Pod labels (e.g., {\"app\": \"demo-web\"}). Ensure this change is approved and safe for the application.",
+              "verification_and_stop": "After reverting, verify that EndpointSlices contain the expected endpoints and that application traffic is routed correctly. Stop if endpoints are restored and service is reachable; rollback if issues persist."
+            }
+          },
+          {
+            "action": "finish",
+            "kind": null,
+            "name": null,
+            "query": null,
+            "answer": null,
+            "citations": [
+              "H1",
+              "C1-0",
+              "C2-0",
+              "C3-0"
+            ],
+            "final": {
+              "assessment": "supported_mechanism",
+              "observed_impact": "Customer impact is unknown: there is no direct evidence of user-facing symptoms or traffic loss.",
+              "timeline": [
+                {
+                  "evidence_id": "H1",
+                  "observed_at": "2026-11-19T10:00:00+00:00",
+                  "observation": "Service demo-web selector changed from {\"app\": \"demo-web\"} to {\"app\": \"no-matching-pods\"}."
+                }
+              ],
+              "observations": "Currently, Service demo-web has selector {\"app\": \"no-matching-pods\"} (C1-0). The only Pod present has label {\"app\": \"demo-web\"} and is ready (C2-0), so it does not match the Service selector. The EndpointSlice for demo-web contains no endpoints (C3-0), which is consistent with the selector mismatch.",
+              "explanation": "The loss of endpoints is directly explained by the Service selector change: no Pods match the new selector, so no endpoints are registered. This is a supported mechanism for endpoint loss in Kubernetes.",
+              "alternatives": "No evidence suggests Pod failures, readiness issues, or EndpointSlice controller faults. Selector mismatch is the only supported explanation given the available evidence.",
+              "missing_evidence": "No evidence of customer impact, application logs, or traffic data is available. It is unknown whether users were affected or if any requests failed.",
+              "next_check": "To confirm customer impact, inspect application logs, traffic metrics, or user reports for demo-web after the selector change.",
+              "mitigation_conditions": "To restore endpoints, revert the Service selector to match the Pod labels (e.g., {\"app\": \"demo-web\"}). Ensure this change is approved and safe for the application.",
+              "verification_and_stop": "After reverting, verify that EndpointSlices contain the expected endpoints and that application traffic is routed correctly. Stop if endpoints are restored and service is reachable; rollback if issues persist."
+            }
+          }
+        ],
+        "instruction_version": "history-sre-v6",
+        "knowledge_enabled": false,
+        "data_origin": "synthetic_history_snapshot",
+        "as_of": "2026-11-20T12:00:00+00:00",
+        "system_prompt_sha256": "0d3fe8aebb175772feddf024164d9eea110bd2c311e6cc54b6c80b2cdc3b5729",
+        "verification_note": "Evidence is collected Kubernetes state. End-to-end connectivity and application behavior have not been tested.",
+        "answer": "**Assessment**\nsupported mechanism\n\n**Observed impact**\nCustomer impact is unknown: there is no direct evidence of user-facing symptoms or traffic loss.\n\n**Timeline**\n- Observed at 2026-11-19T10:00:00+00:00: Service demo-web selector changed from {\"app\": \"demo-web\"} to {\"app\": \"no-matching-pods\"}. [H1]\n\n**Observations**\nCurrently, Service demo-web has selector {\"app\": \"no-matching-pods\"} (C1-0). The only Pod present has label {\"app\": \"demo-web\"} and is ready (C2-0), so it does not match the Service selector. The EndpointSlice for demo-web contains no endpoints (C3-0), which is consistent with the selector mismatch.\n\n**Explanation**\nThe loss of endpoints is directly explained by the Service selector change: no Pods match the new selector, so no endpoints are registered. This is a supported mechanism for endpoint loss in Kubernetes.\n\n**Alternatives**\nNo evidence suggests Pod failures, readiness issues, or EndpointSlice controller faults. Selector mismatch is the only supported explanation given the available evidence.\n\n**Missing evidence**\nNo evidence of customer impact, application logs, or traffic data is available. It is unknown whether users were affected or if any requests failed.\n\n**Next check**\nTo confirm customer impact, inspect application logs, traffic metrics, or user reports for demo-web after the selector change.\n\n**Mitigation conditions**\nTo restore endpoints, revert the Service selector to match the Pod labels (e.g., {\"app\": \"demo-web\"}). Ensure this change is approved and safe for the application.\n\n**Verification and stop conditions**\nAfter reverting, verify that EndpointSlices contain the expected endpoints and that application traffic is routed correctly. Stop if endpoints are restored and service is reachable; rollback if issues persist.",
+        "structured": {
+          "assessment": "supported_mechanism",
+          "observed_impact": "Customer impact is unknown: there is no direct evidence of user-facing symptoms or traffic loss.",
+          "timeline": [
+            {
+              "evidence_id": "H1",
+              "observed_at": "2026-11-19T10:00:00+00:00",
+              "observation": "Service demo-web selector changed from {\"app\": \"demo-web\"} to {\"app\": \"no-matching-pods\"}."
+            }
+          ],
+          "observations": "Currently, Service demo-web has selector {\"app\": \"no-matching-pods\"} (C1-0). The only Pod present has label {\"app\": \"demo-web\"} and is ready (C2-0), so it does not match the Service selector. The EndpointSlice for demo-web contains no endpoints (C3-0), which is consistent with the selector mismatch.",
+          "explanation": "The loss of endpoints is directly explained by the Service selector change: no Pods match the new selector, so no endpoints are registered. This is a supported mechanism for endpoint loss in Kubernetes.",
+          "alternatives": "No evidence suggests Pod failures, readiness issues, or EndpointSlice controller faults. Selector mismatch is the only supported explanation given the available evidence.",
+          "missing_evidence": "No evidence of customer impact, application logs, or traffic data is available. It is unknown whether users were affected or if any requests failed.",
+          "next_check": "To confirm customer impact, inspect application logs, traffic metrics, or user reports for demo-web after the selector change.",
+          "mitigation_conditions": "To restore endpoints, revert the Service selector to match the Pod labels (e.g., {\"app\": \"demo-web\"}). Ensure this change is approved and safe for the application.",
+          "verification_and_stop": "After reverting, verify that EndpointSlices contain the expected endpoints and that application traffic is routed correctly. Stop if endpoints are restored and service is reachable; rollback if issues persist."
+        },
+        "citations": {
+          "C1-0": {
+            "kind": "Service",
+            "name": "demo-web",
+            "namespace": "prod-capstone",
+            "uid": "Service-demo-web",
+            "labels": {
+              "app": "demo-web"
+            },
+            "resource_version": "2",
+            "selector": {
+              "app": "no-matching-pods"
+            },
+            "selector_complete": true,
+            "evidence_id": "C1-0"
+          },
+          "C2-0": {
+            "kind": "Pod",
+            "name": "demo-web-abc",
+            "namespace": "prod-capstone",
+            "uid": "Pod-demo-web-abc",
+            "labels": {
+              "app": "demo-web"
+            },
+            "resource_version": "2",
+            "container_status": [
+              {
+                "name": "web",
+                "ready": true,
+                "restart_count": 0
+              }
+            ],
+            "evidence_id": "C2-0"
+          },
+          "C3-0": {
+            "kind": "EndpointSlice",
+            "name": "demo-web-xyz",
+            "namespace": "prod-capstone",
+            "uid": "EndpointSlice-demo-web-xyz",
+            "labels": {
+              "kubernetes.io/service-name": "demo-web"
+            },
+            "resource_version": "2",
+            "endpoints": [],
+            "evidence_id": "C3-0"
+          },
+          "H1": {
+            "id": "H1",
+            "kind": "Service",
+            "name": "demo-web",
+            "namespace": "prod-capstone",
+            "uid": "Service-demo-web",
+            "rv": "1",
+            "operation": "MODIFIED",
+            "observed_at": "2026-11-19T10:00:00+00:00",
+            "before": {
+              "kind": "Service",
+              "name": "demo-web",
+              "namespace": "prod-capstone",
+              "uid": "Service-demo-web",
+              "labels": {
+                "app": "demo-web"
+              },
+              "resource_version": "2",
+              "selector": {
+                "app": "demo-web"
+              },
+              "selector_complete": true
+            },
+            "after": {
+              "kind": "Service",
+              "name": "demo-web",
+              "namespace": "prod-capstone",
+              "uid": "Service-demo-web",
+              "labels": {
+                "app": "demo-web"
+              },
+              "resource_version": "2",
+              "selector": {
+                "app": "no-matching-pods"
+              },
+              "selector_complete": true
+            }
+          }
+        },
+        "status": "completed",
+        "calls": [
+          {
+            "prompt_sha256": "6ab2597af7916ff80ae625832a07f248e2dcdfc045cdb74db9dcd027f8cc2666",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.04901,
+            "input_tokens": 2364,
+            "output_tokens": 30,
+            "cost_usd": 0.004968,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBUqDx1TQO9Bz8WsvVsmts8V3Vy",
+            "duration_ms": 878.41
+          },
+          {
+            "prompt_sha256": "068c95c950a0057b9a2ac30d3122e2c32d2d1b8d5961d382464575d127f94825",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.051246,
+            "input_tokens": 2652,
+            "output_tokens": 30,
+            "cost_usd": 0.005544,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBUtETEUZmjfRn6DYbSdao7uAuD",
+            "duration_ms": 727.42
+          },
+          {
+            "prompt_sha256": "01d9f3a0e98810c3574f6f586a408c2717b36d8ee860b65fd145f09c08810b0c",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.052546,
+            "input_tokens": 2811,
+            "output_tokens": 29,
+            "cost_usd": 0.005854,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBVZhaIAadmzzRsquc0kjXGsz0e",
+            "duration_ms": 715.95
+          },
+          {
+            "prompt_sha256": "5be14312fb4faef374b41f98500cb6cf6858cebad01bb3401cef2a576bbbf4ef",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.053838,
+            "input_tokens": 2976,
+            "output_tokens": 36,
+            "cost_usd": 0.00624,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBWLYUAE4MVLZdydDfcMNIly7E1",
+            "duration_ms": 864.1
+          },
+          {
+            "prompt_sha256": "768fe0c26a9e28551c5b3aa6024ee2e115ced5c4368f231adce6af067fb01ca4",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.055158,
+            "input_tokens": 3137,
+            "output_tokens": 605,
+            "cost_usd": 0.011114,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBXEEPU26OPack2MePpFHllsOg0",
+            "duration_ms": 3349.26
+          },
+          {
+            "prompt_sha256": "3780d07c19e3331c9828c49a7a97ed447b41f0bdfc3542b0d8d5b2a55ee3c2e0",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.061074,
+            "input_tokens": 3815,
+            "output_tokens": 432,
+            "cost_usd": 0.011086,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBaHB7LPZnXihbEHf83eyynep1g",
+            "duration_ms": 2103.56
+          }
+        ]
+      },
+      "rag": {
+        "run_id": "d1ba5e05-41ee-4939-aa01-c49250ecc006",
+        "type": "cluster_history_chat",
+        "namespace": "prod-capstone",
+        "cluster_uid": "synthetic-history-only",
+        "days": 7,
+        "coverage": {
+          "cluster": "runbook-capstone-demo",
+          "cluster_uid": "synthetic-history-only",
+          "namespace": "prod-capstone",
+          "history_available_since": "2026-11-14T12:00:00+00:00",
+          "healthy": true,
+          "limits": "Synthetic snapshot; observation timestamps, no audit actors, application logs, allocation profiles or metrics. No infrastructure actions.",
+          "streams": [
+            {
+              "kind": "Pod",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Deployment",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "ReplicaSet",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Service",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "EndpointSlice",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Event",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            }
+          ],
+          "gaps": []
+        },
+        "question": "Why does demo-web have no endpoints? Compare the Service changes, current Pod labels and EndpointSlices this week. Is customer impact known?",
+        "trace": [
+          {
+            "step": {
+              "action": "history",
+              "kind": "Service",
+              "name": "demo-web",
+              "query": null,
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "records": [
+                {
+                  "id": "H1",
+                  "kind": "Service",
+                  "name": "demo-web",
+                  "namespace": "prod-capstone",
+                  "uid": "Service-demo-web",
+                  "rv": "1",
+                  "operation": "MODIFIED",
+                  "observed_at": "2026-11-19T10:00:00+00:00",
+                  "before": {
+                    "kind": "Service",
+                    "name": "demo-web",
+                    "namespace": "prod-capstone",
+                    "uid": "Service-demo-web",
+                    "labels": {
+                      "app": "demo-web"
+                    },
+                    "resource_version": "2",
+                    "selector": {
+                      "app": "demo-web"
+                    },
+                    "selector_complete": true
+                  },
+                  "after": {
+                    "kind": "Service",
+                    "name": "demo-web",
+                    "namespace": "prod-capstone",
+                    "uid": "Service-demo-web",
+                    "labels": {
+                      "app": "demo-web"
+                    },
+                    "resource_version": "2",
+                    "selector": {
+                      "app": "no-matching-pods"
+                    },
+                    "selector_complete": true
+                  }
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            }
+          },
+          {
+            "step": {
+              "action": "current",
+              "kind": "Service",
+              "name": "demo-web",
+              "query": null,
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "items": [
+                {
+                  "kind": "Service",
+                  "name": "demo-web",
+                  "namespace": "prod-capstone",
+                  "uid": "Service-demo-web",
+                  "labels": {
+                    "app": "demo-web"
+                  },
+                  "resource_version": "2",
+                  "selector": {
+                    "app": "no-matching-pods"
+                  },
+                  "selector_complete": true,
+                  "evidence_id": "C1-0"
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            }
+          },
+          {
+            "step": {
+              "action": "current",
+              "kind": "Pod",
+              "name": null,
+              "query": null,
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "items": [
+                {
+                  "kind": "Pod",
+                  "name": "demo-web-abc",
+                  "namespace": "prod-capstone",
+                  "uid": "Pod-demo-web-abc",
+                  "labels": {
+                    "app": "demo-web"
+                  },
+                  "resource_version": "2",
+                  "container_status": [
+                    {
+                      "name": "web",
+                      "ready": true,
+                      "restart_count": 0
+                    }
+                  ],
+                  "evidence_id": "C2-0"
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            }
+          },
+          {
+            "step": {
+              "action": "current",
+              "kind": "EndpointSlice",
+              "name": null,
+              "query": null,
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "items": [
+                {
+                  "kind": "EndpointSlice",
+                  "name": "demo-web-xyz",
+                  "namespace": "prod-capstone",
+                  "uid": "EndpointSlice-demo-web-xyz",
+                  "labels": {
+                    "kubernetes.io/service-name": "demo-web"
+                  },
+                  "resource_version": "2",
+                  "endpoints": [],
+                  "evidence_id": "C3-0"
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            }
+          },
+          {
+            "step": {
+              "action": "runbook",
+              "kind": "Service",
+              "name": null,
+              "query": "selector mismatch endpoint troubleshooting",
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": [
+              {
+                "id": "D-routing-generic",
+                "title": "Kubernetes general operating contract",
+                "url": "",
+                "text": "A Kubernetes Service selector must match Pod labels. Ready EndpointSlices support discovery but do not prove network connectivity, HTTP success or customer recovery. Compare selector history with Pod labels and EndpointSlices. A change needs review, matching Pods, resource version preconditions and separate traffic verification.",
+                "bm25": 1.91688975566403
+              }
+            ]
+          }
+        ],
+        "attempts": [
+          {
+            "action": "history",
+            "kind": "Service",
+            "name": "demo-web",
+            "query": null,
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "current",
+            "kind": "Service",
+            "name": "demo-web",
+            "query": null,
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "current",
+            "kind": "Pod",
+            "name": null,
+            "query": null,
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "current",
+            "kind": "EndpointSlice",
+            "name": null,
+            "query": null,
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "runbook",
+            "kind": "Service",
+            "name": null,
+            "query": "selector mismatch endpoint troubleshooting",
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "finish",
+            "kind": null,
+            "name": null,
+            "query": null,
+            "answer": null,
+            "citations": [
+              "H1",
+              "C1-0",
+              "C2-0",
+              "C3-0",
+              "D-routing-generic"
+            ],
+            "final": {
+              "assessment": "supported_mechanism",
+              "observed_impact": "No endpoints are present for Service demo-web; customer impact is unknown from available evidence.",
+              "timeline": [
+                {
+                  "evidence_id": "H1",
+                  "observed_at": "2026-11-19T10:00:00+00:00",
+                  "observation": "Service demo-web selector changed from {\"app\": \"demo-web\"} to {\"app\": \"no-matching-pods\"}."
+                },
+                {
+                  "evidence_id": "C1-0",
+                  "observed_at": "2026-11-20T12:00:00+00:00",
+                  "observation": "Service demo-web currently has selector {\"app\": \"no-matching-pods\"}."
+                },
+                {
+                  "evidence_id": "C2-0",
+                  "observed_at": "2026-11-20T12:00:00+00:00",
+                  "observation": "Pod demo-web-abc exists with label {\"app\": \"demo-web\"} and is ready."
+                },
+                {
+                  "evidence_id": "C3-0",
+                  "observed_at": "2026-11-20T12:00:00+00:00",
+                  "observation": "EndpointSlice demo-web-xyz exists for Service demo-web but contains no endpoints."
+                }
+              ],
+              "observations": "The Service demo-web's selector was changed on 2026-11-19T10:00:00+00:00 from matching the existing Pod label (\"app\": \"demo-web\") to a selector (\"app\": \"no-matching-pods\") that does not match any current Pod. The current Pod demo-web-abc is ready and labeled \"app\": \"demo-web\". The EndpointSlice for demo-web is empty, consistent with the selector mismatch. This matches the expected Kubernetes behavior that only Pods matching the Service selector are included as endpoints.",
+              "explanation": "The absence of endpoints for Service demo-web is due to a selector mismatch: the Service selector was changed to a value that does not match any existing Pod labels. This is a supported mechanism per Kubernetes operating contract.",
+              "alternatives": "No evidence suggests Pod unavailability, readiness issues, or EndpointSlice controller failure. No evidence of network or application-level issues is available. Customer impact (such as failed requests or user-visible outage) cannot be determined from the available evidence.",
+              "missing_evidence": "No application logs, traffic metrics, or user reports are available to confirm customer impact. No evidence of why the selector was changed or whether this was intentional.",
+              "next_check": "To confirm customer impact, inspect application logs, traffic metrics, or user reports for demo-web. To restore endpoints, revert the Service selector to match the Pod labels (\"app\": \"demo-web\") after reviewing intent and compatibility.",
+              "mitigation_conditions": "Before changing the Service selector, confirm that reverting to the previous selector is intended, safe, and compatible with current workloads. Review any recent changes or intended maintenance.",
+              "verification_and_stop": "After reverting the selector, verify that EndpointSlices populate with the expected endpoints and that application traffic is routed correctly. Stop if user-facing functionality is restored or if further investigation is required based on observed impact."
+            }
+          },
+          {
+            "action": "finish",
+            "kind": null,
+            "name": null,
+            "query": null,
+            "answer": null,
+            "citations": [
+              "H1",
+              "C1-0",
+              "C2-0",
+              "C3-0",
+              "D-routing-generic"
+            ],
+            "final": {
+              "assessment": "supported_mechanism",
+              "observed_impact": "No endpoints are present for Service demo-web; customer impact is unknown from available evidence.",
+              "timeline": [
+                {
+                  "evidence_id": "H1",
+                  "observed_at": "2026-11-19T10:00:00+00:00",
+                  "observation": "Service demo-web selector changed from {\"app\": \"demo-web\"} to {\"app\": \"no-matching-pods\"}."
+                }
+              ],
+              "observations": "Currently, Service demo-web has selector {\"app\": \"no-matching-pods\"}. Pod demo-web-abc exists, is ready, and has label {\"app\": \"demo-web\"}. EndpointSlice demo-web-xyz for Service demo-web contains no endpoints. This is consistent with a selector mismatch: the Service selector does not match any Pod labels, so no endpoints are created.",
+              "explanation": "The absence of endpoints for Service demo-web is due to a selector mismatch: the Service selector was changed to a value that does not match any existing Pod labels. This is expected Kubernetes behavior.",
+              "alternatives": "No evidence suggests Pod unavailability, readiness issues, or EndpointSlice controller failure. No evidence of network or application-level issues is available. Customer impact (such as failed requests or user-visible outage) cannot be determined from the available evidence.",
+              "missing_evidence": "No application logs, traffic metrics, or user reports are available to confirm customer impact. No evidence of why the selector was changed or whether this was intentional.",
+              "next_check": "To confirm customer impact, inspect application logs, traffic metrics, or user reports for demo-web. To restore endpoints, revert the Service selector to match the Pod labels (\"app\": \"demo-web\") after reviewing intent and compatibility.",
+              "mitigation_conditions": "Before changing the Service selector, confirm that reverting to the previous selector is intended, safe, and compatible with current workloads. Review any recent changes or intended maintenance.",
+              "verification_and_stop": "After reverting the selector, verify that EndpointSlices populate with the expected endpoints and that application traffic is routed correctly. Stop if user-facing functionality is restored or if further investigation is required based on observed impact."
+            }
+          }
+        ],
+        "instruction_version": "history-sre-v6",
+        "knowledge_enabled": true,
+        "data_origin": "synthetic_history_snapshot",
+        "as_of": "2026-11-20T12:00:00+00:00",
+        "system_prompt_sha256": "d911d6aae7822f0dbce44d6da994bc3be0684d666c2902e6b1b0102f10bb051c",
+        "verification_note": "Evidence is collected Kubernetes state. End-to-end connectivity and application behavior have not been tested.",
+        "answer": "**Assessment**\nsupported mechanism\n\n**Observed impact**\nNo endpoints are present for Service demo-web; customer impact is unknown from available evidence.\n\n**Timeline**\n- Observed at 2026-11-19T10:00:00+00:00: Service demo-web selector changed from {\"app\": \"demo-web\"} to {\"app\": \"no-matching-pods\"}. [H1]\n\n**Observations**\nCurrently, Service demo-web has selector {\"app\": \"no-matching-pods\"}. Pod demo-web-abc exists, is ready, and has label {\"app\": \"demo-web\"}. EndpointSlice demo-web-xyz for Service demo-web contains no endpoints. This is consistent with a selector mismatch: the Service selector does not match any Pod labels, so no endpoints are created.\n\n**Explanation**\nThe absence of endpoints for Service demo-web is due to a selector mismatch: the Service selector was changed to a value that does not match any existing Pod labels. This is expected Kubernetes behavior.\n\n**Alternatives**\nNo evidence suggests Pod unavailability, readiness issues, or EndpointSlice controller failure. No evidence of network or application-level issues is available. Customer impact (such as failed requests or user-visible outage) cannot be determined from the available evidence.\n\n**Missing evidence**\nNo application logs, traffic metrics, or user reports are available to confirm customer impact. No evidence of why the selector was changed or whether this was intentional.\n\n**Next check**\nTo confirm customer impact, inspect application logs, traffic metrics, or user reports for demo-web. To restore endpoints, revert the Service selector to match the Pod labels (\"app\": \"demo-web\") after reviewing intent and compatibility.\n\n**Mitigation conditions**\nBefore changing the Service selector, confirm that reverting to the previous selector is intended, safe, and compatible with current workloads. Review any recent changes or intended maintenance.\n\n**Verification and stop conditions**\nAfter reverting the selector, verify that EndpointSlices populate with the expected endpoints and that application traffic is routed correctly. Stop if user-facing functionality is restored or if further investigation is required based on observed impact.",
+        "structured": {
+          "assessment": "supported_mechanism",
+          "observed_impact": "No endpoints are present for Service demo-web; customer impact is unknown from available evidence.",
+          "timeline": [
+            {
+              "evidence_id": "H1",
+              "observed_at": "2026-11-19T10:00:00+00:00",
+              "observation": "Service demo-web selector changed from {\"app\": \"demo-web\"} to {\"app\": \"no-matching-pods\"}."
+            }
+          ],
+          "observations": "Currently, Service demo-web has selector {\"app\": \"no-matching-pods\"}. Pod demo-web-abc exists, is ready, and has label {\"app\": \"demo-web\"}. EndpointSlice demo-web-xyz for Service demo-web contains no endpoints. This is consistent with a selector mismatch: the Service selector does not match any Pod labels, so no endpoints are created.",
+          "explanation": "The absence of endpoints for Service demo-web is due to a selector mismatch: the Service selector was changed to a value that does not match any existing Pod labels. This is expected Kubernetes behavior.",
+          "alternatives": "No evidence suggests Pod unavailability, readiness issues, or EndpointSlice controller failure. No evidence of network or application-level issues is available. Customer impact (such as failed requests or user-visible outage) cannot be determined from the available evidence.",
+          "missing_evidence": "No application logs, traffic metrics, or user reports are available to confirm customer impact. No evidence of why the selector was changed or whether this was intentional.",
+          "next_check": "To confirm customer impact, inspect application logs, traffic metrics, or user reports for demo-web. To restore endpoints, revert the Service selector to match the Pod labels (\"app\": \"demo-web\") after reviewing intent and compatibility.",
+          "mitigation_conditions": "Before changing the Service selector, confirm that reverting to the previous selector is intended, safe, and compatible with current workloads. Review any recent changes or intended maintenance.",
+          "verification_and_stop": "After reverting the selector, verify that EndpointSlices populate with the expected endpoints and that application traffic is routed correctly. Stop if user-facing functionality is restored or if further investigation is required based on observed impact."
+        },
+        "citations": {
+          "C1-0": {
+            "kind": "Service",
+            "name": "demo-web",
+            "namespace": "prod-capstone",
+            "uid": "Service-demo-web",
+            "labels": {
+              "app": "demo-web"
+            },
+            "resource_version": "2",
+            "selector": {
+              "app": "no-matching-pods"
+            },
+            "selector_complete": true,
+            "evidence_id": "C1-0"
+          },
+          "C2-0": {
+            "kind": "Pod",
+            "name": "demo-web-abc",
+            "namespace": "prod-capstone",
+            "uid": "Pod-demo-web-abc",
+            "labels": {
+              "app": "demo-web"
+            },
+            "resource_version": "2",
+            "container_status": [
+              {
+                "name": "web",
+                "ready": true,
+                "restart_count": 0
+              }
+            ],
+            "evidence_id": "C2-0"
+          },
+          "C3-0": {
+            "kind": "EndpointSlice",
+            "name": "demo-web-xyz",
+            "namespace": "prod-capstone",
+            "uid": "EndpointSlice-demo-web-xyz",
+            "labels": {
+              "kubernetes.io/service-name": "demo-web"
+            },
+            "resource_version": "2",
+            "endpoints": [],
+            "evidence_id": "C3-0"
+          },
+          "D-routing-generic": {
+            "id": "D-routing-generic",
+            "title": "Kubernetes general operating contract",
+            "url": "",
+            "text": "A Kubernetes Service selector must match Pod labels. Ready EndpointSlices support discovery but do not prove network connectivity, HTTP success or customer recovery. Compare selector history with Pod labels and EndpointSlices. A change needs review, matching Pods, resource version preconditions and separate traffic verification.",
+            "bm25": 1.91688975566403
+          },
+          "H1": {
+            "id": "H1",
+            "kind": "Service",
+            "name": "demo-web",
+            "namespace": "prod-capstone",
+            "uid": "Service-demo-web",
+            "rv": "1",
+            "operation": "MODIFIED",
+            "observed_at": "2026-11-19T10:00:00+00:00",
+            "before": {
+              "kind": "Service",
+              "name": "demo-web",
+              "namespace": "prod-capstone",
+              "uid": "Service-demo-web",
+              "labels": {
+                "app": "demo-web"
+              },
+              "resource_version": "2",
+              "selector": {
+                "app": "demo-web"
+              },
+              "selector_complete": true
+            },
+            "after": {
+              "kind": "Service",
+              "name": "demo-web",
+              "namespace": "prod-capstone",
+              "uid": "Service-demo-web",
+              "labels": {
+                "app": "demo-web"
+              },
+              "resource_version": "2",
+              "selector": {
+                "app": "no-matching-pods"
+              },
+              "selector_complete": true
+            }
+          }
+        },
+        "status": "completed",
+        "calls": [
+          {
+            "prompt_sha256": "becb8fd5792f247f16edc9211febacf8be676f6b79ac47bf219f669dfd340a39",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.048656,
+            "input_tokens": 2336,
+            "output_tokens": 30,
+            "cost_usd": 0.004912,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBc9wlUR8cnjQluuXFyYyeO30pj",
+            "duration_ms": 829.77
+          },
+          {
+            "prompt_sha256": "a3ad1013dc06216afbef9afd43a049b505f625a0f5ee0f3e344f9c2935876773",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.050892,
+            "input_tokens": 2624,
+            "output_tokens": 30,
+            "cost_usd": 0.005488,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBdCre0K7uVNxNi188c7j0oGbW7",
+            "duration_ms": 721.14
+          },
+          {
+            "prompt_sha256": "9ceb44da054606b93b4c2aafbe6592a06222b973095c8ed0f5bb9a87ac0e4dab",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.052192,
+            "input_tokens": 2783,
+            "output_tokens": 29,
+            "cost_usd": 0.005798,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBddcFoSos2rlGMFHTjl9MqqbHZ",
+            "duration_ms": 622.17
+          },
+          {
+            "prompt_sha256": "11c48927c41616d7b20fea00c16ee60b025fd08295e83cfe98cd883674acc9cf",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.053484,
+            "input_tokens": 2948,
+            "output_tokens": 30,
+            "cost_usd": 0.006136,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBe3L2pEdn9wmhAEFXsIPGalzka",
+            "duration_ms": 675.39
+          },
+          {
+            "prompt_sha256": "68e656f508d9e7cff939da8dcc129755d82fd2148552c8f3029de9b8688357a8",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.054752,
+            "input_tokens": 3103,
+            "output_tokens": 33,
+            "cost_usd": 0.00647,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBfjVzsHjgVRWIZFwwl8BVh92As",
+            "duration_ms": 621.82
+          },
+          {
+            "prompt_sha256": "6a7c5bf66e0f047588c66b1b25522606e0ad44738f8769368b0278146048248a",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.056408,
+            "input_tokens": 3268,
+            "output_tokens": 679,
+            "cost_usd": 0.011968,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBg1fWE8a7mKDiqfy4V6S88NoCI",
+            "duration_ms": 4195.91
+          },
+          {
+            "prompt_sha256": "1fb60bfd23ce69e62e08e3b24e98982284ffddfd479680e1484f9155b52888ef",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.063316,
+            "input_tokens": 4020,
+            "output_tokens": 482,
+            "cost_usd": 0.011896,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBkF8gMVd4ixGUsUcuYpcso1gLz",
+            "duration_ms": 2137.6
+          }
+        ]
+      }
+    },
+    "missing-history": {
+      "evidence": {
+        "run_id": "7deb3de6-f5f0-4007-8b31-eed1f604b2d6",
+        "type": "cluster_history_chat",
+        "namespace": "prod-capstone",
+        "cluster_uid": "synthetic-history-only",
+        "days": 30,
+        "coverage": {
+          "cluster": "runbook-capstone-demo",
+          "cluster_uid": "synthetic-history-only",
+          "namespace": "prod-capstone",
+          "history_available_since": "2026-11-18T12:00:00+00:00",
+          "healthy": true,
+          "limits": "Synthetic snapshot; observation timestamps, no audit actors, application logs, allocation profiles or metrics. No infrastructure actions.",
+          "streams": [
+            {
+              "kind": "Pod",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Deployment",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "ReplicaSet",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Service",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "EndpointSlice",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Event",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            }
+          ],
+          "gaps": []
+        },
+        "question": "What deployment caused the payments-api outage on November 5? Check the last month and tell me whether rolling back now is justified.",
+        "trace": [
+          {
+            "step": {
+              "action": "history",
+              "kind": "Deployment",
+              "name": "payments-api",
+              "query": null,
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "records": [
+                {
+                  "id": "H1",
+                  "kind": "Deployment",
+                  "name": "payments-api",
+                  "namespace": "prod-capstone",
+                  "uid": "Deployment-payments-api",
+                  "rv": "1",
+                  "operation": "BASELINE",
+                  "observed_at": "2026-11-18T12:00:00+00:00",
+                  "before": null,
+                  "after": {
+                    "kind": "Deployment",
+                    "name": "payments-api",
+                    "namespace": "prod-capstone",
+                    "uid": "Deployment-payments-api",
+                    "labels": {
+                      "app": "payments-api"
+                    },
+                    "resource_version": "2",
+                    "containers": [
+                      {
+                        "name": "api",
+                        "image": "fictional/payments-api:v3"
+                      }
+                    ],
+                    "replicas": 2,
+                    "ready_replicas": 2
+                  }
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            },
+            "reason": "Resolve requested summary citation against full records"
+          }
+        ],
+        "attempts": [
+          {
+            "action": "finish",
+            "kind": null,
+            "name": null,
+            "query": null,
+            "answer": "There is insufficient evidence to determine the cause of a payments-api outage on November 5 or to justify a rollback at this time. The available history for the prod-capstone namespace only begins at observed at 2026-11-18T12:00:00+00:00, which is after the date in question. No deployment or configuration changes from November 5 are present in the evidence, and there is no information about outages, pod health, or customer impact from that period. As a result, it is not possible to identify a deployment that caused an outage on November 5 or to assess whether a rollback would be safe or effective.",
+            "citations": [
+              "COVERAGE",
+              "H1"
+            ],
+            "final": {
+              "assessment": "insufficient_evidence",
+              "observed_impact": "Unknown; no evidence of outage or customer impact from November 5 is available.",
+              "timeline": [
+                {
+                  "evidence_id": "COVERAGE",
+                  "observed_at": "2026-11-20T12:00:00+00:00",
+                  "observation": "History coverage for prod-capstone namespace begins at 2026-11-18T12:00:00+00:00; no earlier records available."
+                },
+                {
+                  "evidence_id": "H1",
+                  "observed_at": "2026-11-18T12:00:00+00:00",
+                  "observation": "Deployment payments-api first observed (baseline) at this time; no prior deployment or changes recorded."
+                }
+              ],
+              "observations": "No deployment or configuration changes from November 5 are present in the available history. The only observed deployment record is a baseline for payments-api on November 18. No pod, service, or event history from November 5 is available.",
+              "explanation": "The absence of history before November 18 means there is no evidence of any deployment or outage on November 5. Therefore, no causal link can be established between a deployment and an outage on that date.",
+              "alternatives": "It is possible that an outage occurred on November 5, but without historical records, this cannot be confirmed or investigated further. Other causes (e.g., infrastructure, application bugs) cannot be excluded.",
+              "missing_evidence": "Deployment, pod, service, and event history from November 5, as well as any logs or metrics from that period, are missing. Customer impact evidence is also unavailable.",
+              "next_check": "If possible, obtain historical records (deployment, pod, event, or monitoring data) from November 5 to investigate the incident.",
+              "mitigation_conditions": "Rollback cannot be justified without evidence of a problematic deployment or confirmation that a rollback would address the issue.",
+              "verification_and_stop": "If a rollback is considered, verify compatibility and safety using version and configuration guidance before proceeding. Stop if evidence of the root cause or safe rollback conditions cannot be established."
+            }
+          },
+          {
+            "action": "finish",
+            "kind": null,
+            "name": null,
+            "query": null,
+            "answer": "After reviewing the full record for the cited deployment, there is still insufficient evidence to determine the cause of a payments-api outage on November 5 or to justify a rollback now. The only available deployment record is a baseline observation of payments-api on November 18, running image fictional/payments-api:v3 with 2 ready replicas. There are no records of any deployment, rollout, or configuration change from November 5 or earlier in the available evidence. No pod, service, or event history from the time of the alleged outage is present. Therefore, it is not possible to identify a deployment that caused an outage on November 5 or to assess whether a rollback would be safe or effective.",
+            "citations": [
+              "H1"
+            ],
+            "final": {
+              "assessment": "insufficient_evidence",
+              "observed_impact": "Unknown; no evidence of outage or customer impact from November 5 is available.",
+              "timeline": [
+                {
+                  "evidence_id": "H1",
+                  "observed_at": "2026-11-18T12:00:00+00:00",
+                  "observation": "Deployment payments-api first observed (baseline) at this time, running image fictional/payments-api:v3 with 2 ready replicas."
+                }
+              ],
+              "observations": "The only available deployment record is a baseline for payments-api on November 18, running image fictional/payments-api:v3. No deployment, pod, service, or event history from November 5 is present.",
+              "explanation": "There is no evidence of any deployment or configuration change on or before November 5. The baseline on November 18 does not provide information about prior versions or incidents.",
+              "alternatives": "An outage may have occurred on November 5, but without historical records, this cannot be confirmed or investigated further. Other causes (e.g., infrastructure, application bugs) cannot be excluded.",
+              "missing_evidence": "Deployment, pod, service, and event history from November 5, as well as any logs or metrics from that period, are missing. Customer impact evidence is also unavailable.",
+              "next_check": "If possible, obtain historical records (deployment, pod, event, or monitoring data) from November 5 to investigate the incident.",
+              "mitigation_conditions": "Rollback cannot be justified without evidence of a problematic deployment or confirmation that a rollback would address the issue.",
+              "verification_and_stop": "If a rollback is considered, verify compatibility and safety using version and configuration guidance before proceeding. Stop if evidence of the root cause or safe rollback conditions cannot be established."
+            }
+          }
+        ],
+        "instruction_version": "history-sre-v6",
+        "knowledge_enabled": false,
+        "data_origin": "synthetic_history_snapshot",
+        "as_of": "2026-11-20T12:00:00+00:00",
+        "system_prompt_sha256": "bd5d6fb47bfd64aa0e647c427478615000c929dfd447556a0261be9a50b4babc",
+        "verification_note": "Evidence is collected Kubernetes state. End-to-end connectivity and application behavior have not been tested.",
+        "answer": "**Assessment**\ninsufficient evidence\n\n**Observed impact**\nUnknown; no evidence of outage or customer impact from November 5 is available.\n\n**Timeline**\n- Observed at 2026-11-18T12:00:00+00:00: Deployment payments-api first observed (baseline) at this time, running image fictional/payments-api:v3 with 2 ready replicas. [H1]\n\n**Observations**\nThe only available deployment record is a baseline for payments-api on November 18, running image fictional/payments-api:v3. No deployment, pod, service, or event history from November 5 is present.\n\n**Explanation**\nThere is no evidence of any deployment or configuration change on or before November 5. The baseline on November 18 does not provide information about prior versions or incidents.\n\n**Alternatives**\nAn outage may have occurred on November 5, but without historical records, this cannot be confirmed or investigated further. Other causes (e.g., infrastructure, application bugs) cannot be excluded.\n\n**Missing evidence**\nDeployment, pod, service, and event history from November 5, as well as any logs or metrics from that period, are missing. Customer impact evidence is also unavailable.\n\n**Next check**\nIf possible, obtain historical records (deployment, pod, event, or monitoring data) from November 5 to investigate the incident.\n\n**Mitigation conditions**\nRollback cannot be justified without evidence of a problematic deployment or confirmation that a rollback would address the issue.\n\n**Verification and stop conditions**\nIf a rollback is considered, verify compatibility and safety using version and configuration guidance before proceeding. Stop if evidence of the root cause or safe rollback conditions cannot be established.",
+        "structured": {
+          "assessment": "insufficient_evidence",
+          "observed_impact": "Unknown; no evidence of outage or customer impact from November 5 is available.",
+          "timeline": [
+            {
+              "evidence_id": "H1",
+              "observed_at": "2026-11-18T12:00:00+00:00",
+              "observation": "Deployment payments-api first observed (baseline) at this time, running image fictional/payments-api:v3 with 2 ready replicas."
+            }
+          ],
+          "observations": "The only available deployment record is a baseline for payments-api on November 18, running image fictional/payments-api:v3. No deployment, pod, service, or event history from November 5 is present.",
+          "explanation": "There is no evidence of any deployment or configuration change on or before November 5. The baseline on November 18 does not provide information about prior versions or incidents.",
+          "alternatives": "An outage may have occurred on November 5, but without historical records, this cannot be confirmed or investigated further. Other causes (e.g., infrastructure, application bugs) cannot be excluded.",
+          "missing_evidence": "Deployment, pod, service, and event history from November 5, as well as any logs or metrics from that period, are missing. Customer impact evidence is also unavailable.",
+          "next_check": "If possible, obtain historical records (deployment, pod, event, or monitoring data) from November 5 to investigate the incident.",
+          "mitigation_conditions": "Rollback cannot be justified without evidence of a problematic deployment or confirmation that a rollback would address the issue.",
+          "verification_and_stop": "If a rollback is considered, verify compatibility and safety using version and configuration guidance before proceeding. Stop if evidence of the root cause or safe rollback conditions cannot be established."
+        },
+        "citations": {
+          "H1": {
+            "id": "H1",
+            "kind": "Deployment",
+            "name": "payments-api",
+            "namespace": "prod-capstone",
+            "uid": "Deployment-payments-api",
+            "rv": "1",
+            "operation": "BASELINE",
+            "observed_at": "2026-11-18T12:00:00+00:00",
+            "before": null,
+            "after": {
+              "kind": "Deployment",
+              "name": "payments-api",
+              "namespace": "prod-capstone",
+              "uid": "Deployment-payments-api",
+              "labels": {
+                "app": "payments-api"
+              },
+              "resource_version": "2",
+              "containers": [
+                {
+                  "name": "api",
+                  "image": "fictional/payments-api:v3"
+                }
+              ],
+              "replicas": 2,
+              "ready_replicas": 2
+            }
+          }
+        },
+        "status": "completed",
+        "calls": [
+          {
+            "prompt_sha256": "174dee1186555dd811e94a8d1961d4cd7f8d55591fd0d7fa584e2cc53a892a61",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.047864,
+            "input_tokens": 2244,
+            "output_tokens": 578,
+            "cost_usd": 0.009112,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBmOIz1f1Br9dXwCNzXGGm9ULT2",
+            "duration_ms": 3820.04
+          },
+          {
+            "prompt_sha256": "2befbdb3b207aa0e5131593215dc2c7fb6c9de142606551924486d7b2b762d92",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.055032,
+            "input_tokens": 3041,
+            "output_tokens": 508,
+            "cost_usd": 0.010146,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBqI81vj79gqvPnWIMJz8KnpFZV",
+            "duration_ms": 2395.62
+          }
+        ]
+      },
+      "rag": {
+        "run_id": "5eca9e4e-e767-434b-a001-fa206dd16d3f",
+        "type": "cluster_history_chat",
+        "namespace": "prod-capstone",
+        "cluster_uid": "synthetic-history-only",
+        "days": 30,
+        "coverage": {
+          "cluster": "runbook-capstone-demo",
+          "cluster_uid": "synthetic-history-only",
+          "namespace": "prod-capstone",
+          "history_available_since": "2026-11-18T12:00:00+00:00",
+          "healthy": true,
+          "limits": "Synthetic snapshot; observation timestamps, no audit actors, application logs, allocation profiles or metrics. No infrastructure actions.",
+          "streams": [
+            {
+              "kind": "Pod",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Deployment",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "ReplicaSet",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Service",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "EndpointSlice",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            },
+            {
+              "kind": "Event",
+              "heartbeat": "2026-11-20T12:00:00+00:00",
+              "error": null
+            }
+          ],
+          "gaps": []
+        },
+        "question": "What deployment caused the payments-api outage on November 5? Check the last month and tell me whether rolling back now is justified.",
+        "trace": [
+          {
+            "step": {
+              "action": "history",
+              "kind": "Deployment",
+              "name": "payments-api",
+              "query": null,
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": {
+              "records": [
+                {
+                  "id": "H1",
+                  "kind": "Deployment",
+                  "name": "payments-api",
+                  "namespace": "prod-capstone",
+                  "uid": "Deployment-payments-api",
+                  "rv": "1",
+                  "operation": "BASELINE",
+                  "observed_at": "2026-11-18T12:00:00+00:00",
+                  "before": null,
+                  "after": {
+                    "kind": "Deployment",
+                    "name": "payments-api",
+                    "namespace": "prod-capstone",
+                    "uid": "Deployment-payments-api",
+                    "labels": {
+                      "app": "payments-api"
+                    },
+                    "resource_version": "2",
+                    "containers": [
+                      {
+                        "name": "api",
+                        "image": "fictional/payments-api:v3"
+                      }
+                    ],
+                    "replicas": 2,
+                    "ready_replicas": 2
+                  }
+                }
+              ],
+              "total": 1,
+              "truncated": false
+            }
+          },
+          {
+            "step": {
+              "action": "runbook",
+              "kind": "Deployment",
+              "name": "payments-api",
+              "query": "rollback justification, incident investigation, history gaps",
+              "answer": null,
+              "citations": [],
+              "final": null
+            },
+            "result": [
+              {
+                "id": "D-baseline-generic",
+                "title": "Kubernetes general operating contract",
+                "url": "",
+                "text": "BASELINE is first observed resource state, not its deployment date. Missing pre-collection history cannot establish when or why an outage occurred. A currently ready Deployment does not establish past or present customer impact; obtain retained audit/release records and incident-time telemetry.",
+                "bm25": 0.9022967349338505
+              },
+              {
+                "id": "D-routing-generic",
+                "title": "Kubernetes general operating contract",
+                "url": "",
+                "text": "A Kubernetes Service selector must match Pod labels. Ready EndpointSlices support discovery but do not prove network connectivity, HTTP success or customer recovery. Compare selector history with Pod labels and EndpointSlices. A change needs review, matching Pods, resource version preconditions and separate traffic verification.",
+                "bm25": 0.17705711584940317
+              }
+            ]
+          }
+        ],
+        "attempts": [
+          {
+            "action": "history",
+            "kind": "Deployment",
+            "name": "payments-api",
+            "query": null,
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "finish",
+            "kind": null,
+            "name": null,
+            "query": null,
+            "answer": "There is insufficient evidence to determine what deployment caused the payments-api outage on November 5 or whether a rollback is justified. The available history only covers from November 18 onward, and the only observed deployment of payments-api is a baseline on November 18 with image v3. There is no evidence of any deployment or configuration change around November 5, nor any indication of an outage or recovery event within the available data. The incident window predates history coverage.",
+            "citations": [
+              "H1",
+              "COVERAGE"
+            ],
+            "final": {
+              "assessment": "insufficient_evidence",
+              "observed_impact": "Unknown; no evidence of outage or user impact within available history.",
+              "timeline": [
+                {
+                  "evidence_id": "COVERAGE",
+                  "observed_at": "2026-11-18T12:00:00+00:00",
+                  "observation": "History coverage begins; no prior deployment or event data available."
+                },
+                {
+                  "evidence_id": "H1",
+                  "observed_at": "2026-11-18T12:00:00+00:00",
+                  "observation": "Baseline observation of payments-api Deployment with image v3 and 2 ready replicas."
+                }
+              ],
+              "observations": "Only a single baseline deployment of payments-api (image v3) is observed on November 18. No deployment or event history is available for November 5 or earlier in the month. No evidence of an outage or recovery is present in the available data.",
+              "explanation": "The requested incident (November 5) is outside the available history window. No deployment or configuration changes are observed near the incident date, so no cause or justification for rollback can be established.",
+              "alternatives": "A deployment or configuration change may have occurred before November 18, but this cannot be confirmed without earlier history. The outage may have been caused by factors not visible in the available data.",
+              "missing_evidence": "Deployment, event, and pod history for payments-api prior to November 18, 2026. Application logs, user reports, and runtime metrics for the incident window.",
+              "next_check": "If possible, obtain deployment and event history covering November 5, or application logs from the incident window.",
+              "mitigation_conditions": "Rollback is not justified based on current evidence. Any rollback should be considered only if additional evidence links a deployment to the outage and confirms compatibility.",
+              "verification_and_stop": "If a rollback is proposed, verify the target version's compatibility and monitor application health and user impact after rollback. Stop if the original issue is not resolved or new issues arise."
+            }
+          },
+          {
+            "action": "runbook",
+            "kind": "Deployment",
+            "name": "payments-api",
+            "query": "rollback justification, incident investigation, history gaps",
+            "answer": null,
+            "citations": [],
+            "final": null
+          },
+          {
+            "action": "finish",
+            "kind": null,
+            "name": null,
+            "query": null,
+            "answer": "Operational guidance confirms that missing pre-collection history prevents establishing the cause or timing of an outage. The current state of the payments-api Deployment (ready, image v3) does not prove past or present customer impact. No additional guidance resolves the uncertainty about the November 5 incident or justifies a rollback. Retained audit, release, or telemetry records from the incident window would be required for a conclusive investigation.",
+            "citations": [
+              "H1",
+              "COVERAGE",
+              "D-baseline-generic"
+            ],
+            "final": {
+              "assessment": "insufficient_evidence",
+              "observed_impact": "Unknown; no evidence of outage or user impact within available history.",
+              "timeline": [
+                {
+                  "evidence_id": "COVERAGE",
+                  "observed_at": "2026-11-18T12:00:00+00:00",
+                  "observation": "History coverage begins; no prior deployment or event data available."
+                },
+                {
+                  "evidence_id": "H1",
+                  "observed_at": "2026-11-18T12:00:00+00:00",
+                  "observation": "Baseline observation of payments-api Deployment with image v3 and 2 ready replicas."
+                }
+              ],
+              "observations": "Only a single baseline deployment of payments-api (image v3) is observed on November 18. No deployment or event history is available for November 5 or earlier in the month. No evidence of an outage or recovery is present in the available data. Operational guidance confirms that missing history prevents root cause analysis or rollback justification.",
+              "explanation": "The requested incident (November 5) is outside the available history window. No deployment or configuration changes are observed near the incident date, so no cause or justification for rollback can be established. Operational guidance confirms that the absence of history prevents a conclusive investigation.",
+              "alternatives": "A deployment or configuration change may have occurred before November 18, but this cannot be confirmed without earlier history. The outage may have been caused by factors not visible in the available data.",
+              "missing_evidence": "Deployment, event, and pod history for payments-api prior to November 18, 2026. Application logs, user reports, and runtime metrics for the incident window.",
+              "next_check": "If possible, obtain deployment and event history covering November 5, or application logs from the incident window.",
+              "mitigation_conditions": "Rollback is not justified based on current evidence. Any rollback should be considered only if additional evidence links a deployment to the outage and confirms compatibility.",
+              "verification_and_stop": "If a rollback is proposed, verify the target version's compatibility and monitor application health and user impact after rollback. Stop if the original issue is not resolved or new issues arise."
+            }
+          },
+          {
+            "action": "finish",
+            "kind": null,
+            "name": null,
+            "query": null,
+            "answer": "Operational guidance confirms that missing pre-collection history prevents establishing the cause or timing of an outage. The current state of the payments-api Deployment (ready, image v3) does not prove past or present customer impact. No additional guidance resolves the uncertainty about the November 5 incident or justifies a rollback. Retained audit, release, or telemetry records from the incident window would be required for a conclusive investigation.",
+            "citations": [
+              "H1",
+              "COVERAGE",
+              "D-baseline-generic"
+            ],
+            "final": {
+              "assessment": "insufficient_evidence",
+              "observed_impact": "Unknown; no evidence of outage or user impact within available history.",
+              "timeline": [
+                {
+                  "evidence_id": "H1",
+                  "observed_at": "2026-11-18T12:00:00+00:00",
+                  "observation": "Baseline observation of payments-api Deployment with image v3 and 2 ready replicas."
+                }
+              ],
+              "observations": "History coverage begins only on November 18, 2026; no prior deployment or event data is available. Only a single baseline deployment of payments-api (image v3) is observed, with 2 ready replicas. Operational guidance confirms that missing history prevents root cause analysis or rollback justification. The current state does not establish past or present customer impact.",
+              "explanation": "The requested incident (November 5) is outside the available history window. No deployment or configuration changes are observed near the incident date, so no cause or justification for rollback can be established. Operational guidance confirms that the absence of history prevents a conclusive investigation.",
+              "alternatives": "A deployment or configuration change may have occurred before November 18, but this cannot be confirmed without earlier history. The outage may have been caused by factors not visible in the available data.",
+              "missing_evidence": "Deployment, event, and pod history for payments-api prior to November 18, 2026. Application logs, user reports, and runtime metrics for the incident window.",
+              "next_check": "If possible, obtain deployment and event history covering November 5, or application logs from the incident window.",
+              "mitigation_conditions": "Rollback is not justified based on current evidence. Any rollback should be considered only if additional evidence links a deployment to the outage and confirms compatibility.",
+              "verification_and_stop": "If a rollback is proposed, verify the target version's compatibility and monitor application health and user impact after rollback. Stop if the original issue is not resolved or new issues arise."
+            }
+          }
+        ],
+        "instruction_version": "history-sre-v6",
+        "knowledge_enabled": true,
+        "data_origin": "synthetic_history_snapshot",
+        "as_of": "2026-11-20T12:00:00+00:00",
+        "system_prompt_sha256": "84ceead96d37d6ea4c715de040dbde221f860b4cdfdf9f081818cbf3ad1e1778",
+        "verification_note": "Evidence is collected Kubernetes state. End-to-end connectivity and application behavior have not been tested.",
+        "answer": "**Assessment**\ninsufficient evidence\n\n**Observed impact**\nUnknown; no evidence of outage or user impact within available history.\n\n**Timeline**\n- Observed at 2026-11-18T12:00:00+00:00: Baseline observation of payments-api Deployment with image v3 and 2 ready replicas. [H1]\n\n**Observations**\nHistory coverage begins only on November 18, 2026; no prior deployment or event data is available. Only a single baseline deployment of payments-api (image v3) is observed, with 2 ready replicas. Operational guidance confirms that missing history prevents root cause analysis or rollback justification. The current state does not establish past or present customer impact.\n\n**Explanation**\nThe requested incident (November 5) is outside the available history window. No deployment or configuration changes are observed near the incident date, so no cause or justification for rollback can be established. Operational guidance confirms that the absence of history prevents a conclusive investigation.\n\n**Alternatives**\nA deployment or configuration change may have occurred before November 18, but this cannot be confirmed without earlier history. The outage may have been caused by factors not visible in the available data.\n\n**Missing evidence**\nDeployment, event, and pod history for payments-api prior to November 18, 2026. Application logs, user reports, and runtime metrics for the incident window.\n\n**Next check**\nIf possible, obtain deployment and event history covering November 5, or application logs from the incident window.\n\n**Mitigation conditions**\nRollback is not justified based on current evidence. Any rollback should be considered only if additional evidence links a deployment to the outage and confirms compatibility.\n\n**Verification and stop conditions**\nIf a rollback is proposed, verify the target version's compatibility and monitor application health and user impact after rollback. Stop if the original issue is not resolved or new issues arise.",
+        "structured": {
+          "assessment": "insufficient_evidence",
+          "observed_impact": "Unknown; no evidence of outage or user impact within available history.",
+          "timeline": [
+            {
+              "evidence_id": "H1",
+              "observed_at": "2026-11-18T12:00:00+00:00",
+              "observation": "Baseline observation of payments-api Deployment with image v3 and 2 ready replicas."
+            }
+          ],
+          "observations": "History coverage begins only on November 18, 2026; no prior deployment or event data is available. Only a single baseline deployment of payments-api (image v3) is observed, with 2 ready replicas. Operational guidance confirms that missing history prevents root cause analysis or rollback justification. The current state does not establish past or present customer impact.",
+          "explanation": "The requested incident (November 5) is outside the available history window. No deployment or configuration changes are observed near the incident date, so no cause or justification for rollback can be established. Operational guidance confirms that the absence of history prevents a conclusive investigation.",
+          "alternatives": "A deployment or configuration change may have occurred before November 18, but this cannot be confirmed without earlier history. The outage may have been caused by factors not visible in the available data.",
+          "missing_evidence": "Deployment, event, and pod history for payments-api prior to November 18, 2026. Application logs, user reports, and runtime metrics for the incident window.",
+          "next_check": "If possible, obtain deployment and event history covering November 5, or application logs from the incident window.",
+          "mitigation_conditions": "Rollback is not justified based on current evidence. Any rollback should be considered only if additional evidence links a deployment to the outage and confirms compatibility.",
+          "verification_and_stop": "If a rollback is proposed, verify the target version's compatibility and monitor application health and user impact after rollback. Stop if the original issue is not resolved or new issues arise."
+        },
+        "citations": {
+          "COVERAGE": {
+            "cluster": "runbook-capstone-demo",
+            "cluster_uid": "synthetic-history-only",
+            "namespace": "prod-capstone",
+            "history_available_since": "2026-11-18T12:00:00+00:00",
+            "limits": "Synthetic snapshot; observation timestamps, no audit actors, application logs, allocation profiles or metrics. No infrastructure actions.",
+            "healthy": true,
+            "streams": [
+              {
+                "kind": "Pod",
+                "heartbeat": "2026-11-20T12:00:00+00:00",
+                "error": null
+              },
+              {
+                "kind": "Deployment",
+                "heartbeat": "2026-11-20T12:00:00+00:00",
+                "error": null
+              },
+              {
+                "kind": "ReplicaSet",
+                "heartbeat": "2026-11-20T12:00:00+00:00",
+                "error": null
+              },
+              {
+                "kind": "Service",
+                "heartbeat": "2026-11-20T12:00:00+00:00",
+                "error": null
+              },
+              {
+                "kind": "EndpointSlice",
+                "heartbeat": "2026-11-20T12:00:00+00:00",
+                "error": null
+              },
+              {
+                "kind": "Event",
+                "heartbeat": "2026-11-20T12:00:00+00:00",
+                "error": null
+              }
+            ],
+            "recent_gaps": [],
+            "interruptions_in_recent_report": 0
+          },
+          "D-baseline-generic": {
+            "id": "D-baseline-generic",
+            "title": "Kubernetes general operating contract",
+            "url": "",
+            "text": "BASELINE is first observed resource state, not its deployment date. Missing pre-collection history cannot establish when or why an outage occurred. A currently ready Deployment does not establish past or present customer impact; obtain retained audit/release records and incident-time telemetry.",
+            "bm25": 0.9022967349338505
+          },
+          "H1": {
+            "id": "H1",
+            "kind": "Deployment",
+            "name": "payments-api",
+            "namespace": "prod-capstone",
+            "uid": "Deployment-payments-api",
+            "rv": "1",
+            "operation": "BASELINE",
+            "observed_at": "2026-11-18T12:00:00+00:00",
+            "before": null,
+            "after": {
+              "kind": "Deployment",
+              "name": "payments-api",
+              "namespace": "prod-capstone",
+              "uid": "Deployment-payments-api",
+              "labels": {
+                "app": "payments-api"
+              },
+              "resource_version": "2",
+              "containers": [
+                {
+                  "name": "api",
+                  "image": "fictional/payments-api:v3"
+                }
+              ],
+              "replicas": 2,
+              "ready_replicas": 2
+            }
+          }
+        },
+        "status": "completed",
+        "calls": [
+          {
+            "prompt_sha256": "39bedf40948d5b0105df38a77c8ec7510934f01e3d08df24d7ac0b262e60a7ed",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.04751,
+            "input_tokens": 2216,
+            "output_tokens": 30,
+            "cost_usd": 0.004672,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBshnClTXTubJUy0E8QHwcmTYBH",
+            "duration_ms": 698.31
+          },
+          {
+            "prompt_sha256": "4814b9d1f508b26400b249fae9b3ecba001fbae615b5cf52ccabaa820d4e2867",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.04943,
+            "input_tokens": 2465,
+            "output_tokens": 515,
+            "cost_usd": 0.00905,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBtvNkn5SFrAL1hfmrvXPWZXNGJ",
+            "duration_ms": 3544.59
+          },
+          {
+            "prompt_sha256": "4ac6098dec0fc87a05d493a4cb8ec36bd6d7481e3ef391b7e48e08b9bb5fcbd2",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.055076,
+            "input_tokens": 3022,
+            "output_tokens": 38,
+            "cost_usd": 0.006348,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBw4w1ILM96XZ0u51lTgyZXhMos",
+            "duration_ms": 826.97
+          },
+          {
+            "prompt_sha256": "40a2af6be995d1e178084fa75713477b70457a39c5b954c7ec9bfc0bf0b2dcb0",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.057692,
+            "input_tokens": 3286,
+            "output_tokens": 540,
+            "cost_usd": 0.010892,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHBxuE5p4vjrGeis62T8T4ZM0dPd",
+            "duration_ms": 2825.54
+          },
+          {
+            "prompt_sha256": "4a12620739363e7faba119b41fb9e9bdaf2b7cc45b852767b49fb46b3a4cc66a",
+            "requested_model": "gpt-4.1-2025-04-14",
+            "reserved_usd": 0.063888,
+            "input_tokens": 3886,
+            "output_tokens": 500,
+            "cost_usd": 0.011772,
+            "resolved_model": "gpt-4.1-2025-04-14",
+            "response_id": "chatcmpl-EnHC0MpHTTIc6hj4V6TCtR4qAZ90t",
+            "duration_ms": 2525.87
+          }
+        ]
+      }
+    }
+  },
+  "status": "completed",
+  "retry_source": "eval/reports/history-demo-v8",
+  "per_arm_source": {
+    "cache-rollout/evidence": "eval/reports/history-demo-v8",
+    "cache-rollout/rag": "eval/reports/history-demo-v9",
+    "selector-change/evidence": "eval/reports/history-demo-v8",
+    "selector-change/rag": "eval/reports/history-demo-v8",
+    "missing-history/evidence": "eval/reports/history-demo-v8",
+    "missing-history/rag": "eval/reports/history-demo-v8"
+  },
+  "retry_reason": "A narrow repeated-OOM guard incorrectly rejected a qualified statement spanning a semicolon. Corrected guard and regression-tested; successful answers retained without editing.",
+  "retry_guard_sha256": "2bd4b5a861cf987d2a7a795a9e670fd43ff110867285a4daad26f0204ca331c6",
+  "source_directory": "eval/reports/history-demo-v9",
+  "review_notes": {
+    "cache-rollout": "Developer review: RAG adds the four-worker \u00d7 192 MiB potential budget and checks for effective worker/cache settings plus an allocation profile. Both answers keep cause uncertain and separate the three restarts from the last OOM termination. This demonstrates more specific checks, not proven cause or statistical superiority.",
+    "selector-change": "Developer review: both answers identify the observed selector/Pod-label mismatch and keep customer impact unknown. RAG adds no necessary causal evidence here. Backend selection, DNS and HTTP recovery remain separate checks.",
+    "missing-history": "Developer review: both answers identify the missing incident-time evidence and decline to justify rollback. Documents cannot recreate absent history. Earlier external records could change the conclusion."
+  },
+  "limitations": [
+    "Development demonstrations, not held-out performance evaluation.",
+    "Five unchanged successful v8 answers plus one explicitly retried failed arm; see per_arm_source.",
+    "Same model, initial snapshots, tool bounds and prompt; adaptive tool choices may differ.",
+    "Judge findings were developer-adjudicated; independent human review remains outstanding."
+  ]
+}

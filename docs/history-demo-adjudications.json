@@ -1,0 +1,116 @@
+{
+  "reviewer": "Implementation assistant, not an independent human domain reviewer",
+  "method": "Read all six full answers against collected evidence, retrieved documents and evaluator expectations. Judge findings reviewed with surrounding text. Decisions are not numerical score overrides.",
+  "judge_sha256": "915dc01a9ab61e0fc825075e22fac1cc34e7083358712b073aa2241313e34930",
+  "cases": {
+    "cache-rollout": {
+      "evidence": {
+        "answer_sha256": "97749b631a93560b7534c15f0568706c952bce2328f24bf861106dcf1eb20e24",
+        "reviewed_full_answer": true,
+        "known_blocking_factual_errors_found": false,
+        "findings": [
+          {
+            "kind": "causal_overclaim",
+            "quote": "the new image may have increased memory usage beyond the configured 512Mi limit, but this is not confirmed without runtime allocation or traffic evidence.",
+            "reason": "The phrase 'may have increased memory usage' is presented as a plausible hypothesis, but the sentence 'the temporal association between the rollout to v2 and the onset of repeated restarts, with the last termination OOMKilled, suggests the new image may have increased memory usage beyond the configured 512Mi limit' implies a causal link between the image change and the OOMKilled event. However, without runtime allocation or traffic evidence, this causal relationship is not established by the evidence.",
+            "context": "The temporal association between the rollout to v2 and the onset of repeated restarts, with the last termination OOMKilled, suggests the new image may have increased memory usage beyond the configured 512Mi limit, but this is not confirmed without runtime allocation or traffic evidence. Earlier restart causes are unknown.",
+            "status": "needs_review_conditional_or_uncertain",
+            "verdict": "reject_deduction",
+            "review_reason": "The full clause says may and not confirmed; the answer labels the assessment hypothesis and requests discriminating allocation/traffic evidence. It does not assert proven image causality."
+          }
+        ],
+        "assessment": "hypothesis",
+        "cost_usd": 0.046844,
+        "next_check_quote": "Obtain runtime memory usage metrics or application logs for cache-api:v2 to confirm if memory use exceeds 512Mi. Check for user/business impact via application monitoring or support channels.",
+        "explanation_quote": "The temporal association between the rollout to v2 and the onset of repeated restarts, with the last termination OOMKilled, suggests the new image may have increased memory usage beyond the configured 512Mi limit, but this is not confirmed without runtime allocation or traffic evidence. Earlier restart causes are unknown."
+      },
+      "rag": {
+        "answer_sha256": "bdabcc7240defea50fd6ad5177330e311288fd3aa338bb638046ab5fcc720afc",
+        "reviewed_full_answer": true,
+        "known_blocking_factual_errors_found": false,
+        "findings": [
+          {
+            "kind": "causal_overclaim",
+            "quote": "The most likely cause is that the v2 image's default configuration (four workers, each with a 192Mi cache) could exceed the 512Mi container memory limit, leading to OOMKilled events.",
+            "reason": "This sentence asserts a likely cause-effect relationship between the v2 image defaults and the OOMKilled event. However, the evidence only establishes that the image defaults could potentially exceed the limit, not that the actual runtime configuration or memory usage did so. The explanation does qualify this as a hypothesis, but the phrase 'most likely cause' overstates the certainty given the lack of runtime allocation or configuration evidence.",
+            "context": "The most likely cause is that the v2 image's default configuration (four workers, each with a 192Mi cache) could exceed the 512Mi container memory limit, leading to OOMKilled events. This is a hypothesis based on image defaults and the last observed OOMKilled, not confirmed runtime settings or actual memory use.",
+            "status": "needs_review_conditional_or_uncertain",
+            "verdict": "reject_deduction",
+            "review_reason": "The complete explanation explicitly says could and hypothesis, based on defaults rather than confirmed runtime settings. This is a candidate mechanism for checking, not proof of cause. Most likely is uncalibrated qualitative wording; the demonstrated RAG benefit is specific next checks, not reliable cause ranking."
+          }
+        ],
+        "assessment": "hypothesis",
+        "cost_usd": 0.04812,
+        "next_check_quote": "Check the effective worker count and cache budget in the running Pod, and obtain a memory allocation profile to confirm actual use. Review Pod/application logs for further clues. Assess user/business impact via application monitoring or user reports.",
+        "explanation_quote": "The most likely cause is that the v2 image's default configuration (four workers, each with a 192Mi cache) could exceed the 512Mi container memory limit, leading to OOMKilled events. This is a hypothesis based on image defaults and the last observed OOMKilled, not confirmed runtime settings or actual memory use. Earlier restart reasons are unknown."
+      }
+    },
+    "selector-change": {
+      "evidence": {
+        "answer_sha256": "4c6ff619e58b66fa827d5af7095f387a0afcdc29874a020d9f75239f5870c19d",
+        "reviewed_full_answer": true,
+        "known_blocking_factual_errors_found": false,
+        "findings": [
+          {
+            "kind": "causal_overclaim",
+            "quote": "The loss of endpoints is directly explained by the Service selector change: no Pods match the new selector, so no endpoints are registered. This is a supported mechanism for endpoint loss in Kubernetes.",
+            "reason": "The phrase 'directly explained' asserts a proven cause-effect relationship between the selector change and endpoint loss. While the evidence supports that the selector no longer matches any Pods and the EndpointSlice is empty, it does not exclude all other possible causes for endpoint loss (such as controller malfunction). The evidence supports selector mismatch as a sufficient mechanism, but not as the exclusive or directly proven cause.",
+            "context": "The loss of endpoints is directly explained by the Service selector change: no Pods match the new selector, so no endpoints are registered. This is a supported mechanism for endpoint loss in Kubernetes.",
+            "status": "needs_review_affirmative_claim",
+            "verdict": "reject_deduction",
+            "review_reason": "The before/after selector, current Pod labels and empty slice support exclusion of the observed Pod. A supported sufficient mechanism does not require eliminating every possible concurrent controller fault. This does not prove customer impact or recovery."
+          }
+        ],
+        "assessment": "supported_mechanism",
+        "cost_usd": 0.044806,
+        "next_check_quote": "To confirm customer impact, inspect application logs, traffic metrics, or user reports for demo-web after the selector change.",
+        "explanation_quote": "The loss of endpoints is directly explained by the Service selector change: no Pods match the new selector, so no endpoints are registered. This is a supported mechanism for endpoint loss in Kubernetes."
+      },
+      "rag": {
+        "answer_sha256": "0b4323e851a44235dff2a9a1faa6cf5cfd07dbd035fb59bd2823df3e53036c61",
+        "reviewed_full_answer": true,
+        "known_blocking_factual_errors_found": false,
+        "findings": [],
+        "assessment": "supported_mechanism",
+        "cost_usd": 0.052668,
+        "next_check_quote": "To confirm customer impact, inspect application logs, traffic metrics, or user reports for demo-web. To restore endpoints, revert the Service selector to match the Pod labels (\"app\": \"demo-web\") after reviewing intent and compatibility.",
+        "explanation_quote": "The absence of endpoints for Service demo-web is due to a selector mismatch: the Service selector was changed to a value that does not match any existing Pod labels. This is expected Kubernetes behavior."
+      }
+    },
+    "missing-history": {
+      "evidence": {
+        "answer_sha256": "45bef2790ea6b5a5d025c2018a82d92ba264dda4bfc8025cece97b7cfb96a1fd",
+        "reviewed_full_answer": true,
+        "known_blocking_factual_errors_found": false,
+        "findings": [],
+        "assessment": "insufficient_evidence",
+        "cost_usd": 0.019258,
+        "next_check_quote": "If possible, obtain historical records (deployment, pod, event, or monitoring data) from November 5 to investigate the incident.",
+        "explanation_quote": "There is no evidence of any deployment or configuration change on or before November 5. The baseline on November 18 does not provide information about prior versions or incidents."
+      },
+      "rag": {
+        "answer_sha256": "9d2e5281b70d32fa33a4aba14ef7a2a8199f049c9e9eeb428cab46ba83fa9b3b",
+        "reviewed_full_answer": true,
+        "known_blocking_factual_errors_found": false,
+        "findings": [
+          {
+            "kind": "unsupported_fact",
+            "quote": "Operational guidance confirms that missing history prevents root cause analysis or rollback justification.",
+            "reason": "The evidence (D-baseline-generic) states that missing history cannot establish when or why an outage occurred, but does not confirm that rollback justification is categorically prevented\u2014only that it cannot be established from the available data. The answer overstates the operational guidance as a categorical prohibition.",
+            "context": "Only a single baseline deployment of payments-api (image v3) is observed, with 2 ready replicas. Operational guidance confirms that missing history prevents root cause analysis or rollback justification. The current state does not establish past or present customer impact.",
+            "status": "needs_review_affirmative_claim",
+            "verdict": "reject_deduction",
+            "review_reason": "Read with the next-check and mitigation fields: they request earlier records and explicitly limit the rollback conclusion to current evidence, permitting reconsideration when evidence links a deployment. The quoted sentence is not a universal prohibition."
+          }
+        ],
+        "assessment": "insufficient_evidence",
+        "cost_usd": 0.042734,
+        "next_check_quote": "If possible, obtain deployment and event history covering November 5, or application logs from the incident window.",
+        "explanation_quote": "The requested incident (November 5) is outside the available history window. No deployment or configuration changes are observed near the incident date, so no cause or justification for rollback can be established. Operational guidance confirms that the absence of history prevents a conclusive investigation."
+      }
+    }
+  },
+  "limitation": "Development examples reused during debugging; no held-out superiority claim. Judge controls passed but actual conditional-claim false positives persist.",
+  "source_results_sha256": "a75c779a3434a6ec77bbdd0ef93a1d2358db36dfb3950803ab099c07c86135ba",
+  "results_sha256": "84d9076e0ad8c4ea3bff7764496ed180125ad29d97c6be73b79b210143f4b197"
+}

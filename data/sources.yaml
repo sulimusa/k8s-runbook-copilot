@@ -1,6 +1,20 @@
 # Source manifest. Every remote source is fetched with git at a PINNED commit so the corpus is
 # reproducible. To update: change `commit`, run `make ingest`, re-run `make eval-retrieval`.
 sources:
+  - id: service-knowledge
+    description: Fictional Atlas service contracts, operational procedures and explicitly superseded guidance
+    local_path: data/service_knowledge
+    license: Apache-2.0
+    url_base: https://github.com/sulimusa/k8s-runbook-copilot/blob/main/data/service_knowledge/
+    enabled: true
+
+  - id: incident-knowledge
+    description: Original reviewed synopses of 12 public incidents; historical analogies, not case answer keys
+    local_path: data/incident_knowledge
+    license: Apache-2.0
+    url_base: https://github.com/sulimusa/k8s-runbook-copilot/blob/main/data/incident_knowledge/
+    enabled: true
+
   - id: k8s-docs
     description: Official Kubernetes documentation (kubernetes/website)
     repo: https://github.com/kubernetes/website.git

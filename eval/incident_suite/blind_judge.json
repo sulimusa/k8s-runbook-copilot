@@ -1,0 +1,539 @@
+[
+  {
+    "id": "case-b8520965f8",
+    "status": "supported",
+    "diagnosis": "Loss of pod policy-routing rules after a systemd-networkd restart explains cross-node connectivity loss. The restart is the likely trigger; the precise rule-removal behavior is not demonstrated.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Identify the CNI and networkd version/configuration, affected policy-routing tables, and whether restoring the missing rules restores cross-node traffic."
+    ],
+    "confidence": 0.9,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-ba957a5308",
+    "status": "supported",
+    "diagnosis": "Removal of the inter-worker firewall allow rule blocks cross-node pod traffic.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Confirm rejected flow tuples match the affected pod path and that restoring the intended rule restores connectivity."
+    ],
+    "confidence": 0.97,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-dc047a77d5",
+    "status": "insufficient_evidence",
+    "diagnosis": "Cross-node dataplane failure is localized, but its cause cannot be determined from pod readiness and same-node success alone.",
+    "evidence_ids": [
+      "E1"
+    ],
+    "missing_checks": [
+      "Compare routes and policy rules before/after maintenance.",
+      "Inspect inter-worker firewall, NetworkPolicy, CNI/tunnel state and packet captures."
+    ],
+    "confidence": 0.98,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-dd638bc02d",
+    "status": "supported",
+    "diagnosis": "Synchronized node-agent startup produced a burst of large unpaginated pod LIST requests and API-server memory pressure, explaining the API degradation.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Measure response sizes, API-server memory/GC and termination events to distinguish pressure from confirmed OOM termination.",
+      "Verify rollout concurrency and actual LIST request scope."
+    ],
+    "confidence": 0.95,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-ce633c6845",
+    "status": "supported",
+    "diagnosis": "Severe etcd storage fsync latency during a storage snapshot is the supported control-plane bottleneck; the node-agent rollout is coincidental.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Correlate etcd commit/request latency and disk utilization with the snapshot and recovery."
+    ],
+    "confidence": 0.95,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-a67d358923",
+    "status": "insufficient_evidence",
+    "diagnosis": "Temporal overlap between a rollout and API latency does not identify the bottleneck.",
+    "evidence_ids": [
+      "E1"
+    ],
+    "missing_checks": [
+      "Inspect API request volume/size, server resource use and errors.",
+      "Inspect etcd latency, storage metrics and rollout start concurrency."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-8b2777cf10",
+    "status": "supported",
+    "diagnosis": "A template condition rendered the desired resource set empty, and automated GitOps pruning deleted the previously managed resources.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Confirm the deleted resource identities match the missing Services and determine which template input changed."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-1bf1468007",
+    "status": "supported",
+    "diagnosis": "A cleanup service account deleted the affected namespaces, causing deletion of their Services.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Inspect namespace deletion lifecycle and cleanup job/audit attribution to determine why the delete was issued."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-59798af406",
+    "status": "insufficient_evidence",
+    "diagnosis": "Services are absent, but the deleting actor and initiating configuration change are unknown.",
+    "evidence_ids": [
+      "E1"
+    ],
+    "missing_checks": [
+      "Inspect Service and namespace DELETE audit events.",
+      "Compare GitOps desired manifests, prune history and infrastructure/cleanup change history."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-6f530d02f9",
+    "status": "supported",
+    "diagnosis": "The Service selector excludes healthy old pods, concentrating traffic on two new pods; this overload is the supported explanation for their OOM/restart loop and rollout disruption.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Correlate new-pod memory with request rate and compare resource limits.",
+      "Inspect EndpointSlice readiness conditions and request distribution during restarts."
+    ],
+    "confidence": 0.95,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-f8c6aa0726",
+    "status": "supported",
+    "diagnosis": "The new image has workload-dependent memory growth absent in the previous image under equal load; an image-level memory regression explains the OOM failures.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Compare limits, runtime settings and heap/RSS profiles to identify the regression; continuous RSS growth alone does not establish a specific leak."
+    ],
+    "confidence": 0.97,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-d0bcf03fda",
+    "status": "insufficient_evidence",
+    "diagnosis": "New pods are OOMKilled, but uneven traffic, changed limits and a memory regression remain unresolved alternatives.",
+    "evidence_ids": [
+      "E1"
+    ],
+    "missing_checks": [
+      "Inspect Service selectors, EndpointSlice readiness and per-pod load.",
+      "Compare image/configuration/limits and run controlled equal-load memory comparisons."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-bf47d72b56",
+    "status": "supported",
+    "diagnosis": "Deletion of the shared instance profile prevents replacement provisioning and is consistent with existing workers losing renewable credentials after cached credentials expire.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Inspect preceding RemoveRoleFromInstanceProfile events and instance associations; successful profile deletion requires removal of its role.",
+      "Check metadata credential refresh failures and actual credential expiry times on affected workers."
+    ],
+    "confidence": 0.88,
+    "technical_inconsistencies": [
+      "The normalized deletion event omits required role-removal prerequisites. This is incomplete lifecycle evidence, not a contradiction if those actions occurred."
+    ]
+  },
+  {
+    "id": "case-08f3f5f687",
+    "status": "supported",
+    "diagnosis": "A 19-minute node clock skew causes signed cloud API requests to expire, explaining cloud credential/signature errors and plausibly bootstrap failure.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Verify the same skew and RequestExpired failure on replacement nodes, and confirm time correction restores bootstrap."
+    ],
+    "confidence": 0.93,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-ea27849b79",
+    "status": "insufficient_evidence",
+    "diagnosis": "Credential errors and failed node initialization do not distinguish deleted IAM resources, denied permissions, expired credentials, clock skew or metadata/network failure.",
+    "evidence_ids": [
+      "E1"
+    ],
+    "missing_checks": [
+      "Inspect exact cloud errors, IAM audit/profile state, credential expiry/refresh, node time and bootstrap logs."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-d7f5448ed1",
+    "status": "supported",
+    "diagnosis": "The load balancer lost its Redis backend endpoint during scaling despite the pod remaining available; the blocked eviction and endpoint removal expose inconsistent lifecycle handling.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Inspect controller/version and scaling sequence to establish why endpoint removal preceded or outlived the blocked eviction.",
+      "Verify backend reattachment restores load-balancer reachability."
+    ],
+    "confidence": 0.96,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-2c974849bb",
+    "status": "supported",
+    "diagnosis": "A newly selecting ingress NetworkPolicy denies the client namespace access to Redis; policy drops and direct-IP failure support this mechanism.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Confirm load-balancer forwarding preserves or translates client identity in a way covered by the observed policy drops."
+    ],
+    "confidence": 0.95,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-5d826dc228",
+    "status": "insufficient_evidence",
+    "diagnosis": "The fault is somewhere on the client-to-load-balancer-to-pod path; Running/Ready status does not identify it.",
+    "evidence_ids": [
+      "E1"
+    ],
+    "missing_checks": [
+      "Test direct pod connectivity from affected clients and inspect LB target membership/health.",
+      "Inspect policies, firewall paths and packet captures."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-695a822ca9",
+    "status": "supported",
+    "diagnosis": "An obsolete bundled CA store cannot validate new TLS connections after its trusted root expires; established old connections conceal the problem until reconnection.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Inspect the actual chain, client verification implementation and alternate chain/root supplied by the current CA store."
+    ],
+    "confidence": 0.97,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-560d7ff354",
+    "status": "supported",
+    "diagnosis": "The new deployment uses login.internal while the presented certificate covers auth.internal, producing hostname validation failure.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Inspect the configured endpoint/SNI and full SAN list, then verify correction of endpoint or certificate restores connections."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-902b1f4597",
+    "status": "insufficient_evidence",
+    "diagnosis": "Success on established connections does not distinguish a trust-chain failure from hostname, certificate, DNS or new-connection configuration problems.",
+    "evidence_ids": [
+      "E1"
+    ],
+    "missing_checks": [
+      "Capture the exact handshake error and chain/SANs.",
+      "Compare endpoint/SNI, CA bundles and fresh connections from both deployments."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-c674299ad8",
+    "status": "supported",
+    "diagnosis": "Recursive fsGroup ownership changes over millions of files delay volume preparation and application startup.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Inspect effective fsGroupChangePolicy and CSI ownership behavior to select an applicable mitigation."
+    ],
+    "confidence": 0.98,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-74f6cf251d",
+    "status": "supported",
+    "diagnosis": "A stale attachment to the previous NotReady node blocks attachment of the volume to the replacement, preventing startup.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Inspect access mode, VolumeAttachment/controller state and safe fencing/detachment conditions on the old node."
+    ],
+    "confidence": 0.98,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-8398ec0c0c",
+    "status": "insufficient_evidence",
+    "diagnosis": "File count is a potential clue but does not prove filesystem ownership traversal or any other startup blocker.",
+    "evidence_ids": [
+      "E1"
+    ],
+    "missing_checks": [
+      "Inspect pod events and kubelet/CSI attach/mount logs.",
+      "Check init containers, image pulls, volume attachment state and ownership traversal progress."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-b7b0997c31",
+    "status": "supported",
+    "diagnosis": "The metrics collector inspection causes memory-map lock contention and request stalls; the isolated disable/re-enable experiment supplies causal support.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Identify the inspected proc interface, kernel/runtime version and lock stacks to select a targeted fix."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-fa1f644111",
+    "status": "supported",
+    "diagnosis": "Stop-the-world garbage collection causes the tail-latency spikes; allocation reduction removes them with collector settings unchanged.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Inspect GC pause traces, allocation profiles and runtime settings to identify the triggering allocation behavior."
+    ],
+    "confidence": 0.98,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-d52a13aa3d",
+    "status": "insufficient_evidence",
+    "diagnosis": "Rare latency spikes with moderate average CPU do not identify their cause.",
+    "evidence_ids": [
+      "E1"
+    ],
+    "missing_checks": [
+      "Capture slow-request traces and profiles, GC pauses, CPU throttling/scheduling latency, I/O and collector timing."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-11d8b17898",
+    "status": "supported",
+    "diagnosis": "Stale UDP conntrack translations retain a removed CoreDNS endpoint for affected flows, blackholing their DNS requests.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Identify dataplane/kube-proxy behavior and conntrack cleanup timing; validate recovery of the affected flow after its stale mapping is removed."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-3da36e7ddf",
+    "status": "supported",
+    "diagnosis": "A new egress NetworkPolicy blocks affected clients\u2019 UDP DNS traffic to live CoreDNS endpoints.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Check whether apparent intermittency is across clients, policy timing or cached/TCP-fallback queries; a fixed deny generally consistently blocks matching UDP flows."
+    ],
+    "confidence": 0.98,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-58f9fe24ff",
+    "status": "insufficient_evidence",
+    "diagnosis": "Healthy CoreDNS replicas and a subset of failing clients do not distinguish stale conntrack, policy, client resolver issues or local dataplane problems.",
+    "evidence_ids": [
+      "E1"
+    ],
+    "missing_checks": [
+      "Compare DNS EndpointSlices and failing-flow conntrack destinations.",
+      "Capture packets and inspect policy drops, CoreDNS load and client resolver behavior."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-6aced99011",
+    "status": "insufficient_evidence",
+    "diagnosis": "Fail-open admission before CA injection plausibly placed the simulation on a real node. The alleged later rejection of pod/status updates due to injected nodeSelector/labels is not sufficiently coherent to establish the cleanup failure mechanism.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Obtain the exact admission response, JSONPatch, API rejection message and HTTP status.",
+      "Confirm the webhook matches pods/status and inspect the Kubernetes version/status update strategy.",
+      "Determine whether the patch is malformed, denied by admission, or changes some independently invalid status/metadata field; inspect whether completion status actually persisted."
+    ],
+    "confidence": 0.94,
+    "technical_inconsistencies": [
+      "Ordinary pod/status update processing restores the existing Pod spec before status validation, so a nodeSelector spec mutation alone does not establish the claimed immutable-spec rejection.",
+      "Labels are not intrinsically an invalid Pod metadata change. A concrete rejection reason is needed; the stated fields do not by themselves explain rejected completion updates."
+    ]
+  },
+  {
+    "id": "case-25087601d4",
+    "status": "supported",
+    "diagnosis": "An orphaned cleanup finalizer blocks deletion of an already Succeeded pod because the responsible cleanup controller is absent.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Confirm deletionTimestamp and finalizer ownership, and determine whether required external cleanup has completed before finalizer removal."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-d86046ac54",
+    "status": "insufficient_evidence",
+    "diagnosis": "Process exit alone does not establish persisted Pod completion or successful cleanup; remaining Pods can also be normal without a deletion policy.",
+    "evidence_ids": [
+      "E1"
+    ],
+    "missing_checks": [
+      "Inspect Pod phase/container statuses, deletionTimestamp, finalizers and controller events/logs.",
+      "Inspect admission errors and the expected simulation cleanup lifecycle."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-9085887517",
+    "status": "supported",
+    "diagnosis": "A stale fixed package repository URL returns 404 and aborts bootstrap on the four instances, preventing their registration and leaving insufficient cluster capacity.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Test bootstrap using the current package path and verify nodes register and become Ready."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-a2915c1019",
+    "status": "supported",
+    "diagnosis": "The new instance role is absent from the cluster authentication mapping, so kubelet registration is rejected despite successful network/bootstrap prerequisites.",
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "missing_checks": [
+      "Verify the exact identity presented by kubelet and the cluster authentication mechanism, then validate registration after the intended mapping is restored."
+    ],
+    "confidence": 0.98,
+    "technical_inconsistencies": []
+  },
+  {
+    "id": "case-0c5f4e12ee",
+    "status": "insufficient_evidence",
+    "diagnosis": "The cloud instances have not joined Kubernetes; the evidence does not distinguish incomplete bootstrap, network reachability, authentication or kubelet failure.",
+    "evidence_ids": [
+      "E1"
+    ],
+    "missing_checks": [
+      "Inspect bootstrap and kubelet registration logs on missing instances.",
+      "Check package installation, API endpoint connectivity, identity mapping and node startup progress."
+    ],
+    "confidence": 0.99,
+    "technical_inconsistencies": []
+  }
+]

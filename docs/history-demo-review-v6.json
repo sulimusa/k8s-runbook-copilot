@@ -1,0 +1,125 @@
+{
+  "system_sha256": "0833a5c2e49e1b1e9ee3c185b256da196114fda9ecc678c8525c8328f191a2dc",
+  "results_sha256": "988e8d681b4756448afee97ea9699a264c1937b08469ede0c66390b62c30970b",
+  "cases": {
+    "cache-rollout": {
+      "evidence": {
+        "issues": [
+          {
+            "kind": "unsupported_fact",
+            "quote": "No EndpointSlice is present, so the service is not discoverable by clients.",
+            "reason": "Absence of an EndpointSlice in the evidence does not prove the service is not discoverable; there could be other mechanisms or a delay in EndpointSlice creation. The evidence only shows no EndpointSlice record, not that clients cannot discover the service."
+          },
+          {
+            "kind": "unsupported_fact",
+            "quote": "No EndpointSlice exists for this app, so it is not discoverable by Service endpoints.",
+            "reason": "The evidence does not confirm that the absence of an EndpointSlice means the service is undiscoverable; it only shows no EndpointSlice record at the time of observation."
+          }
+        ],
+        "provider": {
+          "prompt_sha256": "d6120263372eb390d7517a71d64cbeacb927b04473a4c21155e0bf5fb7b53fe0",
+          "requested_model": "gpt-4.1-2025-04-14",
+          "reserved_usd": 0.044178,
+          "input_tokens": 3099,
+          "output_tokens": 141,
+          "cost_usd": 0.007326,
+          "resolved_model": "gpt-4.1-2025-04-14",
+          "response_id": "chatcmpl-EnGzf4cZw4SC8C2CidhkJtxHpJVkI",
+          "duration_ms": 1490.25
+        },
+        "packet_sha256": "857616cae52c5f62597d679fdf550a7310f00c5e6621256f25f356690a41f55e"
+      },
+      "rag": {
+        "issues": [
+          {
+            "kind": "causal_overclaim",
+            "quote": "The most likely explanation is that the v2 image's default configuration (four workers, each with a 192Mi cache) exceeds the 512Mi container memory limit, causing OOMKilled restarts.",
+            "reason": "This statement asserts a cause ('causing OOMKilled restarts') based on image defaults, but the evidence does not confirm the actual runtime configuration or allocations. The contract text and answer both note this is a hypothesis, not proof, so the clause overclaims causality."
+          }
+        ],
+        "provider": {
+          "prompt_sha256": "bdc8ec0a65207da98ad5fc5c7c92a6a80a881dcc1f0e5aa6870d32edb0a1d139",
+          "requested_model": "gpt-4.1-2025-04-14",
+          "reserved_usd": 0.048234,
+          "input_tokens": 3514,
+          "output_tokens": 113,
+          "cost_usd": 0.007932,
+          "resolved_model": "gpt-4.1-2025-04-14",
+          "response_id": "chatcmpl-EnGzhlgl5A3UbTq7n5NlPWqczf1Qn",
+          "duration_ms": 1221.03
+        },
+        "packet_sha256": "80951c5be1b9fabd49566eb50133296261e383b072daa055fcb6404bc0013ed0"
+      }
+    },
+    "selector-change": {
+      "evidence": {
+        "issues": [
+          {
+            "kind": "causal_overclaim",
+            "quote": "The loss of endpoints is fully explained by the Service selector being changed to a value that does not match any existing pod labels.",
+            "reason": "The evidence shows a selector mismatch and empty EndpointSlice, but does not exclude all other possible causes for endpoint loss (e.g., controller malfunction). The phrase 'fully explained' is an overclaim."
+          }
+        ],
+        "provider": {
+          "prompt_sha256": "fb8d739e78f80717fd83fe147d3559e65134bbfdf6de2466bba46e7302c45b89",
+          "requested_model": "gpt-4.1-2025-04-14",
+          "reserved_usd": 0.03651,
+          "input_tokens": 2087,
+          "output_tokens": 82,
+          "cost_usd": 0.00483,
+          "resolved_model": "gpt-4.1-2025-04-14",
+          "response_id": "chatcmpl-EnGziK6dAWCfluYbR4Tulqct44SoC",
+          "duration_ms": 1022.55
+        },
+        "packet_sha256": "11df014ea541448651ccde95b412e91370651086a6e7042ccf9b7b55883b2177"
+      },
+      "rag": {
+        "issues": [],
+        "provider": {
+          "prompt_sha256": "0e37dc11901428fcb77cfc06360855e9bcb6bb27e34b7458823097eb181cb58c",
+          "requested_model": "gpt-4.1-2025-04-14",
+          "reserved_usd": 0.038806,
+          "input_tokens": 2301,
+          "output_tokens": 4,
+          "cost_usd": 0.004634,
+          "resolved_model": "gpt-4.1-2025-04-14",
+          "response_id": "chatcmpl-EnGzjjQnTb8eBvnMRXEngXzEx55s0",
+          "duration_ms": 816.53
+        },
+        "packet_sha256": "781fda76b2ae2c34099210395a0e5a3f82e966fb5e115b0b0bdde7df7a2551a2"
+      }
+    },
+    "missing-history": {
+      "evidence": {
+        "issues": [],
+        "provider": {
+          "prompt_sha256": "dbf70e6f84102abefca243d7d8003bc0af7212f19dc847686feb9d31d2dad9c3",
+          "requested_model": "gpt-4.1-2025-04-14",
+          "reserved_usd": 0.03141,
+          "input_tokens": 1396,
+          "output_tokens": 4,
+          "cost_usd": 0.002824,
+          "resolved_model": "gpt-4.1-2025-04-14",
+          "response_id": "chatcmpl-EnGzkAj377Q99o6HFZjb65p9TwIcp",
+          "duration_ms": 492.03
+        },
+        "packet_sha256": "f7accc5e300c2e735f84e5f1d63f710064b4b07a3df3e5414d1fdbb6e854c02d"
+      },
+      "rag": {
+        "issues": [],
+        "provider": {
+          "prompt_sha256": "b09e0c3c076944fc56e70c4e61eeec6416582f38bdc6ab3d5128e4e774663c63",
+          "requested_model": "gpt-4.1-2025-04-14",
+          "reserved_usd": 0.03505,
+          "input_tokens": 1747,
+          "output_tokens": 4,
+          "cost_usd": 0.003526,
+          "resolved_model": "gpt-4.1-2025-04-14",
+          "response_id": "chatcmpl-EnGzkGlnEEi4Mj0nveL9YiKwDpIQm",
+          "duration_ms": 616.69
+        },
+        "packet_sha256": "74ea9806d4d344f806e4122cff04a376a78ac98f89a0c12cda05956cf89d4743"
+      }
+    }
+  }
+}

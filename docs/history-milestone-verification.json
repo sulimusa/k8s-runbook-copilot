@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-22",
+  "cap_usd": 6.0,
+  "charged_or_reserved_usd": 5.42793275,
+  "known_cost_usd": 5.42793275,
+  "unknown_calls": 0,
+  "prior_checkpoint_usd": 2.06566875,
+  "additional_since_prior_checkpoint_usd": 2.5150520000000003,
+  "offline_tests": 263,
+  "final_demo_runs": 6,
+  "model": "gpt-4.1-2025-04-14",
+  "judge_status": "Nine constructed controls passed; four final demo judge findings rejected after full-context developer review. All 31 prior queued findings adjudicated (22 rejected, 2 accepted, 7 wording corrections). No independent human review claimed.",
+  "final_demo_directory": "eval/reports/history-demo-v9",
+  "live_smoke": "docs/history-live-smoke.json",
+  "ui_verified": "Streamlit AppTest rendered all three recorded comparisons including the hash-bound review panel without cluster or paid calls.",
+  "provenance_checks": "All six final timelines match full retrieved record timestamps; evidence-only arms make no retrieval calls.",
+  "semantic_limitations": "Six final demo answers reviewed against evidence with no known blocking factual error found. Development-only examples, not held-out accuracy. Judge false positives persist; raw ratings retained.",
+  "incremental_this_correction_usd": 0.8472119999999999,
+  "final_demo_provenance": "Five v8 successful reports retained unchanged; one failed OOM RAG arm rerun in v9 after fixing a guard false positive; all failures preserved.",
+  "lint": "Ruff passed",
+  "static_security": "Bandit passed"
+}

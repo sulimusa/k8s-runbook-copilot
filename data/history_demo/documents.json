@@ -1,0 +1,52 @@
+[
+  {
+    "id": "cache-v2",
+    "service": "cache-api",
+    "version": "v2",
+    "namespace": "prod-capstone",
+    "valid_from": "2026-01-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "cache-api v2 operating contract",
+    "text": "Fictional cache-api v2 image defaults: four worker processes, each with a maximum cache budget of 192 MiB. These are image defaults, not observed runtime overrides or measured allocations. v1 uses one shared 192 MiB cache. Runtime overrides are possible and not collected by this history service. Check effective worker count and cache settings plus an allocation profile. A potential 4 x 192 = 768 MiB cache budget exceeds a 512 MiB container limit before overhead. This is a hypothesis, not proof of actual use. Reduce cache budgets/workers only after reviewing effective settings, traffic needs and memory headroom; validate allocations, restart counts, latency and throughput. Stop or revert the reviewed configuration change if health worsens. No rollback compatibility statement is available."
+  },
+  {
+    "id": "cache-v1",
+    "service": "cache-api",
+    "version": "v1",
+    "namespace": "prod-capstone",
+    "valid_from": "2026-01-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "cache-api v1 operating contract",
+    "text": "Fictional v1 shares one 192 MiB cache; do not multiply it by worker count."
+  },
+  {
+    "id": "cache-dev-v2",
+    "service": "cache-api",
+    "version": "v2",
+    "namespace": "dev-capstone",
+    "valid_from": "2026-01-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "cache-api v2 operating contract",
+    "text": "Development configuration uses a shared cache. This does not apply to production."
+  },
+  {
+    "id": "routing-generic",
+    "service": null,
+    "version": null,
+    "namespace": "prod-capstone",
+    "valid_from": "2026-01-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "Kubernetes general operating contract",
+    "text": "A Kubernetes Service selector must match Pod labels. Ready EndpointSlices support discovery but do not prove network connectivity, HTTP success or customer recovery. Compare selector history with Pod labels and EndpointSlices. A change needs review, matching Pods, resource version preconditions and separate traffic verification."
+  },
+  {
+    "id": "baseline-generic",
+    "service": null,
+    "version": null,
+    "namespace": "prod-capstone",
+    "valid_from": "2026-01-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "Kubernetes general operating contract",
+    "text": "BASELINE is first observed resource state, not its deployment date. Missing pre-collection history cannot establish when or why an outage occurred. A currently ready Deployment does not establish past or present customer impact; obtain retained audit/release records and incident-time telemetry."
+  }
+]

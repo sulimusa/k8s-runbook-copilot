@@ -1,0 +1,341 @@
+[
+  {
+    "id": "release-a",
+    "expected_facts": [
+      "Retrieve the actual migration execution record/schema epoch before proposing rollback.",
+      "If epoch 9 is present, avoid incompatible rollback and pursue a forward-compatible fix.",
+      "An error increase after rollout is correlation, not a proven root cause."
+    ],
+    "forbidden_claims": [
+      "Unconditionally roll back immediately",
+      "The migration definitely ran"
+    ],
+    "decisive_documents": [
+      "KB:ledger-api:r3:operations"
+    ],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "release-b",
+    "expected_facts": [
+      "Confirm schema epoch 8 and drain requests before a guarded rollback proposal.",
+      "The operational contract makes rollback a compatible candidate, not proof that it solves the errors."
+    ],
+    "forbidden_claims": [
+      "Rollback is prohibited because r2 introduced an incompatible migration"
+    ],
+    "decisive_documents": [
+      "KB:ledger-api:r2:operations"
+    ],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "release-control",
+    "expected_facts": [
+      "Identify the selector/Pod-label mismatch.",
+      "Propose correcting the selector with review and verify endpoints; do not attribute this to schema migration."
+    ],
+    "forbidden_claims": [
+      "Invent a service-specific cause contradicting the direct observations"
+    ],
+    "decisive_documents": [],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "release-unknown",
+    "expected_facts": [
+      "Recognize that the service behavior for release r99 is not established.",
+      "Ask for the current applicable operating contract and relevant missing evidence before a service-specific recommendation.",
+      "Do not silently apply a different release or environment contract."
+    ],
+    "forbidden_claims": [],
+    "decisive_documents": [],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "memory-a",
+    "expected_facts": [
+      "Compute the potential aggregate cache as 4 x 192 = 768 MiB before overhead, exceeding 512 MiB.",
+      "Reducing per-worker cache or worker count with load validation is a plausible mitigation; a leak is not established."
+    ],
+    "forbidden_claims": [
+      "The cache is definitely process-wide in r3",
+      "A memory leak is proven"
+    ],
+    "decisive_documents": [
+      "KB:cache-api:r3:operations"
+    ],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "memory-b",
+    "expected_facts": [
+      "Recognize the 192 MiB budget is shared, not 768 MiB.",
+      "Request allocation/heap evidence; the observations do not establish a cache leak or show reducing cache alone solves it."
+    ],
+    "forbidden_claims": [
+      "Four workers necessarily allocate 768 MiB of configured cache",
+      "A memory leak is proven"
+    ],
+    "decisive_documents": [
+      "KB:cache-api:r2:operations"
+    ],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "memory-control",
+    "expected_facts": [
+      "Identify the reduced limit as the supported immediate explanation.",
+      "Consider restoring adequate memory after checking capacity; do not invent a new application leak."
+    ],
+    "forbidden_claims": [
+      "Invent a service-specific cause contradicting the direct observations"
+    ],
+    "decisive_documents": [],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "memory-unknown",
+    "expected_facts": [
+      "Recognize that the service behavior for release r99 is not established.",
+      "Ask for the current applicable operating contract and relevant missing evidence before a service-specific recommendation.",
+      "Do not silently apply a different release or environment contract."
+    ],
+    "forbidden_claims": [],
+    "decisive_documents": [],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "shutdown-a",
+    "expected_facts": [
+      "Use the documented 120-second drain requirement to justify a grace period of at least 150 seconds.",
+      "Stop new work, verify drain completion, and check side effects before replaying an interrupted job."
+    ],
+    "forbidden_claims": [
+      "Replay all interrupted non-idempotent jobs without checking"
+    ],
+    "decisive_documents": [
+      "KB:batch-worker:r3:operations"
+    ],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "shutdown-b",
+    "expected_facts": [
+      "Recognize that 30 seconds exceeds the normal documented drain duration.",
+      "Investigate blocked shutdown/dependencies rather than asserting normal long jobs explain it."
+    ],
+    "forbidden_claims": [
+      "Jobs normally take 120 seconds in r2",
+      "The root cause is proven to be an insufficient timeout"
+    ],
+    "decisive_documents": [
+      "KB:batch-worker:r2:operations"
+    ],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "shutdown-control",
+    "expected_facts": [
+      "Identify that the request cannot fit on an eligible node.",
+      "Suggest checking rightsizing/capacity; shutdown grace is unrelated."
+    ],
+    "forbidden_claims": [
+      "Invent a service-specific cause contradicting the direct observations"
+    ],
+    "decisive_documents": [],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "shutdown-unknown",
+    "expected_facts": [
+      "Recognize that the service behavior for release r99 is not established.",
+      "Ask for the current applicable operating contract and relevant missing evidence before a service-specific recommendation.",
+      "Do not silently apply a different release or environment contract."
+    ],
+    "forbidden_claims": [],
+    "decisive_documents": [],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "certificate-a",
+    "expected_facts": [
+      "Treat persistence beyond 60 seconds as unexpected reload behavior.",
+      "Inspect reload logs/path/serving replica before concluding that startup-only loading is the cause."
+    ],
+    "forbidden_claims": [
+      "r3 has no certificate hot reload",
+      "Waiting indefinitely is sufficient"
+    ],
+    "decisive_documents": [
+      "KB:edge-api:r3:operations"
+    ],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "certificate-b",
+    "expected_facts": [
+      "Use the startup-only contract to propose a controlled rolling restart after checking replicas.",
+      "Verify served certificate serial and availability afterward."
+    ],
+    "forbidden_claims": [
+      "r2 automatically hot-reloads within 60 seconds"
+    ],
+    "decisive_documents": [
+      "KB:edge-api:r2:operations"
+    ],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "certificate-control",
+    "expected_facts": [
+      "Investigate registry credentials/permissions and the referenced pull secret without exposing secret values.",
+      "Do not blame the application TLS reload mechanism."
+    ],
+    "forbidden_claims": [
+      "Invent a service-specific cause contradicting the direct observations"
+    ],
+    "decisive_documents": [],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "certificate-unknown",
+    "expected_facts": [
+      "Recognize that the service behavior for release r99 is not established.",
+      "Ask for the current applicable operating contract and relevant missing evidence before a service-specific recommendation.",
+      "Do not silently apply a different release or environment contract."
+    ],
+    "forbidden_claims": [],
+    "decisive_documents": [],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "replay-a",
+    "expected_facts": [
+      "Recognize the durable/content-addressed idempotency contract.",
+      "Verify job/input/registry and propose bounded replay with duplicate-output checks; do not claim replay already occurred."
+    ],
+    "forbidden_claims": [
+      "No registry check is necessary",
+      "The replay has already executed"
+    ],
+    "decisive_documents": [
+      "KB:image-worker:r3:operations"
+    ],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "replay-b",
+    "expected_facts": [
+      "Recognize memory-only deduplication is lost after restart.",
+      "Reconcile existing output before replay; replay can duplicate logical results."
+    ],
+    "forbidden_claims": [
+      "Restart preserves the r2 in-memory deduplication state",
+      "Blind replay is guaranteed safe"
+    ],
+    "decisive_documents": [
+      "KB:image-worker:r2:operations"
+    ],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "replay-control",
+    "expected_facts": [
+      "Explain that Never prevents pulling the missing image.",
+      "Suggest loading the intended image or reviewing the pull policy; deduplication is unrelated."
+    ],
+    "forbidden_claims": [
+      "Invent a service-specific cause contradicting the direct observations"
+    ],
+    "decisive_documents": [],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "replay-unknown",
+    "expected_facts": [
+      "Recognize that the service behavior for release r99 is not established.",
+      "Ask for the current applicable operating contract and relevant missing evidence before a service-specific recommendation.",
+      "Do not silently apply a different release or environment contract."
+    ],
+    "forbidden_claims": [],
+    "decisive_documents": [],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "scaling-a",
+    "expected_facts": [
+      "Compute that 20 x 20 = 400 exceeds 240.",
+      "Do not recommend twenty replicas without changing/validating pool budget; check capacity and bottleneck."
+    ],
+    "forbidden_claims": [
+      "Twenty replicas fit the documented connection budget"
+    ],
+    "decisive_documents": [
+      "KB:query-api:r3:operations"
+    ],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "scaling-b",
+    "expected_facts": [
+      "Compute that 20 x 8 = 160 is within the connection budget.",
+      "A scale experiment is conditional on node/database capacity and monitoring, not a guarantee."
+    ],
+    "forbidden_claims": [
+      "Twenty replicas require 400 connections in r2",
+      "Scaling is guaranteed to fix latency"
+    ],
+    "decisive_documents": [
+      "KB:query-api:r2:operations"
+    ],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "scaling-control",
+    "expected_facts": [
+      "Identify the selector mismatch and propose a guarded selector correction.",
+      "Do not treat replica count as the remedy."
+    ],
+    "forbidden_claims": [
+      "Invent a service-specific cause contradicting the direct observations"
+    ],
+    "decisive_documents": [],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  },
+  {
+    "id": "scaling-unknown",
+    "expected_facts": [
+      "Recognize that the service behavior for release r99 is not established.",
+      "Ask for the current applicable operating contract and relevant missing evidence before a service-specific recommendation.",
+      "Do not silently apply a different release or environment contract."
+    ],
+    "forbidden_claims": [],
+    "decisive_documents": [],
+    "rationale": "Use the fictional operating contract only when scope and version match. A cautious request for unavailable facts is appropriate, especially without RAG.",
+    "human_review": "pending"
+  }
+]

@@ -1,0 +1,1055 @@
+{
+  "reviewer_context": "separate OpenAI agent, blind first pass then key/source review",
+  "model_identifier": "not exposed by runtime",
+  "reviewed_artifacts_sha256": {
+    "inputs.json": "31a5ca67fb018b90228c480d868c98bedc9e5e2f81e6d9ac4eba67091f77aff5",
+    "answer_keys.json": "0bcdd2c5ba9e5dbd62a10f28df326c888a58a5944b58ebe19f1f2ef82ac286c7",
+    "blind_judge.json": "94a570a53fa8b86969787f872a6e50c2a8366c60b8f57073e72bb28d53fda95c"
+  },
+  "scope": "Review of the original 36 synthetic inputs and answer keys at the recorded hashes. Proposed revisions have not yet been read or approved.",
+  "method": "First pass read only AGENTS.md and inputs.json. Second pass compared all keys and read 12 primary incident reports plus AWS documentation and version-pinned Kubernetes source for disputed details.",
+  "empirical_verification": false,
+  "empirical_verification_note": "No incident was reproduced and no live cluster was inspected. Source verification records what primary reports say, not independent verification of their full historical claims.",
+  "confidence_note": "Blind confidence numbers were subjective judgments of the supplied fictional evidence and are not calibrated accuracy probabilities or empirical confidence intervals.",
+  "blind_review_corrections": [
+    {
+      "case_id": "case-6aced99011",
+      "correction": "My blind treatment of labels was too broad: NodeRestriction does reject label changes in kubelet status updates. The original E3 is plausible through labels, while its merged nodeSelector detail still merits correction. Frozen blind output is retained for audit."
+    },
+    {
+      "case_id": "case-bf47d72b56",
+      "correction": "Omitted IAM role removal is an incompleteness, not proof of impossibility. AWS documentation confirms the prerequisite, and the historical report confirms deletion/delay without specifying the exact preceding API call."
+    }
+  ],
+  "summary": {
+    "cases": 36,
+    "accept": 33,
+    "revise": 3,
+    "reject": 0,
+    "blind_status_agreement": 35,
+    "source_review_supported_statuses": 24,
+    "source_review_insufficient_statuses": 12,
+    "historical_sources_verified": 10,
+    "historical_sources_partial": 2,
+    "historical_sources_unavailable": 0
+  },
+  "cases": [
+    {
+      "id": "case-b8520965f8",
+      "family": "host-routing",
+      "variant": "supported",
+      "decision": "accept",
+      "reasons": [
+        "Loss of pod policy-routing rules after a systemd-networkd restart explains cross-node connectivity loss. The restart is the likely trigger; the precise rule-removal behavior is not demonstrated.",
+        "E2/E3 are relevant decisive observations. Historical source checking concerns the family mechanism, not fictional times, counts or experiments."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "host-routing"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Identify the CNI and networkd version/configuration, affected policy-routing tables, and whether restoring the missing rules restores cross-node traffic."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-ba957a5308",
+      "family": "host-routing",
+      "variant": "counterfactual",
+      "decision": "accept",
+      "reasons": [
+        "Removal of the inter-worker firewall allow rule blocks cross-node pod traffic.",
+        "E2/E3 support the alternative and contradict the nominated original mechanism. This counterfactual is authored fiction; the historical family source does not verify that alternative event."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "host-routing"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Confirm rejected flow tuples match the affected pod path and that restoring the intended rule restores connectivity."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-dc047a77d5",
+      "family": "host-routing",
+      "variant": "insufficient",
+      "decision": "accept",
+      "reasons": [
+        "Cross-node dataplane failure is localized, but its cause cannot be determined from pod readiness and same-node success alone.",
+        "The key appropriately abstains: E1 alone does not establish the family mechanism. Its requested next check is relevant but not exhaustive."
+      ],
+      "blind_status": "insufficient_evidence",
+      "key_status": "insufficient_evidence",
+      "reviewed_status": "insufficient_evidence",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "host-routing"
+      ],
+      "technical_plausibility": "observations plausible; cause underdetermined",
+      "remaining_uncertainty": [
+        "Compare routes and policy rules before/after maintenance.",
+        "Inspect inter-worker firewall, NetworkPolicy, CNI/tunnel state and packet captures."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-dd638bc02d",
+      "family": "rollout-api-load",
+      "variant": "supported",
+      "decision": "revise",
+      "reasons": [
+        "Synchronized node-agent startup produced a burst of large unpaginated pod LIST requests and API-server memory pressure, explaining the API degradation.",
+        "E2/E3 are relevant decisive observations. Historical source checking concerns the family mechanism, not fictional times, counts or experiments.",
+        "The key adds a previous rollout delay absent from the supplied observations. Crossing a memory limit supports pressure/exhaustion but does not itself establish an OOM kill. Keep the supported classification, tighten causal wording to observed scope."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "rollout-api-load"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Measure response sizes, API-server memory/GC and termination events to distinguish pressure from confirmed OOM termination.",
+        "Verify rollout concurrency and actual LIST request scope."
+      ],
+      "proposed_changes": [
+        {
+          "target": "answer_keys.expected_cause",
+          "proposed": "Near-simultaneous node-agent startup with cached images produced concurrent unpaginated LIST requests and API-server memory pressure above its configured limit.",
+          "purpose": "Avoid importing the historical prior-rollout comparison or claiming unobserved OOM termination."
+        }
+      ]
+    },
+    {
+      "id": "case-ce633c6845",
+      "family": "rollout-api-load",
+      "variant": "counterfactual",
+      "decision": "accept",
+      "reasons": [
+        "Severe etcd storage fsync latency during a storage snapshot is the supported control-plane bottleneck; the node-agent rollout is coincidental.",
+        "E2/E3 support the alternative and contradict the nominated original mechanism. This counterfactual is authored fiction; the historical family source does not verify that alternative event."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "rollout-api-load"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Correlate etcd commit/request latency and disk utilization with the snapshot and recovery."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-a67d358923",
+      "family": "rollout-api-load",
+      "variant": "insufficient",
+      "decision": "accept",
+      "reasons": [
+        "Temporal overlap between a rollout and API latency does not identify the bottleneck.",
+        "The key appropriately abstains: E1 alone does not establish the family mechanism. Its requested next check is relevant but not exhaustive."
+      ],
+      "blind_status": "insufficient_evidence",
+      "key_status": "insufficient_evidence",
+      "reviewed_status": "insufficient_evidence",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "rollout-api-load"
+      ],
+      "technical_plausibility": "observations plausible; cause underdetermined",
+      "remaining_uncertainty": [
+        "Inspect API request volume/size, server resource use and errors.",
+        "Inspect etcd latency, storage metrics and rollout start concurrency."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-8b2777cf10",
+      "family": "gitops-pruning",
+      "variant": "supported",
+      "decision": "accept",
+      "reasons": [
+        "A template condition rendered the desired resource set empty, and automated GitOps pruning deleted the previously managed resources.",
+        "E2/E3 are relevant decisive observations. Historical source checking concerns the family mechanism, not fictional times, counts or experiments."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "gitops-pruning"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Confirm the deleted resource identities match the missing Services and determine which template input changed."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-1bf1468007",
+      "family": "gitops-pruning",
+      "variant": "counterfactual",
+      "decision": "accept",
+      "reasons": [
+        "A cleanup service account deleted the affected namespaces, causing deletion of their Services.",
+        "E2/E3 support the alternative and contradict the nominated original mechanism. This counterfactual is authored fiction; the historical family source does not verify that alternative event."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "gitops-pruning"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Inspect namespace deletion lifecycle and cleanup job/audit attribution to determine why the delete was issued."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-59798af406",
+      "family": "gitops-pruning",
+      "variant": "insufficient",
+      "decision": "accept",
+      "reasons": [
+        "Services are absent, but the deleting actor and initiating configuration change are unknown.",
+        "The key appropriately abstains: E1 alone does not establish the family mechanism. Its requested next check is relevant but not exhaustive."
+      ],
+      "blind_status": "insufficient_evidence",
+      "key_status": "insufficient_evidence",
+      "reviewed_status": "insufficient_evidence",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "gitops-pruning"
+      ],
+      "technical_plausibility": "observations plausible; cause underdetermined",
+      "remaining_uncertainty": [
+        "Inspect Service and namespace DELETE audit events.",
+        "Compare GitOps desired manifests, prune history and infrastructure/cleanup change history."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-6f530d02f9",
+      "family": "selector-concentration",
+      "variant": "supported",
+      "decision": "accept",
+      "reasons": [
+        "The Service selector excludes healthy old pods, concentrating traffic on two new pods; this overload is the supported explanation for their OOM/restart loop and rollout disruption.",
+        "E2/E3 are relevant decisive observations. Historical source checking concerns the family mechanism, not fictional times, counts or experiments."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "selector-concentration"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Correlate new-pod memory with request rate and compare resource limits.",
+        "Inspect EndpointSlice readiness conditions and request distribution during restarts."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-f8c6aa0726",
+      "family": "selector-concentration",
+      "variant": "counterfactual",
+      "decision": "accept",
+      "reasons": [
+        "The new image has workload-dependent memory growth absent in the previous image under equal load; an image-level memory regression explains the OOM failures.",
+        "E2/E3 support the alternative and contradict the nominated original mechanism. This counterfactual is authored fiction; the historical family source does not verify that alternative event."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "selector-concentration"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Compare limits, runtime settings and heap/RSS profiles to identify the regression; continuous RSS growth alone does not establish a specific leak."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-d0bcf03fda",
+      "family": "selector-concentration",
+      "variant": "insufficient",
+      "decision": "accept",
+      "reasons": [
+        "New pods are OOMKilled, but uneven traffic, changed limits and a memory regression remain unresolved alternatives.",
+        "The key appropriately abstains: E1 alone does not establish the family mechanism. Its requested next check is relevant but not exhaustive."
+      ],
+      "blind_status": "insufficient_evidence",
+      "key_status": "insufficient_evidence",
+      "reviewed_status": "insufficient_evidence",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "selector-concentration"
+      ],
+      "technical_plausibility": "observations plausible; cause underdetermined",
+      "remaining_uncertainty": [
+        "Inspect Service selectors, EndpointSlice readiness and per-pod load.",
+        "Compare image/configuration/limits and run controlled equal-load memory comparisons."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-bf47d72b56",
+      "family": "delayed-identity",
+      "variant": "supported",
+      "decision": "revise",
+      "reasons": [
+        "Deletion of the shared instance profile prevents replacement provisioning and is consistent with existing workers losing renewable credentials after cached credentials expire.",
+        "E2/E3 are relevant decisive observations. Historical source checking concerns the family mechanism, not fictional times, counts or experiments.",
+        "A successful profile deletion is compatible with an omitted preceding role-removal operation. Include that prerequisite for teaching clarity; do not attribute that exact audit call to Stytch without evidence."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "partial",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "delayed-identity",
+        "aws-delete-profile"
+      ],
+      "technical_plausibility": "plausible with an omitted prerequisite",
+      "remaining_uncertainty": [
+        "Inspect preceding RemoveRoleFromInstanceProfile events and instance associations; successful profile deletion requires removal of its role.",
+        "Check metadata credential refresh failures and actual credential expiry times on affected workers."
+      ],
+      "proposed_changes": [
+        {
+          "target": "inputs.E2",
+          "proposed": "12:40Z fictional IAM audit: RemoveRoleFromInstanceProfile removed the role, then DeleteInstanceProfile successfully deleted the shared profile referenced by a retired node group and active workers.",
+          "purpose": "Explicitly supply a technically required synthetic prerequisite. The historical report does not name this API call."
+        }
+      ]
+    },
+    {
+      "id": "case-08f3f5f687",
+      "family": "delayed-identity",
+      "variant": "counterfactual",
+      "decision": "accept",
+      "reasons": [
+        "A 19-minute node clock skew causes signed cloud API requests to expire, explaining cloud credential/signature errors and plausibly bootstrap failure.",
+        "E2/E3 support the alternative and contradict the nominated original mechanism. This counterfactual is authored fiction; the historical family source does not verify that alternative event."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "partial",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "delayed-identity"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Verify the same skew and RequestExpired failure on replacement nodes, and confirm time correction restores bootstrap."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-ea27849b79",
+      "family": "delayed-identity",
+      "variant": "insufficient",
+      "decision": "accept",
+      "reasons": [
+        "Credential errors and failed node initialization do not distinguish deleted IAM resources, denied permissions, expired credentials, clock skew or metadata/network failure.",
+        "The key appropriately abstains: E1 alone does not establish the family mechanism. Its requested next check is relevant but not exhaustive."
+      ],
+      "blind_status": "insufficient_evidence",
+      "key_status": "insufficient_evidence",
+      "reviewed_status": "insufficient_evidence",
+      "source_verification": "partial",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "delayed-identity"
+      ],
+      "technical_plausibility": "observations plausible; cause underdetermined",
+      "remaining_uncertainty": [
+        "Inspect exact cloud errors, IAM audit/profile state, credential expiry/refresh, node time and bootstrap logs."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-d7f5448ed1",
+      "family": "pdb-endpoint",
+      "variant": "supported",
+      "decision": "accept",
+      "reasons": [
+        "The load balancer lost its Redis backend endpoint during scaling despite the pod remaining available; the blocked eviction and endpoint removal expose inconsistent lifecycle handling.",
+        "E2/E3 are relevant decisive observations. Historical source checking concerns the family mechanism, not fictional times, counts or experiments."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "pdb-endpoint"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Inspect controller/version and scaling sequence to establish why endpoint removal preceded or outlived the blocked eviction.",
+        "Verify backend reattachment restores load-balancer reachability."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-2c974849bb",
+      "family": "pdb-endpoint",
+      "variant": "counterfactual",
+      "decision": "accept",
+      "reasons": [
+        "A newly selecting ingress NetworkPolicy denies the client namespace access to Redis; policy drops and direct-IP failure support this mechanism.",
+        "E2/E3 support the alternative and contradict the nominated original mechanism. This counterfactual is authored fiction; the historical family source does not verify that alternative event."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "pdb-endpoint"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Confirm load-balancer forwarding preserves or translates client identity in a way covered by the observed policy drops."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-5d826dc228",
+      "family": "pdb-endpoint",
+      "variant": "insufficient",
+      "decision": "accept",
+      "reasons": [
+        "The fault is somewhere on the client-to-load-balancer-to-pod path; Running/Ready status does not identify it.",
+        "The key appropriately abstains: E1 alone does not establish the family mechanism. Its requested next check is relevant but not exhaustive."
+      ],
+      "blind_status": "insufficient_evidence",
+      "key_status": "insufficient_evidence",
+      "reviewed_status": "insufficient_evidence",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "pdb-endpoint"
+      ],
+      "technical_plausibility": "observations plausible; cause underdetermined",
+      "remaining_uncertainty": [
+        "Test direct pod connectivity from affected clients and inspect LB target membership/health.",
+        "Inspect policies, firewall paths and packet captures."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-695a822ca9",
+      "family": "tls-keepalive",
+      "variant": "supported",
+      "decision": "accept",
+      "reasons": [
+        "An obsolete bundled CA store cannot validate new TLS connections after its trusted root expires; established old connections conceal the problem until reconnection.",
+        "E2/E3 are relevant decisive observations. Historical source checking concerns the family mechanism, not fictional times, counts or experiments."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "tls-keepalive"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Inspect the actual chain, client verification implementation and alternate chain/root supplied by the current CA store."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-560d7ff354",
+      "family": "tls-keepalive",
+      "variant": "counterfactual",
+      "decision": "accept",
+      "reasons": [
+        "The new deployment uses login.internal while the presented certificate covers auth.internal, producing hostname validation failure.",
+        "E2/E3 support the alternative and contradict the nominated original mechanism. This counterfactual is authored fiction; the historical family source does not verify that alternative event."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "tls-keepalive"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Inspect the configured endpoint/SNI and full SAN list, then verify correction of endpoint or certificate restores connections."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-902b1f4597",
+      "family": "tls-keepalive",
+      "variant": "insufficient",
+      "decision": "accept",
+      "reasons": [
+        "Success on established connections does not distinguish a trust-chain failure from hostname, certificate, DNS or new-connection configuration problems.",
+        "The key appropriately abstains: E1 alone does not establish the family mechanism. Its requested next check is relevant but not exhaustive."
+      ],
+      "blind_status": "insufficient_evidence",
+      "key_status": "insufficient_evidence",
+      "reviewed_status": "insufficient_evidence",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "tls-keepalive"
+      ],
+      "technical_plausibility": "observations plausible; cause underdetermined",
+      "remaining_uncertainty": [
+        "Capture the exact handshake error and chain/SANs.",
+        "Compare endpoint/SNI, CA bundles and fresh connections from both deployments."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-c674299ad8",
+      "family": "volume-ownership",
+      "variant": "supported",
+      "decision": "accept",
+      "reasons": [
+        "Recursive fsGroup ownership changes over millions of files delay volume preparation and application startup.",
+        "E2/E3 are relevant decisive observations. Historical source checking concerns the family mechanism, not fictional times, counts or experiments."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "volume-ownership"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Inspect effective fsGroupChangePolicy and CSI ownership behavior to select an applicable mitigation."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-74f6cf251d",
+      "family": "volume-ownership",
+      "variant": "counterfactual",
+      "decision": "accept",
+      "reasons": [
+        "A stale attachment to the previous NotReady node blocks attachment of the volume to the replacement, preventing startup.",
+        "E2/E3 support the alternative and contradict the nominated original mechanism. This counterfactual is authored fiction; the historical family source does not verify that alternative event."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "volume-ownership"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Inspect access mode, VolumeAttachment/controller state and safe fencing/detachment conditions on the old node."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-8398ec0c0c",
+      "family": "volume-ownership",
+      "variant": "insufficient",
+      "decision": "accept",
+      "reasons": [
+        "File count is a potential clue but does not prove filesystem ownership traversal or any other startup blocker.",
+        "The key appropriately abstains: E1 alone does not establish the family mechanism. Its requested next check is relevant but not exhaustive."
+      ],
+      "blind_status": "insufficient_evidence",
+      "key_status": "insufficient_evidence",
+      "reviewed_status": "insufficient_evidence",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "volume-ownership"
+      ],
+      "technical_plausibility": "observations plausible; cause underdetermined",
+      "remaining_uncertainty": [
+        "Inspect pod events and kubelet/CSI attach/mount logs.",
+        "Check init containers, image pulls, volume attachment state and ownership traversal progress."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-b7b0997c31",
+      "family": "observer-tail-latency",
+      "variant": "supported",
+      "decision": "accept",
+      "reasons": [
+        "The metrics collector inspection causes memory-map lock contention and request stalls; the isolated disable/re-enable experiment supplies causal support.",
+        "E2/E3 are relevant decisive observations. Historical source checking concerns the family mechanism, not fictional times, counts or experiments."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "partial",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "observer-tail-latency"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Identify the inspected proc interface, kernel/runtime version and lock stacks to select a targeted fix."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-fa1f644111",
+      "family": "observer-tail-latency",
+      "variant": "counterfactual",
+      "decision": "accept",
+      "reasons": [
+        "Stop-the-world garbage collection causes the tail-latency spikes; allocation reduction removes them with collector settings unchanged.",
+        "E2/E3 support the alternative and contradict the nominated original mechanism. This counterfactual is authored fiction; the historical family source does not verify that alternative event."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "partial",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "observer-tail-latency"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Inspect GC pause traces, allocation profiles and runtime settings to identify the triggering allocation behavior."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-d52a13aa3d",
+      "family": "observer-tail-latency",
+      "variant": "insufficient",
+      "decision": "accept",
+      "reasons": [
+        "Rare latency spikes with moderate average CPU do not identify their cause.",
+        "The key appropriately abstains: E1 alone does not establish the family mechanism. Its requested next check is relevant but not exhaustive."
+      ],
+      "blind_status": "insufficient_evidence",
+      "key_status": "insufficient_evidence",
+      "reviewed_status": "insufficient_evidence",
+      "source_verification": "partial",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "observer-tail-latency"
+      ],
+      "technical_plausibility": "observations plausible; cause underdetermined",
+      "remaining_uncertainty": [
+        "Capture slow-request traces and profiles, GC pauses, CPU throttling/scheduling latency, I/O and collector timing."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-11d8b17898",
+      "family": "dns-stale-state",
+      "variant": "supported",
+      "decision": "accept",
+      "reasons": [
+        "Stale UDP conntrack translations retain a removed CoreDNS endpoint for affected flows, blackholing their DNS requests.",
+        "E2/E3 are relevant decisive observations. Historical source checking concerns the family mechanism, not fictional times, counts or experiments."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "dns-stale-state"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Identify dataplane/kube-proxy behavior and conntrack cleanup timing; validate recovery of the affected flow after its stale mapping is removed."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-3da36e7ddf",
+      "family": "dns-stale-state",
+      "variant": "counterfactual",
+      "decision": "accept",
+      "reasons": [
+        "A new egress NetworkPolicy blocks affected clients\u2019 UDP DNS traffic to live CoreDNS endpoints.",
+        "E2/E3 support the alternative and contradict the nominated original mechanism. This counterfactual is authored fiction; the historical family source does not verify that alternative event."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "dns-stale-state"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Check whether apparent intermittency is across clients, policy timing or cached/TCP-fallback queries; a fixed deny generally consistently blocks matching UDP flows."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-58f9fe24ff",
+      "family": "dns-stale-state",
+      "variant": "insufficient",
+      "decision": "accept",
+      "reasons": [
+        "Healthy CoreDNS replicas and a subset of failing clients do not distinguish stale conntrack, policy, client resolver issues or local dataplane problems.",
+        "The key appropriately abstains: E1 alone does not establish the family mechanism. Its requested next check is relevant but not exhaustive."
+      ],
+      "blind_status": "insufficient_evidence",
+      "key_status": "insufficient_evidence",
+      "reviewed_status": "insufficient_evidence",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "dns-stale-state"
+      ],
+      "technical_plausibility": "observations plausible; cause underdetermined",
+      "remaining_uncertainty": [
+        "Compare DNS EndpointSlices and failing-flow conntrack destinations.",
+        "Capture packets and inspect policy drops, CoreDNS load and client resolver behavior."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-6aced99011",
+      "family": "webhook-lifecycle",
+      "variant": "supported",
+      "decision": "revise",
+      "reasons": [
+        "Fail-open admission before CA injection plausibly placed the simulation on a real node. The alleged later rejection of pod/status updates due to injected nodeSelector/labels is not sufficiently coherent to establish the cleanup failure mechanism.",
+        "E2/E3 are relevant decisive observations. Historical source checking concerns the family mechanism, not fictional times, counts or experiments.",
+        "Second-pass correction to my blind judgment: changing Pod labels is permitted in some contexts, but a kubelet node identity with NodeRestriction cannot change labels through pod/status. Therefore E3 can explain rejected completion status even though its nodeSelector detail conflates a separate ordinary-update path.",
+        "The broad answer-key mechanism is acceptable; rewrite the evidence so a learner does not infer that pod/status rejects nodeSelector through ordinary Pod-spec immutability validation."
+      ],
+      "blind_status": "insufficient_evidence",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "webhook-lifecycle",
+        "k8s-node-restriction",
+        "k8s-pod-status-strategy"
+      ],
+      "technical_plausibility": "plausible via label rejection, but two update paths are conflated",
+      "remaining_uncertainty": [
+        "Obtain the exact admission response, JSONPatch, API rejection message and HTTP status.",
+        "Confirm the webhook matches pods/status and inspect the Kubernetes version/status update strategy.",
+        "Determine whether the patch is malformed, denied by admission, or changes some independently invalid status/metadata field; inspect whether completion status actually persisted."
+      ],
+      "proposed_changes": [
+        {
+          "target": "inputs.E3",
+          "proposed": "19:10Z after CA injection, the webhook matches UPDATE requests for both pods and pods/status. A job-controller ordinary Pod update is rejected because the webhook adds an immutable nodeSelector. Separately, the webhook adds labels to a kubelet pods/status update; with NodeRestriction enabled, admission rejects the label change from the node identity, and completion status never persists.",
+          "purpose": "Separate immutable spec validation on ordinary Pod updates from NodeRestriction label validation on kubelet status updates."
+        },
+        {
+          "target": "answer_keys.expected_cause",
+          "proposed": "Fail-open admission during delayed CA injection allowed real-node scheduling; later webhook label mutation of kubelet status updates was rejected by NodeRestriction, blocking completion status and cleanup. Ordinary Pod updates separately failed after injected nodeSelector changes.",
+          "purpose": "Identify the specific causal path to missing completion status without conflating update endpoints."
+        }
+      ]
+    },
+    {
+      "id": "case-25087601d4",
+      "family": "webhook-lifecycle",
+      "variant": "counterfactual",
+      "decision": "accept",
+      "reasons": [
+        "An orphaned cleanup finalizer blocks deletion of an already Succeeded pod because the responsible cleanup controller is absent.",
+        "E2/E3 support the alternative and contradict the nominated original mechanism. This counterfactual is authored fiction; the historical family source does not verify that alternative event."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "webhook-lifecycle"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Confirm deletionTimestamp and finalizer ownership, and determine whether required external cleanup has completed before finalizer removal."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-d86046ac54",
+      "family": "webhook-lifecycle",
+      "variant": "insufficient",
+      "decision": "accept",
+      "reasons": [
+        "Process exit alone does not establish persisted Pod completion or successful cleanup; remaining Pods can also be normal without a deletion policy.",
+        "The key appropriately abstains: E1 alone does not establish the family mechanism. Its requested next check is relevant but not exhaustive."
+      ],
+      "blind_status": "insufficient_evidence",
+      "key_status": "insufficient_evidence",
+      "reviewed_status": "insufficient_evidence",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "webhook-lifecycle"
+      ],
+      "technical_plausibility": "observations plausible; cause underdetermined",
+      "remaining_uncertainty": [
+        "Inspect Pod phase/container statuses, deletionTimestamp, finalizers and controller events/logs.",
+        "Inspect admission errors and the expected simulation cleanup lifecycle."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-9085887517",
+      "family": "node-bootstrap",
+      "variant": "supported",
+      "decision": "accept",
+      "reasons": [
+        "A stale fixed package repository URL returns 404 and aborts bootstrap on the four instances, preventing their registration and leaving insufficient cluster capacity.",
+        "E2/E3 are relevant decisive observations. Historical source checking concerns the family mechanism, not fictional times, counts or experiments."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "node-bootstrap"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Test bootstrap using the current package path and verify nodes register and become Ready."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-a2915c1019",
+      "family": "node-bootstrap",
+      "variant": "counterfactual",
+      "decision": "accept",
+      "reasons": [
+        "The new instance role is absent from the cluster authentication mapping, so kubelet registration is rejected despite successful network/bootstrap prerequisites.",
+        "E2/E3 support the alternative and contradict the nominated original mechanism. This counterfactual is authored fiction; the historical family source does not verify that alternative event."
+      ],
+      "blind_status": "supported",
+      "key_status": "supported",
+      "reviewed_status": "supported",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "node-bootstrap"
+      ],
+      "technical_plausibility": "plausible",
+      "remaining_uncertainty": [
+        "Verify the exact identity presented by kubelet and the cluster authentication mechanism, then validate registration after the intended mapping is restored."
+      ],
+      "proposed_changes": []
+    },
+    {
+      "id": "case-0c5f4e12ee",
+      "family": "node-bootstrap",
+      "variant": "insufficient",
+      "decision": "accept",
+      "reasons": [
+        "The cloud instances have not joined Kubernetes; the evidence does not distinguish incomplete bootstrap, network reachability, authentication or kubelet failure.",
+        "The key appropriately abstains: E1 alone does not establish the family mechanism. Its requested next check is relevant but not exhaustive."
+      ],
+      "blind_status": "insufficient_evidence",
+      "key_status": "insufficient_evidence",
+      "reviewed_status": "insufficient_evidence",
+      "source_verification": "verified",
+      "source_verification_scope": "Original family mechanism only; not empirical verification of this synthetic case.",
+      "source_ids": [
+        "node-bootstrap"
+      ],
+      "technical_plausibility": "observations plausible; cause underdetermined",
+      "remaining_uncertainty": [
+        "Inspect bootstrap and kubelet registration logs on missing instances.",
+        "Check package installation, API endpoint connectivity, identity mapping and node startup progress."
+      ],
+      "proposed_changes": []
+    }
+  ],
+  "sources": [
+    {
+      "id": "host-routing",
+      "company": "Datadog",
+      "url": "https://www.datadoghq.com/blog/engineering/2023-03-08-deep-dive-into-platform-level-impact/",
+      "source_type": "primary incident report",
+      "verification": "verified",
+      "reported_mechanism": "Datadog reports an unattended systemd update restarting networkd and flushing routing rules used for pod networking.",
+      "limitations": "Behavior was version/configuration dependent; synthetic snapshots establish the local failure without identifying every networkd setting.",
+      "retrieval": "Primary webpage read through web tool."
+    },
+    {
+      "id": "rollout-api-load",
+      "company": "Reddit",
+      "url": "https://www.reddit.com/r/RedditEng/comments/1id01im/unseen_catalyst_a_simple_rollout_caused_a/",
+      "source_type": "primary incident report",
+      "verification": "verified",
+      "reported_mechanism": "Reddit reports cached images removing pull throttling, simultaneous large LIST calls, and control-plane VM memory exhaustion.",
+      "limitations": "The historical report concerns VM exhaustion; the synthetic memory limit, counts and timings are invented. Prior rollout delay is not directly observed in this fixture.",
+      "retrieval": "Primary webpage read through web tool."
+    },
+    {
+      "id": "gitops-pruning",
+      "company": "Skyscanner",
+      "url": "https://medium.com/@SkyscannerEng/how-a-couple-of-characters-brought-down-our-site-356ccaf1fbc3",
+      "source_type": "primary incident report",
+      "verification": "verified",
+      "reported_mechanism": "Skyscanner reports broken infrastructure templating leaving no valid namespaces and ArgoCD reconciliation deleting services.",
+      "limitations": "The synthetic empty rendered resource list and explicit prune audit normalize a broader namespace/configuration failure; they are not literal historical observations.",
+      "retrieval": "Primary webpage read through web tool."
+    },
+    {
+      "id": "selector-concentration",
+      "company": "Grafana Labs",
+      "url": "https://grafana.com/blog/how-adding-kubernetes-label-selectors-caused-an-outage-in-grafana-cloud-logs-and-how-we-resolved-it/",
+      "source_type": "primary incident report",
+      "verification": "verified",
+      "reported_mechanism": "Grafana reports an added Service selector routing load to a small subset of pods, causing overload and memory failures.",
+      "limitations": "Synthetic load ratios, pod counts and equal-rate experiments are added evidence, not quoted historical measurements.",
+      "retrieval": "Primary webpage read through web tool."
+    },
+    {
+      "id": "delayed-identity",
+      "company": "Stytch",
+      "url": "https://stytch.com/blog/stytch-postmortem-2023-02-23/",
+      "source_type": "primary incident report",
+      "verification": "partial",
+      "reported_mechanism": "Stytch reports deletion of a shared instance profile, inability to launch replacement nodes, and delayed failure of existing nodes.",
+      "limitations": "The report supports delayed effects but does not establish the fixture exact cached-credential expiry or name the required role-removal API call.",
+      "retrieval": "Primary webpage read through web tool."
+    },
+    {
+      "id": "pdb-endpoint",
+      "company": "GitLab",
+      "url": "https://gitlab.com/gitlab-com/gl-infra/production/-/issues/21208",
+      "source_type": "primary incident report",
+      "verification": "verified",
+      "reported_mechanism": "GitLab reports a PDB blocking eviction while load-balancer lifecycle handling removed NEG connectivity and left a running Redis pod unreachable.",
+      "limitations": "The source describes NEG removal; the synthetic empty-group observation is a mechanism-inspired abstraction. PDBs do not generally guarantee load-balancer membership.",
+      "retrieval": "Primary webpage read through web tool."
+    },
+    {
+      "id": "tls-keepalive",
+      "company": "Shopify",
+      "url": "https://shopify.engineering/that-old-certificate-expired-and-started-an-outage-this-is-what-happened-next",
+      "source_type": "primary incident report",
+      "verification": "verified",
+      "reported_mechanism": "Shopify reports an obsolete bundled CA store, root expiry, and established connections concealing handshake failures until pod replacement.",
+      "limitations": "Applicability depends on the actual client and trust chain; this is not a universal assertion that every implementation rejects every expired trust anchor.",
+      "retrieval": "Primary webpage read through web tool."
+    },
+    {
+      "id": "volume-ownership",
+      "company": "Cloudflare",
+      "url": "https://blog.cloudflare.com/one-line-kubernetes-fix-saved-600-hours-a-year/",
+      "source_type": "primary incident report",
+      "verification": "verified",
+      "reported_mechanism": "Cloudflare reports recursive fsGroup ownership processing on a file-heavy volume delaying Atlantis startup, mitigated with an applicable ownership-change policy.",
+      "limitations": "The report is not a universal promise that OnRootMismatch is safe or effective for every CSI driver/volume.",
+      "retrieval": "Primary webpage read through web tool."
+    },
+    {
+      "id": "observer-tail-latency",
+      "company": "Pinterest",
+      "url": "https://medium.com/pinterest-engineering/debugging-the-one-in-a-million-failure-migrating-pinterests-search-infrastructure-to-kubernetes-bef9af9dabf4",
+      "source_type": "primary incident report",
+      "verification": "partial",
+      "reported_mechanism": "Pinterest reports latency disappearing when cAdvisor was suspended and identifies smaps/clear_refs work as the likely memory-contention mechanism.",
+      "limitations": "The exact kernel locking explanation remains qualified in the report. The fixture direct lock traces and isolated disable/re-enable experiment are synthetic strengthening, not historical proof.",
+      "retrieval": "Primary webpage read through web tool."
+    },
+    {
+      "id": "dns-stale-state",
+      "company": "Preply",
+      "url": "https://medium.com/preply-engineering/dns-postmortem-e169efd45afd",
+      "source_type": "primary incident report",
+      "verification": "verified",
+      "reported_mechanism": "Preply reports stale conntrack destinations after CoreDNS scale-down and explicitly leaves the underlying cleanup defect unresolved.",
+      "limitations": "The key correctly avoids claiming a specific conntrack bug; the report is evidence of the authors findings, not independent proof of a particular kernel defect.",
+      "retrieval": "Primary webpage read through web tool."
+    },
+    {
+      "id": "webhook-lifecycle",
+      "company": "Applied Computing Research Labs",
+      "url": "https://appliedcomputing.io/posts/2025-12-08-postmortem-ci-runner/",
+      "source_type": "primary incident report",
+      "verification": "verified",
+      "reported_mechanism": "ACRL reports fail-open admission during delayed CA injection, later ordinary Pod-update rejection for nodeSelector, and separate kubelet status-update rejection for labels.",
+      "limitations": "The synthetic E3 merges two paths. Upstream code supports the distinction, but no cluster reproduction or historical version/configuration verification was performed.",
+      "retrieval": "Primary webpage read through web tool."
+    },
+    {
+      "id": "node-bootstrap",
+      "company": "FREE NOW",
+      "url": "https://github.com/freenowtech/postmortems/blob/master/2019-09-19%20-%20New%20K8s%20workers%20unable%20to%20join%20cluster.pdf",
+      "source_type": "primary incident report",
+      "verification": "verified",
+      "reported_mechanism": "FREE NOW reports a moved package and hardcoded download URL blocking nodeup bootstrap, leaving cloud instances absent from Kubernetes.",
+      "limitations": "The PDF timeline describes checksum mismatch. Synthetic HTTP 404 is a plausible invented observation, not the exact historical error.",
+      "retrieval": "Downloaded primary PDF and extracted text with pypdf; browser extraction failed."
+    },
+    {
+      "id": "aws-delete-profile",
+      "url": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeleteInstanceProfile.html",
+      "source_type": "official API documentation",
+      "verification": "verified",
+      "finding": "DeleteInstanceProfile requires that the profile has no associated role. The documentation warns that deleting a profile associated with a running instance can break its applications."
+    },
+    {
+      "id": "k8s-node-restriction",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.34.1/plugin/pkg/admission/noderestriction/admission.go",
+      "source_type": "upstream version-pinned source code",
+      "verification": "verified",
+      "finding": "admitPodStatus rejects a node status update if the old and new Pod labels differ. This explains the ACRL label rejection when this plugin and node identity apply."
+    },
+    {
+      "id": "k8s-pod-status-strategy",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.34.1/pkg/registry/core/pod/strategy.go",
+      "source_type": "upstream version-pinned source code",
+      "verification": "verified",
+      "finding": "podStatusStrategy.PrepareForUpdate restores old Spec. A nodeSelector edit is not by itself evidence of the regular immutable-Pod-spec error on the status subresource."
+    }
+  ]
+}

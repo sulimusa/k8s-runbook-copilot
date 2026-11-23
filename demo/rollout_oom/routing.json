@@ -1,0 +1,62 @@
+{
+  "synthetic": true,
+  "initial": {
+    "id": "O0",
+    "timestamp": "2026-10-20T10:05:00Z",
+    "text": "Atlas API: after a rolling update, new pods are repeatedly OOMKilled; old pods remain Ready. Cause unknown."
+  },
+  "observations": {
+    "inspect_rollout": {
+      "id": "O1",
+      "timestamp": "2026-10-20T10:05:00Z",
+      "window": "10:00-10:05 UTC",
+      "text": "Atlas API public Service atlas-api, namespace atlas-demo; old revision r17 and new revision r18. Four old and two new ready pods. New pods report OOMKilled, limit 512 MiB. Nodes have no MemoryPressure.",
+      "facts": {
+        "service": "atlas-api",
+        "namespace": "atlas-demo",
+        "old_revision": "r17",
+        "new_revision": "r18",
+        "ready_old": 4,
+        "ready_new": 2,
+        "node_pressure": false
+      }
+    },
+    "inspect_configuration": {
+      "id": "O3",
+      "timestamp": "2026-10-20T10:05:00Z",
+      "window": "10:00-10:05 UTC",
+      "text": "Effective RESULT_BUFFER_MIB is 64 in both revisions; payload and concurrency policies unchanged.",
+      "facts": {
+        "old_buffer": 64,
+        "new_buffer": 64
+      }
+    },
+    "inspect_routes": {
+      "id": "O2",
+      "timestamp": "2026-10-20T10:05:00Z",
+      "window": "10:00-10:05 UTC",
+      "text": "The public atlas-api Service selects app=atlas-api,release=r18. EndpointSlices include only the two new ready pods; the four old ready pods are excluded.",
+      "facts": {
+        "available": true,
+        "release_specific": true,
+        "eligible_old": 0,
+        "eligible_new": 2
+      }
+    },
+    "inspect_memory": {
+      "id": "O4",
+      "timestamp": "2026-10-20T10:05:00Z",
+      "window": "10:00-10:05 UTC",
+      "text": "Matching window: old pods receive 0 requests/s; each new pod receives 210 requests/s and reaches its 512 MiB limit. New pods at the earlier 70 requests/s load used 240 MiB. RESULT_BUFFER_MIB remains 64.",
+      "facts": {
+        "available": true,
+        "new_rps": 210,
+        "old_rps": 0,
+        "new_peak_mib": 512,
+        "lower_load_peak_mib": 240,
+        "buffer_changed": false,
+        "allocation_regression": false
+      }
+    }
+  }
+}

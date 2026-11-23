@@ -78,6 +78,15 @@ class Telemetry:
         self.agent_actions = meter.create_counter("copilot.agent.actions", unit="{action}",
                                                   description="Agent policy decisions and cluster writes")
         self.agent_duration = _hist(meter, "copilot.agent.duration", "s", "Agent run duration", _LATENCY_BUCKETS)
+        self.investigations = meter.create_counter('copilot.investigations', description='Atlas investigations')
+        self.investigation_duration = _hist(meter, 'copilot.investigation.duration', 's', 'Atlas duration',
+                                            [1, 5, 10, 30, 60, 120, 180, 300, 600])
+        self.investigation_calls = meter.create_counter('copilot.investigation.calls', description='Atlas calls')
+        self.investigation_tokens = meter.create_counter('copilot.investigation.tokens', description='Atlas token usage')
+        self.investigation_cost = meter.create_counter('copilot.investigation.cost', description='Atlas cost in USD')
+        self.judgments = meter.create_counter('copilot.judgments', description='Independent Atlas answer reviews')
+        self.judge_tokens = meter.create_counter('copilot.judge.tokens', description='Judge token usage')
+        self.judge_cost = meter.create_counter('copilot.judge.cost', description='Known judge cost in USD')
 
     @contextmanager
     def span(self, name: str, **attrs: Any) -> Iterator[Any]:
@@ -94,6 +103,32 @@ class Telemetry:
             return None
         ctx = otel_trace.get_current_span().get_span_context()
         return format(ctx.trace_id, "032x") if ctx and ctx.trace_id else None
+
+    def record_investigation(self, report):
+        if not self.enabled:
+            return
+        attrs = {**self.base, 'mode': report['mode'], 'planner': report['planner'], 'status': report['status']}
+        self.investigations.add(1, attrs)
+        self.investigation_duration.record(report['duration_ms'] / 1000, attrs)
+        for kind, count in [('model', report['model_calls']), ('tool', report['tool_calls'])]:
+            self.investigation_calls.add(count, {**attrs, 'kind': kind})
+        for kind in ('input', 'output'):
+            self.investigation_tokens.add(report[kind + '_tokens'], {**attrs, 'kind': kind})
+        if report['cost_usd'] is not None:
+            self.investigation_cost.add(report['cost_usd'], attrs)
+
+    def record_judgment(self, result):
+        if not self.enabled:
+            return
+        attrs = {**self.base, 'outcome': 'error' if result.get('error_type') else
+                 ('passed' if result['passed'] else 'failed')}
+        self.judgments.add(1, attrs)
+        for call in result.get('provider_calls', []):
+            for kind in ('input', 'output'):
+                if call.get(kind + '_tokens') is not None:
+                    self.judge_tokens.add(call[kind + '_tokens'], {**attrs, 'kind': kind})
+            if call.get('cost_usd') is not None:
+                self.judge_cost.add(call['cost_usd'], attrs)
 
     def record_agent(self, rep) -> None:
         """Emit metrics for one finished agent run (an AgentReport)."""

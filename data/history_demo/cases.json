@@ -1,0 +1,555 @@
+[
+  {
+    "id": "cache-rollout",
+    "title": "Rollout and OOM: service knowledge may help",
+    "question": "Why did cache-api start restarting after the rollout this week? What can we establish and what should we check before choosing a mitigation?",
+    "namespace": "prod-capstone",
+    "days": 7,
+    "as_of": "2026-11-20T12:00:00+00:00",
+    "scope": {
+      "service": "cache-api",
+      "version": "v2",
+      "namespace": "prod-capstone"
+    },
+    "coverage": {
+      "cluster": "runbook-capstone-demo",
+      "cluster_uid": "synthetic-history-only",
+      "namespace": "prod-capstone",
+      "history_available_since": "2026-11-14T12:00:00+00:00",
+      "healthy": true,
+      "limits": "Synthetic snapshot; observation timestamps, no audit actors, application logs, allocation profiles or metrics. No infrastructure actions.",
+      "streams": [
+        {
+          "kind": "Pod",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        },
+        {
+          "kind": "Deployment",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        },
+        {
+          "kind": "ReplicaSet",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        },
+        {
+          "kind": "Service",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        },
+        {
+          "kind": "EndpointSlice",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        },
+        {
+          "kind": "Event",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        }
+      ],
+      "gaps": []
+    },
+    "history": [
+      {
+        "id": "H1",
+        "kind": "Deployment",
+        "name": "cache-api",
+        "namespace": "prod-capstone",
+        "uid": "Deployment-cache-api",
+        "rv": "1",
+        "operation": "MODIFIED",
+        "observed_at": "2026-11-19T10:00:00+00:00",
+        "before": {
+          "kind": "Deployment",
+          "name": "cache-api",
+          "namespace": "prod-capstone",
+          "uid": "Deployment-cache-api",
+          "labels": {
+            "app": "cache-api"
+          },
+          "resource_version": "2",
+          "containers": [
+            {
+              "name": "api",
+              "image": "fictional/cache-api:v1",
+              "resources": {
+                "limits": {
+                  "memory": "512Mi"
+                }
+              }
+            }
+          ],
+          "replicas": 1,
+          "selector": {
+            "app": "cache-api"
+          },
+          "template_labels": {
+            "app": "cache-api"
+          }
+        },
+        "after": {
+          "kind": "Deployment",
+          "name": "cache-api",
+          "namespace": "prod-capstone",
+          "uid": "Deployment-cache-api",
+          "labels": {
+            "app": "cache-api"
+          },
+          "resource_version": "2",
+          "containers": [
+            {
+              "name": "api",
+              "image": "fictional/cache-api:v2",
+              "resources": {
+                "limits": {
+                  "memory": "512Mi"
+                }
+              }
+            }
+          ],
+          "replicas": 1,
+          "selector": {
+            "app": "cache-api"
+          },
+          "template_labels": {
+            "app": "cache-api"
+          }
+        }
+      },
+      {
+        "id": "H2",
+        "kind": "Pod",
+        "name": "cache-api-abc",
+        "namespace": "prod-capstone",
+        "uid": "Pod-cache-api-abc",
+        "rv": "2",
+        "operation": "ADDED",
+        "observed_at": "2026-11-19T10:06:00+00:00",
+        "before": null,
+        "after": {
+          "kind": "Pod",
+          "name": "cache-api-abc",
+          "namespace": "prod-capstone",
+          "uid": "Pod-cache-api-abc",
+          "labels": {
+            "app": "cache-api"
+          },
+          "resource_version": "2",
+          "containers": [
+            {
+              "name": "api",
+              "image": "fictional/cache-api:v2",
+              "resources": {
+                "limits": {
+                  "memory": "512Mi"
+                }
+              }
+            }
+          ],
+          "container_status": [
+            {
+              "name": "api",
+              "ready": false,
+              "restart_count": 3,
+              "last_termination": {
+                "reason": "OOMKilled",
+                "exitCode": 137
+              }
+            }
+          ],
+          "owners": [
+            {
+              "kind": "ReplicaSet",
+              "name": "cache-api-rs",
+              "uid": "ReplicaSet-cache-api-rs",
+              "controller": true
+            }
+          ]
+        }
+      }
+    ],
+    "current": [
+      {
+        "kind": "Deployment",
+        "name": "cache-api",
+        "namespace": "prod-capstone",
+        "uid": "Deployment-cache-api",
+        "labels": {
+          "app": "cache-api"
+        },
+        "resource_version": "2",
+        "containers": [
+          {
+            "name": "api",
+            "image": "fictional/cache-api:v2",
+            "resources": {
+              "limits": {
+                "memory": "512Mi"
+              }
+            }
+          }
+        ],
+        "replicas": 1,
+        "selector": {
+          "app": "cache-api"
+        },
+        "template_labels": {
+          "app": "cache-api"
+        }
+      },
+      {
+        "kind": "Pod",
+        "name": "cache-api-abc",
+        "namespace": "prod-capstone",
+        "uid": "Pod-cache-api-abc",
+        "labels": {
+          "app": "cache-api"
+        },
+        "resource_version": "2",
+        "containers": [
+          {
+            "name": "api",
+            "image": "fictional/cache-api:v2",
+            "resources": {
+              "limits": {
+                "memory": "512Mi"
+              }
+            }
+          }
+        ],
+        "container_status": [
+          {
+            "name": "api",
+            "ready": false,
+            "restart_count": 3,
+            "last_termination": {
+              "reason": "OOMKilled",
+              "exitCode": 137
+            }
+          }
+        ],
+        "owners": [
+          {
+            "kind": "ReplicaSet",
+            "name": "cache-api-rs",
+            "uid": "ReplicaSet-cache-api-rs",
+            "controller": true
+          }
+        ]
+      },
+      {
+        "kind": "ReplicaSet",
+        "name": "cache-api-rs",
+        "namespace": "prod-capstone",
+        "uid": "ReplicaSet-cache-api-rs",
+        "resource_version": "2",
+        "labels": {
+          "app": "cache-api"
+        },
+        "replicas": 1,
+        "ready_replicas": 0,
+        "owners": [
+          {
+            "kind": "Deployment",
+            "name": "cache-api",
+            "uid": "Deployment-cache-api",
+            "controller": true
+          }
+        ],
+        "containers": [
+          {
+            "name": "api",
+            "image": "fictional/cache-api:v2",
+            "resources": {
+              "limits": {
+                "memory": "512Mi"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "selector-change",
+    "title": "Selector change: cluster evidence is sufficient",
+    "question": "Why does demo-web have no endpoints? Compare the Service changes, current Pod labels and EndpointSlices this week. Is customer impact known?",
+    "namespace": "prod-capstone",
+    "days": 7,
+    "as_of": "2026-11-20T12:00:00+00:00",
+    "scope": {
+      "service": "demo-web",
+      "version": "v1",
+      "namespace": "prod-capstone"
+    },
+    "coverage": {
+      "cluster": "runbook-capstone-demo",
+      "cluster_uid": "synthetic-history-only",
+      "namespace": "prod-capstone",
+      "history_available_since": "2026-11-14T12:00:00+00:00",
+      "healthy": true,
+      "limits": "Synthetic snapshot; observation timestamps, no audit actors, application logs, allocation profiles or metrics. No infrastructure actions.",
+      "streams": [
+        {
+          "kind": "Pod",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        },
+        {
+          "kind": "Deployment",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        },
+        {
+          "kind": "ReplicaSet",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        },
+        {
+          "kind": "Service",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        },
+        {
+          "kind": "EndpointSlice",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        },
+        {
+          "kind": "Event",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        }
+      ],
+      "gaps": []
+    },
+    "history": [
+      {
+        "id": "H1",
+        "kind": "Service",
+        "name": "demo-web",
+        "namespace": "prod-capstone",
+        "uid": "Service-demo-web",
+        "rv": "1",
+        "operation": "MODIFIED",
+        "observed_at": "2026-11-19T10:00:00+00:00",
+        "before": {
+          "kind": "Service",
+          "name": "demo-web",
+          "namespace": "prod-capstone",
+          "uid": "Service-demo-web",
+          "labels": {
+            "app": "demo-web"
+          },
+          "resource_version": "2",
+          "selector": {
+            "app": "demo-web"
+          },
+          "selector_complete": true
+        },
+        "after": {
+          "kind": "Service",
+          "name": "demo-web",
+          "namespace": "prod-capstone",
+          "uid": "Service-demo-web",
+          "labels": {
+            "app": "demo-web"
+          },
+          "resource_version": "2",
+          "selector": {
+            "app": "no-matching-pods"
+          },
+          "selector_complete": true
+        }
+      },
+      {
+        "id": "H2",
+        "kind": "EndpointSlice",
+        "name": "demo-web-xyz",
+        "namespace": "prod-capstone",
+        "uid": "EndpointSlice-demo-web-xyz",
+        "rv": "2",
+        "operation": "MODIFIED",
+        "observed_at": "2026-11-19T10:01:00+00:00",
+        "before": {
+          "kind": "EndpointSlice",
+          "name": "demo-web-xyz",
+          "namespace": "prod-capstone",
+          "uid": "EndpointSlice-demo-web-xyz",
+          "labels": {
+            "kubernetes.io/service-name": "demo-web"
+          },
+          "resource_version": "2",
+          "endpoints": [
+            {
+              "ready": true
+            }
+          ]
+        },
+        "after": {
+          "kind": "EndpointSlice",
+          "name": "demo-web-xyz",
+          "namespace": "prod-capstone",
+          "uid": "EndpointSlice-demo-web-xyz",
+          "labels": {
+            "kubernetes.io/service-name": "demo-web"
+          },
+          "resource_version": "2",
+          "endpoints": []
+        }
+      }
+    ],
+    "current": [
+      {
+        "kind": "Service",
+        "name": "demo-web",
+        "namespace": "prod-capstone",
+        "uid": "Service-demo-web",
+        "labels": {
+          "app": "demo-web"
+        },
+        "resource_version": "2",
+        "selector": {
+          "app": "no-matching-pods"
+        },
+        "selector_complete": true
+      },
+      {
+        "kind": "Pod",
+        "name": "demo-web-abc",
+        "namespace": "prod-capstone",
+        "uid": "Pod-demo-web-abc",
+        "labels": {
+          "app": "demo-web"
+        },
+        "resource_version": "2",
+        "container_status": [
+          {
+            "name": "web",
+            "ready": true,
+            "restart_count": 0
+          }
+        ]
+      },
+      {
+        "kind": "EndpointSlice",
+        "name": "demo-web-xyz",
+        "namespace": "prod-capstone",
+        "uid": "EndpointSlice-demo-web-xyz",
+        "labels": {
+          "kubernetes.io/service-name": "demo-web"
+        },
+        "resource_version": "2",
+        "endpoints": []
+      }
+    ]
+  },
+  {
+    "id": "missing-history",
+    "title": "Earlier outage: evidence is insufficient",
+    "question": "What deployment caused the payments-api outage on November 5? Check the last month and tell me whether rolling back now is justified.",
+    "namespace": "prod-capstone",
+    "days": 30,
+    "as_of": "2026-11-20T12:00:00+00:00",
+    "scope": {
+      "service": "payments-api",
+      "version": "v3",
+      "namespace": "prod-capstone"
+    },
+    "coverage": {
+      "cluster": "runbook-capstone-demo",
+      "cluster_uid": "synthetic-history-only",
+      "namespace": "prod-capstone",
+      "history_available_since": "2026-11-18T12:00:00+00:00",
+      "healthy": true,
+      "limits": "Synthetic snapshot; observation timestamps, no audit actors, application logs, allocation profiles or metrics. No infrastructure actions.",
+      "streams": [
+        {
+          "kind": "Pod",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        },
+        {
+          "kind": "Deployment",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        },
+        {
+          "kind": "ReplicaSet",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        },
+        {
+          "kind": "Service",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        },
+        {
+          "kind": "EndpointSlice",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        },
+        {
+          "kind": "Event",
+          "heartbeat": "2026-11-20T12:00:00+00:00",
+          "error": null
+        }
+      ],
+      "gaps": []
+    },
+    "history": [
+      {
+        "id": "H1",
+        "kind": "Deployment",
+        "name": "payments-api",
+        "namespace": "prod-capstone",
+        "uid": "Deployment-payments-api",
+        "rv": "1",
+        "operation": "BASELINE",
+        "observed_at": "2026-11-18T12:00:00+00:00",
+        "before": null,
+        "after": {
+          "kind": "Deployment",
+          "name": "payments-api",
+          "namespace": "prod-capstone",
+          "uid": "Deployment-payments-api",
+          "labels": {
+            "app": "payments-api"
+          },
+          "resource_version": "2",
+          "containers": [
+            {
+              "name": "api",
+              "image": "fictional/payments-api:v3"
+            }
+          ],
+          "replicas": 2,
+          "ready_replicas": 2
+        }
+      }
+    ],
+    "current": [
+      {
+        "kind": "Deployment",
+        "name": "payments-api",
+        "namespace": "prod-capstone",
+        "uid": "Deployment-payments-api",
+        "labels": {
+          "app": "payments-api"
+        },
+        "resource_version": "2",
+        "containers": [
+          {
+            "name": "api",
+            "image": "fictional/payments-api:v3"
+          }
+        ],
+        "replicas": 2,
+        "ready_replicas": 2
+      }
+    ]
+  }
+]

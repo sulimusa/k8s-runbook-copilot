@@ -1,0 +1,15 @@
+# Isolated loopback-only capstone telemetry; does not touch other projects.
+services:
+  telemetry:
+    image: grafana/otel-lgtm@sha256:4c8056c9c05fcb3c8fd93800e85334bfd79b4d0271b47a54a121a64af41fe1fe
+    ports:
+      - "127.0.0.1:13000:3000"
+      - "127.0.0.1:14318:4318"
+      - "127.0.0.1:19090:9090"
+      - "127.0.0.1:13200:3200"
+    volumes:
+      - atlas-telemetry:/data
+      - ./observability/dashboards:/capstone-dashboards:ro
+      - ./observability/atlas-provisioning.yaml:/otel-lgtm/grafana/conf/provisioning/dashboards/atlas.yaml:ro
+volumes:
+  atlas-telemetry:

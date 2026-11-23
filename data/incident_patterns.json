@@ -1,0 +1,86 @@
+[
+  {
+    "id": "P01",
+    "company": "Datadog",
+    "source_url": "https://www.datadoghq.com/blog/engineering/2023-03-08-deep-dive-into-platform-level-impact/",
+    "text": "Cross-node pod connections timed out after a routine maintenance window. Historical context: Datadog reports that a systemd-networkd restart removed pod routing rules during unattended updates across environments. Useful checks: Compare host routing and maintenance history with cloud firewall decisions for the failed packet path.",
+    "note": "Original synopsis and diagnostic suggestions; historical analogy is not proof of a current cause."
+  },
+  {
+    "id": "P02",
+    "company": "Reddit",
+    "source_url": "https://www.reddit.com/r/RedditEng/comments/1id01im/unseen_catalyst_a_simple_rollout_caused_a/",
+    "text": "A node-agent rollout coincided with API timeouts and slow scheduling. Historical context: Reddit reports that cached-image startup synchronized large LIST requests and exhausted control-plane VM memory. Useful checks: Compare audit request concurrency and API memory with etcd fsync latency and the rollout start-time distribution.",
+    "note": "Original synopsis and diagnostic suggestions; historical analogy is not proof of a current cause."
+  },
+  {
+    "id": "P03",
+    "company": "Skyscanner",
+    "source_url": "https://medium.com/@SkyscannerEng/how-a-couple-of-characters-brought-down-our-site-356ccaf1fbc3",
+    "text": "Services vanished from the cluster shortly after an infrastructure change. Historical context: Skyscanner reports a templating change producing an empty desired state and automated reconciliation deleting resources. Useful checks: Inspect rendered desired state and the identity, timestamps and targets of resource deletion audit events.",
+    "note": "Original synopsis and diagnostic suggestions; historical analogy is not proof of a current cause."
+  },
+  {
+    "id": "P04",
+    "company": "Grafana Labs",
+    "source_url": "https://grafana.com/blog/how-adding-kubernetes-label-selectors-caused-an-outage-in-grafana-cloud-logs-and-how-we-resolved-it/",
+    "text": "A rolling update stalled while new pods repeatedly ran out of memory. Historical context: Grafana reports a Service selector excluding old replicas, concentrating traffic on a small updated subset and causing OOMs. Useful checks: Compare Service selectors and EndpointSlices with per-pod traffic and equal-workload memory profiles.",
+    "note": "Original synopsis and diagnostic suggestions; historical analogy is not proof of a current cause."
+  },
+  {
+    "id": "P05",
+    "company": "Stytch",
+    "source_url": "https://stytch.com/blog/stytch-postmortem-2023-02-23/",
+    "text": "Cloud API access stopped and replacement nodes failed after a quiet interval. Historical context: Stytch reports a deleted shared instance profile, failed replacement provisioning and delayed failures on existing nodes. Exact credential expiry and role-removal API calls are fixture details, not verified historical observations. Useful checks: Inspect instance-profile references and audit history, credential expiry and trusted clock offset without exposing credentials.",
+    "note": "Original synopsis and diagnostic suggestions; historical analogy is not proof of a current cause."
+  },
+  {
+    "id": "P06",
+    "company": "GitLab",
+    "source_url": "https://gitlab.com/gitlab-com/gl-infra/production/-/issues/21208",
+    "text": "A running Redis pod became unreachable through its internal load balancer. Historical context: GitLab reports that a PDB prevented Redis pod eviction while a GKE controller independently removed its load-balancer endpoint. Useful checks: Compare direct pod reachability, endpoint-group membership, target health and network-policy drop evidence.",
+    "note": "Original synopsis and diagnostic suggestions; historical analogy is not proof of a current cause."
+  },
+  {
+    "id": "P07",
+    "company": "Shopify",
+    "source_url": "https://shopify.engineering/that-old-certificate-expired-and-started-an-outage-this-is-what-happened-next",
+    "text": "Newly deployed pods fail TLS calls while old pods continue serving. Historical context: Shopify reports an expired root and stale client trust bundle; existing TLS connections concealed the problem until pod replacement forced new handshakes. Useful checks: Compare fresh versus reused connections, certificate SAN/validity, request hostname and the actual client trust store.",
+    "note": "Original synopsis and diagnostic suggestions; historical analogy is not proof of a current cause."
+  },
+  {
+    "id": "P08",
+    "company": "Cloudflare",
+    "source_url": "https://blog.cloudflare.com/one-line-kubernetes-fix-saved-600-hours-a-year/",
+    "text": "A stateful tool takes a long time to start after replacement. Historical context: Cloudflare reports long pod startup delays while kubelet recursively changed volume group ownership across many files. Useful checks: Establish whether delay occurs during attach, mount, ownership processing or application initialization.",
+    "note": "Original synopsis and diagnostic suggestions; historical analogy is not proof of a current cause."
+  },
+  {
+    "id": "P09",
+    "company": "Pinterest",
+    "source_url": "https://medium.com/pinterest-engineering/debugging-the-one-in-a-million-failure-migrating-pinterests-search-infrastructure-to-kubernetes-bef9af9dabf4",
+    "text": "Rare search latency spikes appeared after moving workloads to Kubernetes. Historical context: Pinterest links rare latency to cAdvisor memory inspection. The precise kernel locking explanation remains qualified; direct lock traces and a controlled re-enable experiment in our exercise are fictional evidence. Useful checks: Correlate tail requests with profiles, collector timing and GC pauses; use a bounded isolated comparison.",
+    "note": "Original synopsis and diagnostic suggestions; historical analogy is not proof of a current cause."
+  },
+  {
+    "id": "P10",
+    "company": "Preply",
+    "source_url": "https://medium.com/preply-engineering/dns-postmortem-e169efd45afd",
+    "text": "Some pods have intermittent DNS timeouts after CoreDNS scaled down. Historical context: Preply reports DNS failures after CoreDNS scale-down with traffic directed to a removed endpoint. The underlying conntrack cleanup failure was not conclusively established. Useful checks: Inspect failing flow destinations and policy decisions; do not claim the underlying conntrack cleanup defect without more evidence.",
+    "note": "Original synopsis and diagnostic suggestions; historical analogy is not proof of a current cause."
+  },
+  {
+    "id": "P11",
+    "company": "Applied Computing Research Labs",
+    "source_url": "https://appliedcomputing.io/posts/2025-12-08-postmortem-ci-runner/",
+    "text": "A simulation finished its workload but never completed cleanup. Historical context: ACRL reports a fail-open webhook certificate race followed by mutation errors: ordinary Pod updates failed on nodeSelector changes and kubelet status updates failed on label changes. Useful checks: Inspect admission timing and rules, accepted status updates, deletionTimestamp, finalizers and their owning controller.",
+    "note": "Original synopsis and diagnostic suggestions; historical analogy is not proof of a current cause."
+  },
+  {
+    "id": "P12",
+    "company": "FREE NOW",
+    "source_url": "https://github.com/freenowtech/postmortems/blob/master/2019-09-19%20-%20New%20K8s%20workers%20unable%20to%20join%20cluster.pdf",
+    "text": "Autoscaling launched instances but application pods remain Pending. Historical context: FREE NOW reports that a moved package invalidated a hardcoded bootstrap URL, leaving launched worker instances unable to join Kubernetes. Useful checks: Compare cloud instance counts with node registration, then inspect bootstrap completion and API authentication errors.",
+    "note": "Original synopsis and diagnostic suggestions; historical analogy is not proof of a current cause."
+  }
+]

@@ -1,0 +1,126 @@
+{
+  "system_sha256": "d905997d05b613c3cc660c790437e6be6cddeafd361a9b7357bea5b3e621dd9b",
+  "results_sha256": "a75c779a3434a6ec77bbdd0ef93a1d2358db36dfb3950803ab099c07c86135ba",
+  "cases": {
+    "cache-rollout": {
+      "evidence": {
+        "issues": [
+          {
+            "kind": "causal_overclaim",
+            "quote": "the new image may have increased memory usage beyond the configured 512Mi limit, but this is not confirmed without runtime allocation or traffic evidence.",
+            "reason": "The phrase 'may have increased memory usage' is presented as a plausible hypothesis, but the sentence 'the temporal association between the rollout to v2 and the onset of repeated restarts, with the last termination OOMKilled, suggests the new image may have increased memory usage beyond the configured 512Mi limit' implies a causal link between the image change and the OOMKilled event. However, without runtime allocation or traffic evidence, this causal relationship is not established by the evidence."
+          }
+        ],
+        "provider": {
+          "prompt_sha256": "cd6b6a827346bb0bf63f2e7559bb5103d40bdb418c4709e1f2cc28b0ead4a840",
+          "requested_model": "gpt-4.1-2025-04-14",
+          "reserved_usd": 0.046194,
+          "input_tokens": 3261,
+          "output_tokens": 141,
+          "cost_usd": 0.00765,
+          "resolved_model": "gpt-4.1-2025-04-14",
+          "response_id": "chatcmpl-EnHCbnJsTbhrp5Z2nMYm6hQQkfX63",
+          "duration_ms": 1534.02
+        },
+        "packet_sha256": "6fa739004d7be98e88c4ad2c3ff9dc3ece8dddd68db1cdd787708ca8281a8515"
+      },
+      "rag": {
+        "issues": [
+          {
+            "kind": "causal_overclaim",
+            "quote": "The most likely cause is that the v2 image's default configuration (four workers, each with a 192Mi cache) could exceed the 512Mi container memory limit, leading to OOMKilled events.",
+            "reason": "This sentence asserts a likely cause-effect relationship between the v2 image defaults and the OOMKilled event. However, the evidence only establishes that the image defaults could potentially exceed the limit, not that the actual runtime configuration or memory usage did so. The explanation does qualify this as a hypothesis, but the phrase 'most likely cause' overstates the certainty given the lack of runtime allocation or configuration evidence."
+          }
+        ],
+        "provider": {
+          "prompt_sha256": "ed966957a0f7560a4d2e0bfee037546fc47ffd8d25d956b5821a2aaeadedac34",
+          "requested_model": "gpt-4.1-2025-04-14",
+          "reserved_usd": 0.048114,
+          "input_tokens": 3432,
+          "output_tokens": 139,
+          "cost_usd": 0.007976,
+          "resolved_model": "gpt-4.1-2025-04-14",
+          "response_id": "chatcmpl-EnHCdGwgo9Tpx77OgMjof12034kKV",
+          "duration_ms": 1526.35
+        },
+        "packet_sha256": "cdb7c0f77492bc156320d38253880ab8147edcfbe89e1c320108e48842eac5a4"
+      }
+    },
+    "selector-change": {
+      "evidence": {
+        "issues": [
+          {
+            "kind": "causal_overclaim",
+            "quote": "The loss of endpoints is directly explained by the Service selector change: no Pods match the new selector, so no endpoints are registered. This is a supported mechanism for endpoint loss in Kubernetes.",
+            "reason": "The phrase 'directly explained' asserts a proven cause-effect relationship between the selector change and endpoint loss. While the evidence supports that the selector no longer matches any Pods and the EndpointSlice is empty, it does not exclude all other possible causes for endpoint loss (such as controller malfunction). The evidence supports selector mismatch as a sufficient mechanism, but not as the exclusive or directly proven cause."
+          }
+        ],
+        "provider": {
+          "prompt_sha256": "915d70e39b7f646471a9f880a6083637a9598bcafcc412867af4ea585f2f1193",
+          "requested_model": "gpt-4.1-2025-04-14",
+          "reserved_usd": 0.038878,
+          "input_tokens": 2301,
+          "output_tokens": 131,
+          "cost_usd": 0.00565,
+          "resolved_model": "gpt-4.1-2025-04-14",
+          "response_id": "chatcmpl-EnHCeaQIUFGihmINKA2tgXTBQncRa",
+          "duration_ms": 1241.16
+        },
+        "packet_sha256": "5757d83e7599025a095b9428133fe533a42cb34516210655fc54275dd462e2d9"
+      },
+      "rag": {
+        "issues": [],
+        "provider": {
+          "prompt_sha256": "f9534f3a926bc103b6a7d09c34dd72b9eaa8cbf7cf2e1333a6af8f521d8b9077",
+          "requested_model": "gpt-4.1-2025-04-14",
+          "reserved_usd": 0.041542,
+          "input_tokens": 2541,
+          "output_tokens": 4,
+          "cost_usd": 0.005114,
+          "resolved_model": "gpt-4.1-2025-04-14",
+          "response_id": "chatcmpl-EnHCfu1eeXl5N2qp42LNyMfVM1NtP",
+          "duration_ms": 631.4
+        },
+        "packet_sha256": "d4893c6027da1eede7a268709d1baf9e247c469be53bb41dd2edfa9077ea9d82"
+      }
+    },
+    "missing-history": {
+      "evidence": {
+        "issues": [],
+        "provider": {
+          "prompt_sha256": "b9cade26295132f851bfccb10972f3d9964d76d19985f58f94bccd51847df6e3",
+          "requested_model": "gpt-4.1-2025-04-14",
+          "reserved_usd": 0.03418,
+          "input_tokens": 1650,
+          "output_tokens": 5,
+          "cost_usd": 0.00334,
+          "resolved_model": "gpt-4.1-2025-04-14",
+          "response_id": "chatcmpl-EnHCg5tZfvfAXI0lZacC9lxnHRnmd",
+          "duration_ms": 500.14
+        },
+        "packet_sha256": "f1162b1a730ccb2b838416b66a9df4573c764f036464cb4f619428bbaa004918"
+      },
+      "rag": {
+        "issues": [
+          {
+            "kind": "unsupported_fact",
+            "quote": "Operational guidance confirms that missing history prevents root cause analysis or rollback justification.",
+            "reason": "The evidence (D-baseline-generic) states that missing history cannot establish when or why an outage occurred, but does not confirm that rollback justification is categorically prevented\u2014only that it cannot be established from the available data. The answer overstates the operational guidance as a categorical prohibition."
+          }
+        ],
+        "provider": {
+          "prompt_sha256": "000373bde8c21af6d32e98ad880825eb0bcefb07a9175017e49be5007a28f38a",
+          "requested_model": "gpt-4.1-2025-04-14",
+          "reserved_usd": 0.039462,
+          "input_tokens": 2276,
+          "output_tokens": 86,
+          "cost_usd": 0.00524,
+          "resolved_model": "gpt-4.1-2025-04-14",
+          "response_id": "chatcmpl-EnHChg2BdMTE9SUYeWUXHlh7Dh7XN",
+          "duration_ms": 993.75
+        },
+        "packet_sha256": "90977f49d684f5d5001c12a482c946002149d7d0464821d2a7358242642c46f8"
+      }
+    }
+  }
+}

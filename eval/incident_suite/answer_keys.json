@@ -1,0 +1,614 @@
+[
+  {
+    "id": "case-b8520965f8",
+    "family": "host-routing",
+    "variant": "supported",
+    "split": "development",
+    "source_company": "Datadog",
+    "source_url": "https://www.datadoghq.com/blog/engineering/2023-03-08-deep-dive-into-platform-level-impact/",
+    "expected_status": "supported",
+    "expected_cause": "Host network maintenance removed required pod policy-routing rules.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Compare host routing and maintenance history with cloud firewall decisions for the failed packet path.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-ba957a5308",
+    "family": "host-routing",
+    "variant": "counterfactual",
+    "split": "development",
+    "source_company": "Datadog",
+    "source_url": "https://www.datadoghq.com/blog/engineering/2023-03-08-deep-dive-into-platform-level-impact/",
+    "expected_status": "supported",
+    "expected_cause": "A cloud firewall change blocks cross-node traffic while host routing remains intact.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Compare host routing and maintenance history with cloud firewall decisions for the failed packet path.",
+    "contradicted_cause": "Host network maintenance removed required pod policy-routing rules.",
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-dc047a77d5",
+    "family": "host-routing",
+    "variant": "insufficient",
+    "split": "development",
+    "source_company": "Datadog",
+    "source_url": "https://www.datadoghq.com/blog/engineering/2023-03-08-deep-dive-into-platform-level-impact/",
+    "expected_status": "insufficient_evidence",
+    "expected_cause": null,
+    "decisive_evidence_ids": [],
+    "required_next_check": "Compare host routing and maintenance history with cloud firewall decisions for the failed packet path.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-dd638bc02d",
+    "family": "rollout-api-load",
+    "variant": "supported",
+    "split": "development",
+    "source_company": "Reddit",
+    "source_url": "https://www.reddit.com/r/RedditEng/comments/1id01im/unseen_catalyst_a_simple_rollout_caused_a/",
+    "expected_status": "supported",
+    "expected_cause": "Near-simultaneous node-agent startup with cached images produced concurrent unpaginated LIST requests and API-server memory pressure above its configured limit.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Compare audit request concurrency and API memory with etcd fsync latency and the rollout start-time distribution.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-ce633c6845",
+    "family": "rollout-api-load",
+    "variant": "counterfactual",
+    "split": "development",
+    "source_company": "Reddit",
+    "source_url": "https://www.reddit.com/r/RedditEng/comments/1id01im/unseen_catalyst_a_simple_rollout_caused_a/",
+    "expected_status": "supported",
+    "expected_cause": "Etcd storage latency during a snapshot slows the API, rather than a node-agent LIST storm.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Compare audit request concurrency and API memory with etcd fsync latency and the rollout start-time distribution.",
+    "contradicted_cause": "Near-simultaneous node-agent startup with cached images produced concurrent unpaginated LIST requests and API-server memory pressure above its configured limit.",
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-a67d358923",
+    "family": "rollout-api-load",
+    "variant": "insufficient",
+    "split": "development",
+    "source_company": "Reddit",
+    "source_url": "https://www.reddit.com/r/RedditEng/comments/1id01im/unseen_catalyst_a_simple_rollout_caused_a/",
+    "expected_status": "insufficient_evidence",
+    "expected_cause": null,
+    "decisive_evidence_ids": [],
+    "required_next_check": "Compare audit request concurrency and API memory with etcd fsync latency and the rollout start-time distribution.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-8b2777cf10",
+    "family": "gitops-pruning",
+    "variant": "supported",
+    "split": "development",
+    "source_company": "Skyscanner",
+    "source_url": "https://medium.com/@SkyscannerEng/how-a-couple-of-characters-brought-down-our-site-356ccaf1fbc3",
+    "expected_status": "supported",
+    "expected_cause": "An empty rendered desired state combined with automated pruning removed live application resources.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Inspect rendered desired state and the identity, timestamps and targets of resource deletion audit events.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-1bf1468007",
+    "family": "gitops-pruning",
+    "variant": "counterfactual",
+    "split": "development",
+    "source_company": "Skyscanner",
+    "source_url": "https://medium.com/@SkyscannerEng/how-a-couple-of-characters-brought-down-our-site-356ccaf1fbc3",
+    "expected_status": "supported",
+    "expected_cause": "A cleanup identity deleted namespaces; the evidence does not support an empty-render GitOps prune.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Inspect rendered desired state and the identity, timestamps and targets of resource deletion audit events.",
+    "contradicted_cause": "An empty rendered desired state combined with automated pruning removed live application resources.",
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-59798af406",
+    "family": "gitops-pruning",
+    "variant": "insufficient",
+    "split": "development",
+    "source_company": "Skyscanner",
+    "source_url": "https://medium.com/@SkyscannerEng/how-a-couple-of-characters-brought-down-our-site-356ccaf1fbc3",
+    "expected_status": "insufficient_evidence",
+    "expected_cause": null,
+    "decisive_evidence_ids": [],
+    "required_next_check": "Inspect rendered desired state and the identity, timestamps and targets of resource deletion audit events.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-6f530d02f9",
+    "family": "selector-concentration",
+    "variant": "supported",
+    "split": "development",
+    "source_company": "Grafana Labs",
+    "source_url": "https://grafana.com/blog/how-adding-kubernetes-label-selectors-caused-an-outage-in-grafana-cloud-logs-and-how-we-resolved-it/",
+    "expected_status": "supported",
+    "expected_cause": "The Service selector excludes old replicas and concentrates traffic on the new pods.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Compare Service selectors and EndpointSlices with per-pod traffic and equal-workload memory profiles.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-f8c6aa0726",
+    "family": "selector-concentration",
+    "variant": "counterfactual",
+    "split": "development",
+    "source_company": "Grafana Labs",
+    "source_url": "https://grafana.com/blog/how-adding-kubernetes-label-selectors-caused-an-outage-in-grafana-cloud-logs-and-how-we-resolved-it/",
+    "expected_status": "supported",
+    "expected_cause": "The new image has a workload-related memory regression; endpoint selection is not concentrating traffic.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Compare Service selectors and EndpointSlices with per-pod traffic and equal-workload memory profiles.",
+    "contradicted_cause": "The Service selector excludes old replicas and concentrates traffic on the new pods.",
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-d0bcf03fda",
+    "family": "selector-concentration",
+    "variant": "insufficient",
+    "split": "development",
+    "source_company": "Grafana Labs",
+    "source_url": "https://grafana.com/blog/how-adding-kubernetes-label-selectors-caused-an-outage-in-grafana-cloud-logs-and-how-we-resolved-it/",
+    "expected_status": "insufficient_evidence",
+    "expected_cause": null,
+    "decisive_evidence_ids": [],
+    "required_next_check": "Compare Service selectors and EndpointSlices with per-pod traffic and equal-workload memory profiles.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-bf47d72b56",
+    "family": "delayed-identity",
+    "variant": "supported",
+    "split": "development",
+    "source_company": "Stytch",
+    "source_url": "https://stytch.com/blog/stytch-postmortem-2023-02-23/",
+    "expected_status": "supported",
+    "expected_cause": "A shared instance profile was deleted; cached credentials delayed symptoms and replacements cannot obtain the profile.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Inspect instance-profile references and audit history, credential expiry and trusted clock offset without exposing credentials.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-08f3f5f687",
+    "family": "delayed-identity",
+    "variant": "counterfactual",
+    "split": "development",
+    "source_company": "Stytch",
+    "source_url": "https://stytch.com/blog/stytch-postmortem-2023-02-23/",
+    "expected_status": "supported",
+    "expected_cause": "Node clock skew invalidates signed cloud requests; profile deletion is contradicted.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Inspect instance-profile references and audit history, credential expiry and trusted clock offset without exposing credentials.",
+    "contradicted_cause": "A shared instance profile was deleted; cached credentials delayed symptoms and replacements cannot obtain the profile.",
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-ea27849b79",
+    "family": "delayed-identity",
+    "variant": "insufficient",
+    "split": "development",
+    "source_company": "Stytch",
+    "source_url": "https://stytch.com/blog/stytch-postmortem-2023-02-23/",
+    "expected_status": "insufficient_evidence",
+    "expected_cause": null,
+    "decisive_evidence_ids": [],
+    "required_next_check": "Inspect instance-profile references and audit history, credential expiry and trusted clock offset without exposing credentials.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-d7f5448ed1",
+    "family": "pdb-endpoint",
+    "variant": "supported",
+    "split": "development",
+    "source_company": "GitLab",
+    "source_url": "https://gitlab.com/gitlab-com/gl-infra/production/-/issues/21208",
+    "expected_status": "supported",
+    "expected_cause": "The load-balancer endpoint was removed independently of the PDB-protected pod.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Compare direct pod reachability, endpoint-group membership, target health and network-policy drop evidence.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-2c974849bb",
+    "family": "pdb-endpoint",
+    "variant": "counterfactual",
+    "split": "development",
+    "source_company": "GitLab",
+    "source_url": "https://gitlab.com/gitlab-com/gl-infra/production/-/issues/21208",
+    "expected_status": "supported",
+    "expected_cause": "A NetworkPolicy blocks client traffic; the load-balancer endpoint still exists.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Compare direct pod reachability, endpoint-group membership, target health and network-policy drop evidence.",
+    "contradicted_cause": "The load-balancer endpoint was removed independently of the PDB-protected pod.",
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-5d826dc228",
+    "family": "pdb-endpoint",
+    "variant": "insufficient",
+    "split": "development",
+    "source_company": "GitLab",
+    "source_url": "https://gitlab.com/gitlab-com/gl-infra/production/-/issues/21208",
+    "expected_status": "insufficient_evidence",
+    "expected_cause": null,
+    "decisive_evidence_ids": [],
+    "required_next_check": "Compare direct pod reachability, endpoint-group membership, target health and network-policy drop evidence.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-695a822ca9",
+    "family": "tls-keepalive",
+    "variant": "supported",
+    "split": "development",
+    "source_company": "Shopify",
+    "source_url": "https://shopify.engineering/that-old-certificate-expired-and-started-an-outage-this-is-what-happened-next",
+    "expected_status": "supported",
+    "expected_cause": "An outdated trust store fails new TLS handshakes; existing keepalive connections concealed the expired-root problem.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Compare fresh versus reused connections, certificate SAN/validity, request hostname and the actual client trust store.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-560d7ff354",
+    "family": "tls-keepalive",
+    "variant": "counterfactual",
+    "split": "development",
+    "source_company": "Shopify",
+    "source_url": "https://shopify.engineering/that-old-certificate-expired-and-started-an-outage-this-is-what-happened-next",
+    "expected_status": "supported",
+    "expected_cause": "A changed upstream hostname does not match the certificate; root expiry is not supported.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Compare fresh versus reused connections, certificate SAN/validity, request hostname and the actual client trust store.",
+    "contradicted_cause": "An outdated trust store fails new TLS handshakes; existing keepalive connections concealed the expired-root problem.",
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-902b1f4597",
+    "family": "tls-keepalive",
+    "variant": "insufficient",
+    "split": "development",
+    "source_company": "Shopify",
+    "source_url": "https://shopify.engineering/that-old-certificate-expired-and-started-an-outage-this-is-what-happened-next",
+    "expected_status": "insufficient_evidence",
+    "expected_cause": null,
+    "decisive_evidence_ids": [],
+    "required_next_check": "Compare fresh versus reused connections, certificate SAN/validity, request hostname and the actual client trust store.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-c674299ad8",
+    "family": "volume-ownership",
+    "variant": "supported",
+    "split": "development",
+    "source_company": "Cloudflare",
+    "source_url": "https://blog.cloudflare.com/one-line-kubernetes-fix-saved-600-hours-a-year/",
+    "expected_status": "supported",
+    "expected_cause": "Recursive volume ownership processing delays startup before the application runs.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Establish whether delay occurs during attach, mount, ownership processing or application initialization.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-74f6cf251d",
+    "family": "volume-ownership",
+    "variant": "counterfactual",
+    "split": "development",
+    "source_company": "Cloudflare",
+    "source_url": "https://blog.cloudflare.com/one-line-kubernetes-fix-saved-600-hours-a-year/",
+    "expected_status": "supported",
+    "expected_cause": "A stale volume attachment prevents mounting, rather than recursive ownership changes delaying startup.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Establish whether delay occurs during attach, mount, ownership processing or application initialization.",
+    "contradicted_cause": "Recursive volume ownership processing delays startup before the application runs.",
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-8398ec0c0c",
+    "family": "volume-ownership",
+    "variant": "insufficient",
+    "split": "development",
+    "source_company": "Cloudflare",
+    "source_url": "https://blog.cloudflare.com/one-line-kubernetes-fix-saved-600-hours-a-year/",
+    "expected_status": "insufficient_evidence",
+    "expected_cause": null,
+    "decisive_evidence_ids": [],
+    "required_next_check": "Establish whether delay occurs during attach, mount, ownership processing or application initialization.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-b7b0997c31",
+    "family": "observer-tail-latency",
+    "variant": "supported",
+    "split": "evaluation-candidate",
+    "source_company": "Pinterest",
+    "source_url": "https://medium.com/pinterest-engineering/debugging-the-one-in-a-million-failure-migrating-pinterests-search-infrastructure-to-kubernetes-bef9af9dabf4",
+    "expected_status": "supported",
+    "expected_cause": "Collector memory-map inspection contends with application memory operations and causes rare stalls.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Correlate tail requests with profiles, collector timing and GC pauses; use a bounded isolated comparison.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-fa1f644111",
+    "family": "observer-tail-latency",
+    "variant": "counterfactual",
+    "split": "evaluation-candidate",
+    "source_company": "Pinterest",
+    "source_url": "https://medium.com/pinterest-engineering/debugging-the-one-in-a-million-failure-migrating-pinterests-search-infrastructure-to-kubernetes-bef9af9dabf4",
+    "expected_status": "supported",
+    "expected_cause": "Application garbage-collection pauses explain the tail latency; collector contention is contradicted.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Correlate tail requests with profiles, collector timing and GC pauses; use a bounded isolated comparison.",
+    "contradicted_cause": "Collector memory-map inspection contends with application memory operations and causes rare stalls.",
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-d52a13aa3d",
+    "family": "observer-tail-latency",
+    "variant": "insufficient",
+    "split": "evaluation-candidate",
+    "source_company": "Pinterest",
+    "source_url": "https://medium.com/pinterest-engineering/debugging-the-one-in-a-million-failure-migrating-pinterests-search-infrastructure-to-kubernetes-bef9af9dabf4",
+    "expected_status": "insufficient_evidence",
+    "expected_cause": null,
+    "decisive_evidence_ids": [],
+    "required_next_check": "Correlate tail requests with profiles, collector timing and GC pauses; use a bounded isolated comparison.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-11d8b17898",
+    "family": "dns-stale-state",
+    "variant": "supported",
+    "split": "evaluation-candidate",
+    "source_company": "Preply",
+    "source_url": "https://medium.com/preply-engineering/dns-postmortem-e169efd45afd",
+    "expected_status": "supported",
+    "expected_cause": "Stale UDP connection tracking sends affected DNS flows to a removed endpoint; the reason cleanup failed remains unknown.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Inspect failing flow destinations and policy decisions; do not claim the underlying conntrack cleanup defect without more evidence.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-3da36e7ddf",
+    "family": "dns-stale-state",
+    "variant": "counterfactual",
+    "split": "evaluation-candidate",
+    "source_company": "Preply",
+    "source_url": "https://medium.com/preply-engineering/dns-postmortem-e169efd45afd",
+    "expected_status": "supported",
+    "expected_cause": "DNS egress is blocked by policy, not stale endpoint mappings.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Inspect failing flow destinations and policy decisions; do not claim the underlying conntrack cleanup defect without more evidence.",
+    "contradicted_cause": "Stale UDP connection tracking sends affected DNS flows to a removed endpoint; the reason cleanup failed remains unknown.",
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-58f9fe24ff",
+    "family": "dns-stale-state",
+    "variant": "insufficient",
+    "split": "evaluation-candidate",
+    "source_company": "Preply",
+    "source_url": "https://medium.com/preply-engineering/dns-postmortem-e169efd45afd",
+    "expected_status": "insufficient_evidence",
+    "expected_cause": null,
+    "decisive_evidence_ids": [],
+    "required_next_check": "Inspect failing flow destinations and policy decisions; do not claim the underlying conntrack cleanup defect without more evidence.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-6aced99011",
+    "family": "webhook-lifecycle",
+    "variant": "supported",
+    "split": "evaluation-candidate",
+    "source_company": "Applied Computing Research Labs",
+    "source_url": "https://appliedcomputing.io/posts/2025-12-08-postmortem-ci-runner/",
+    "expected_status": "supported",
+    "expected_cause": "Fail-open admission during delayed CA injection allowed real-node scheduling; later webhook label mutation of kubelet status updates was rejected by NodeRestriction, blocking completion status and cleanup. Ordinary Pod updates separately failed after injected nodeSelector changes.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Inspect admission timing and rules, accepted status updates, deletionTimestamp, finalizers and their owning controller.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-25087601d4",
+    "family": "webhook-lifecycle",
+    "variant": "counterfactual",
+    "split": "evaluation-candidate",
+    "source_company": "Applied Computing Research Labs",
+    "source_url": "https://appliedcomputing.io/posts/2025-12-08-postmortem-ci-runner/",
+    "expected_status": "supported",
+    "expected_cause": "An orphaned finalizer blocks deletion after successful status update; UPDATE mutation is not the cause.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Inspect admission timing and rules, accepted status updates, deletionTimestamp, finalizers and their owning controller.",
+    "contradicted_cause": "Fail-open admission during delayed CA injection allowed real-node scheduling; later webhook label mutation of kubelet status updates was rejected by NodeRestriction, blocking completion status and cleanup. Ordinary Pod updates separately failed after injected nodeSelector changes.",
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-d86046ac54",
+    "family": "webhook-lifecycle",
+    "variant": "insufficient",
+    "split": "evaluation-candidate",
+    "source_company": "Applied Computing Research Labs",
+    "source_url": "https://appliedcomputing.io/posts/2025-12-08-postmortem-ci-runner/",
+    "expected_status": "insufficient_evidence",
+    "expected_cause": null,
+    "decisive_evidence_ids": [],
+    "required_next_check": "Inspect admission timing and rules, accepted status updates, deletionTimestamp, finalizers and their owning controller.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-9085887517",
+    "family": "node-bootstrap",
+    "variant": "supported",
+    "split": "evaluation-candidate",
+    "source_company": "FREE NOW",
+    "source_url": "https://github.com/freenowtech/postmortems/blob/master/2019-09-19%20-%20New%20K8s%20workers%20unable%20to%20join%20cluster.pdf",
+    "expected_status": "supported",
+    "expected_cause": "An invalid hardcoded package URL stops node bootstrap before registration.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Compare cloud instance counts with node registration, then inspect bootstrap completion and API authentication errors.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-a2915c1019",
+    "family": "node-bootstrap",
+    "variant": "counterfactual",
+    "split": "evaluation-candidate",
+    "source_company": "FREE NOW",
+    "source_url": "https://github.com/freenowtech/postmortems/blob/master/2019-09-19%20-%20New%20K8s%20workers%20unable%20to%20join%20cluster.pdf",
+    "expected_status": "supported",
+    "expected_cause": "A missing node identity mapping blocks registration after successful bootstrap.",
+    "decisive_evidence_ids": [
+      "E2",
+      "E3"
+    ],
+    "required_next_check": "Compare cloud instance counts with node registration, then inspect bootstrap completion and API authentication errors.",
+    "contradicted_cause": "An invalid hardcoded package URL stops node bootstrap before registration.",
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  },
+  {
+    "id": "case-0c5f4e12ee",
+    "family": "node-bootstrap",
+    "variant": "insufficient",
+    "split": "evaluation-candidate",
+    "source_company": "FREE NOW",
+    "source_url": "https://github.com/freenowtech/postmortems/blob/master/2019-09-19%20-%20New%20K8s%20workers%20unable%20to%20join%20cluster.pdf",
+    "expected_status": "insufficient_evidence",
+    "expected_cause": null,
+    "decisive_evidence_ids": [],
+    "required_next_check": "Compare cloud instance counts with node registration, then inspect bootstrap completion and API authentication errors.",
+    "contradicted_cause": null,
+    "review_status": "Authored draft; independent technical review pending",
+    "historical_fidelity": "Mechanism-inspired synthetic exercise; not a reproduction of the reported incident."
+  }
+]

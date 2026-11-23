@@ -1,0 +1,123 @@
+{
+  "verified_at": "2026-11-04T21:44:56.742752+00:00",
+  "cluster": "runbook-capstone",
+  "topology": "one control-plane, one worker; separate from sre-ai-mvp",
+  "tests_passed": 235,
+  "live_run_id": "5a2fc8d3-5eb7-4588-97e7-1ea1e0a70ab4",
+  "live_tools": [
+    [
+      "history",
+      "Service"
+    ],
+    [
+      "current",
+      "Pod"
+    ],
+    [
+      "current",
+      "EndpointSlice"
+    ],
+    [
+      "runbook",
+      null
+    ]
+  ],
+  "result": "Correctly identified the controlled Service selector mismatch and current ready EndpointSlice; explicitly did not claim HTTP recovery.",
+  "temporal_limit": "Timeline labels must be interpreted as observation times, not audit timestamps.",
+  "repair": {
+    "at": "2026-11-04T21:38:14.528878+00:00",
+    "cluster_uid": "137b01dd-0cd6-4493-b1a8-85219648f20d",
+    "namespace": "dev-capstone",
+    "service": "demo-web",
+    "history_id": "H46",
+    "old_selector": {
+      "app": "no-matching-pods"
+    },
+    "new_selector": {
+      "app": "demo-web"
+    },
+    "outcome": "ready_endpoints_restored",
+    "verification": "Ready EndpointSlice endpoint only; not an application-level transaction test."
+  },
+  "restart": {
+    "dev-capstone": {
+      "preserved_service_ids": [
+        "H65",
+        "H46",
+        "H9"
+      ],
+      "no_duplicate_service_changes": true,
+      "healthy": true
+    },
+    "prod-capstone": {
+      "preserved_service_ids": [
+        "H15"
+      ],
+      "no_duplicate_service_changes": true,
+      "healthy": true
+    }
+  },
+  "rbac": [
+    {
+      "identity": "history-reader",
+      "namespace": "dev-capstone",
+      "verb": "watch",
+      "resource": "pods",
+      "allowed": true
+    },
+    {
+      "identity": "history-reader",
+      "namespace": "dev-capstone",
+      "verb": "patch",
+      "resource": "services/demo-web",
+      "allowed": false
+    },
+    {
+      "identity": "history-reader",
+      "namespace": "prod-capstone",
+      "verb": "list",
+      "resource": "secrets",
+      "allowed": false
+    },
+    {
+      "identity": "dev-repair",
+      "namespace": "dev-capstone",
+      "verb": "patch",
+      "resource": "services/demo-web",
+      "allowed": true
+    },
+    {
+      "identity": "dev-repair",
+      "namespace": "dev-capstone",
+      "verb": "patch",
+      "resource": "services/other-service",
+      "allowed": false
+    },
+    {
+      "identity": "dev-repair",
+      "namespace": "prod-capstone",
+      "verb": "patch",
+      "resource": "services/demo-web",
+      "allowed": false
+    },
+    {
+      "identity": "dev-repair",
+      "namespace": "dev-capstone",
+      "verb": "delete",
+      "resource": "pods",
+      "allowed": false
+    }
+  ],
+  "manual_review": {
+    "earlier_failed_run": "e1af0217-b336-4704-bef4-b61ce526d138",
+    "finding": "Misattributed later selector outage to earlier Pod startup; final routing cross-check gate added before the verified run.",
+    "not_claimed": "Not a held-out benchmark or calibrated accuracy score."
+  },
+  "source_sha256": {
+    "src/runbook_copilot/history/__init__.py": "0d7578bc21a3c02fb9bd92f0bda35812f5cb3cf128b2c0dfe42d8043ecff2456",
+    "src/runbook_copilot/history/chat.py": "c0cbafcffd745b1fb01c1c2c6c10fc9518bf23966953d97b808046512092ab1f",
+    "src/runbook_copilot/history/collector.py": "4779ec7f04e12dd2cd488b8ff888bed4d1b032d994f0443ebc089a07e37da32b",
+    "src/runbook_copilot/history/repair.py": "b96c8435f97b715e7d2f6c9d2ffa9070f2740b9f4b27436c9280b8d9fb67e5e2",
+    "src/runbook_copilot/history/store.py": "fd03453b265777d66f0ff950b7f21fe9ae3c982b103119584b68f33879cc5c48"
+  }
+}

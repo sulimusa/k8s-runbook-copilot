@@ -1,0 +1,15 @@
+**
+!pyproject.toml
+!uv.lock
+!README.md
+!src/
+!src/**
+!app/
+!app/ui.py
+!data/
+!data/history_demo/
+!data/history_demo/**
+!docs/
+!docs/history-demo-results.json
+!docs/history-demo-adjudications.json
+**/__pycache__

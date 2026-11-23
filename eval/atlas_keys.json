@@ -1,0 +1,20 @@
+{
+  "review_status": "Authored from synthetic observations; human review pending",
+  "cases": {
+    "routing": {
+      "status": "supported",
+      "required_observations": ["inspect_routes", "inspect_memory"],
+      "reference": "The public Service release selector excludes old ready pods. Matching-window traffic concentrates on new pods (210 requests/s versus zero on old pods); new pods used 240 MiB at earlier 70 requests/s and now reach 512 MiB. These support routing-induced overload. Do not assert a retained-memory leak, node pressure, or that a fix was executed. The current API routing contract applies; archived blue-green guidance and worker memory limits do not."
+    },
+    "buffer": {
+      "status": "supported",
+      "required_observations": ["inspect_routes", "inspect_configuration", "inspect_memory"],
+      "reference": "Normal selector and all six endpoints weaken release-specific routing exclusion. RESULT_BUFFER_MIB changed 64 to 256. Matched-work observations and allocation profiles support a configuration-driven buffer allocation regression. Retained growth is unmeasured, so do not call this a proven memory leak. Apply API memory guidance, not the worker limit or archived routing policy."
+    },
+    "incomplete": {
+      "status": "insufficient_evidence",
+      "required_observations": ["inspect_routes", "inspect_memory"],
+      "reference": "OOMKilled is confirmed, but route capture and matching-window traffic/allocation evidence are unavailable. Missing values are unknown, not zero. Do not select routing or allocation as an established cause. Request endpoint membership and matched-window traffic/allocation evidence. No root cause or repair is established."
+    }
+  }
+}

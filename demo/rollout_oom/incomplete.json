@@ -1,0 +1,53 @@
+{
+  "synthetic": true,
+  "initial": {
+    "id": "O0",
+    "timestamp": "2026-10-20T10:05:00Z",
+    "text": "Atlas API: after a rolling update, new pods are repeatedly OOMKilled; old pods remain Ready. Cause unknown."
+  },
+  "observations": {
+    "inspect_rollout": {
+      "id": "O1",
+      "timestamp": "2026-10-20T10:05:00Z",
+      "window": "10:00-10:05 UTC",
+      "text": "Atlas API public Service atlas-api, namespace atlas-demo; old revision r17 and new revision r18. Four old and two new ready pods. New pods report OOMKilled, limit 512 MiB. Nodes have no MemoryPressure.",
+      "facts": {
+        "service": "atlas-api",
+        "namespace": "atlas-demo",
+        "old_revision": "r17",
+        "new_revision": "r18",
+        "ready_old": 4,
+        "ready_new": 2,
+        "node_pressure": false
+      }
+    },
+    "inspect_configuration": {
+      "id": "O3",
+      "timestamp": "2026-10-20T10:05:00Z",
+      "window": "10:00-10:05 UTC",
+      "text": "Effective RESULT_BUFFER_MIB is 64 in both revisions; payload and concurrency policies unchanged.",
+      "facts": {
+        "old_buffer": 64,
+        "new_buffer": 64
+      }
+    },
+    "inspect_routes": {
+      "id": "O2",
+      "timestamp": "2026-10-20T10:05:00Z",
+      "window": "10:00-10:05 UTC",
+      "text": "Service and EndpointSlice observations are unavailable because the evidence capture failed. Endpoint membership is unknown.",
+      "facts": {
+        "available": false
+      }
+    },
+    "inspect_memory": {
+      "id": "O4",
+      "timestamp": "2026-10-20T10:05:00Z",
+      "window": "10:00-10:05 UTC",
+      "text": "Historical per-pod traffic and allocation profiles are unavailable for the failure window. OOMKilled is confirmed; distribution and allocation mechanism are unknown.",
+      "facts": {
+        "available": false
+      }
+    }
+  }
+}

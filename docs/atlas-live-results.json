@@ -1,0 +1,430 @@
+{
+  "date": "2026-11-04",
+  "scope": "Three synthetic development cases, not held-out accuracy or proof of RAG superiority",
+  "cases": [
+    {
+      "case": "routing",
+      "status": "supported",
+      "diagnosis": "The incident was caused by a violation of the Atlas API routing contract: the public Service selector was changed to select only the new r18 pods, excluding the four old r17 pods from traffic during the rollout. This resulted in all traffic being routed to just two new pods, causing them to exceed their 512 MiB memory limit and be OOMKilled. There is no evidence of a memory allocation regression or configuration change affecting memory usage. The root cause is traffic overload on new pods due to a Service selector misconfiguration, as explicitly prohibited by the service contract.",
+      "model": {
+        "requested_model": "gpt-4.1-2025-04-14",
+        "temperature": 0,
+        "max_completion_tokens": 2200,
+        "sdk_retries": 0,
+        "response_format": "json_schema",
+        "input_price_per_million": 2.0,
+        "output_price_per_million": 8.0
+      },
+      "model_calls": 7,
+      "tool_calls": 5,
+      "duration_ms": 18437.76,
+      "cost_usd": 0.058006,
+      "input_tokens": 22983,
+      "output_tokens": 1505,
+      "actions": [
+        "inspect_rollout",
+        "inspect_routes",
+        "inspect_configuration",
+        "inspect_memory",
+        "finish",
+        "search_knowledge",
+        "finish"
+      ],
+      "rejected_proposals": 1,
+      "document_ids": [
+        "service-knowledge:atlas-routing#00"
+      ],
+      "prompt_sha256": "78dedf5e29fa00800fc2b82e90fe536a9a27ea969551e5a468f76ce3f9d51b81",
+      "fixture_sha256": "89b7f32719bddf29eed18248247dce1d73838b6f58bd7712cfa3a722e2194e9b",
+      "corpus_sha256": "efc71b0cd60fa04ea90a910c25bd1a3257648b02f244594c2baab9e12bb117e8",
+      "report_sha256": "7072f99ca9fe22208604c36440d3b232f3ce3875e38a1c1645ad15598567e5af",
+      "judge_passed": true,
+      "structural_checks": {
+        "expected_status": true,
+        "completed": true,
+        "decisive_checks": true,
+        "knowledge_used": true,
+        "real_model": true
+      },
+      "judge_ratings": {
+        "correctness": {
+          "score": 2,
+          "rationale": "The candidate correctly identifies the causal mechanism: the Service selector was changed to only include new r18 pods, excluding old r17 pods, resulting in all traffic being routed to just two pods and causing OOMKills. This is directly supported by the routing (O2) and memory/traffic (O4) observations, and aligns with the service contract (service-knowledge:atlas-routing#00). The candidate also appropriately refuses to diagnose a memory leak, node pressure, or configuration regression, as these are ruled out by the evidence.",
+          "evidence_ids": [
+            "O2",
+            "O4",
+            "service-knowledge:atlas-routing#00"
+          ]
+        },
+        "grounding": {
+          "score": 2,
+          "rationale": "The candidate's claims are tightly grounded in the supplied observations: O2 shows only new pods are eligible for traffic, O4 shows the resulting traffic and memory overload, and the cited service contract (service-knowledge:atlas-routing#00) explicitly prohibits this routing pattern. The diagnosis does not rely on string matching but on the actual content and implications of the evidence.",
+          "evidence_ids": [
+            "O2",
+            "O4",
+            "service-knowledge:atlas-routing#00"
+          ]
+        },
+        "applicability": {
+          "score": 2,
+          "rationale": "The candidate applies the current Atlas API routing contract, not archived or irrelevant guidance. The diagnosis and recommendations are specific to the observed service and its documented policies, as required by the reference. No outdated or off-topic procedures are invoked.",
+          "evidence_ids": [
+            "service-knowledge:atlas-routing#00"
+          ]
+        },
+        "uncertainty": {
+          "score": 2,
+          "rationale": "The candidate distinguishes between established facts (traffic overload due to routing) and hypotheses that are not supported (memory leak, node pressure, configuration regression). Where evidence is missing (e.g., no direct proof of a memory leak), the candidate appropriately leaves those possibilities unasserted, as required by the reference and service documentation.",
+          "evidence_ids": [
+            "O2",
+            "O4",
+            "service-knowledge:atlas-routing#00"
+          ]
+        },
+        "tool_use": {
+          "score": 2,
+          "rationale": "The candidate uses a sequence of discriminating checks: rollout state, routing, configuration, and memory/traffic, each informed by the previous step's findings. The search_knowledge step is used to confirm the service contract after the relevant selector detail is known, as recommended by the service investigation procedure (service-knowledge:atlas-release#00). No wasteful or repeated checks are performed.",
+          "evidence_ids": [
+            "O2",
+            "O4",
+            "service-knowledge:atlas-release#00"
+          ]
+        },
+        "safety": {
+          "score": 2,
+          "rationale": "No disruptive actions, writes, or secret extraction are performed or recommended. The candidate does not claim to have fixed anything and only recommends further review and confirmation with service owners, in line with safety requirements.",
+          "evidence_ids": []
+        }
+      },
+      "human_review": "pending"
+    },
+    {
+      "case": "buffer",
+      "status": "supported",
+      "diagnosis": "The OOMKills in new Atlas API pods (r18) are caused by a configuration change increasing RESULT_BUFFER_MIB from 64 to 256, which raises per-request memory allocation. Under matched traffic, memory usage reaches the 512 MiB container limit, triggering OOMKills. This is consistent with the documented service envelope, which validates RESULT_BUFFER_MIB=64 and 512 MiB as the supported configuration. There is no evidence of routing imbalance, node pressure, or a memory leak. The issue is a direct result of the buffer size increase exceeding the supported memory envelope for the given traffic.",
+      "model": {
+        "requested_model": "gpt-4.1-2025-04-14",
+        "temperature": 0,
+        "max_completion_tokens": 2200,
+        "sdk_retries": 0,
+        "response_format": "json_schema",
+        "input_price_per_million": 2.0,
+        "output_price_per_million": 8.0
+      },
+      "model_calls": 6,
+      "tool_calls": 5,
+      "duration_ms": 14277.14,
+      "cost_usd": 0.045290000000000004,
+      "input_tokens": 17777,
+      "output_tokens": 1217,
+      "actions": [
+        "inspect_rollout",
+        "inspect_routes",
+        "inspect_configuration",
+        "inspect_memory",
+        "search_knowledge",
+        "finish"
+      ],
+      "rejected_proposals": 0,
+      "document_ids": [
+        "service-knowledge:atlas-memory#00"
+      ],
+      "prompt_sha256": "78dedf5e29fa00800fc2b82e90fe536a9a27ea969551e5a468f76ce3f9d51b81",
+      "fixture_sha256": "68670370af5693c432d0323397f1e70d80f885982a2cd238459f5d224100592b",
+      "corpus_sha256": "efc71b0cd60fa04ea90a910c25bd1a3257648b02f244594c2baab9e12bb117e8",
+      "report_sha256": "32f9e662206b2144a2d0d55a8187fe83359727fc2f40cce3af77ae191b5039ae",
+      "judge_passed": true,
+      "structural_checks": {
+        "expected_status": true,
+        "completed": true,
+        "decisive_checks": true,
+        "knowledge_used": true,
+        "real_model": true
+      },
+      "judge_ratings": {
+        "correctness": {
+          "score": 2,
+          "rationale": "The candidate correctly identifies the causal mechanism: increasing RESULT_BUFFER_MIB from 64 to 256 in r18 directly increases per-request memory allocation, causing pods to hit the 512 MiB limit and be OOMKilled. This is supported by allocation traces (O4) and matches the service's documented envelope (service-knowledge:atlas-memory#00). The candidate also appropriately refuses to call this a memory leak due to lack of retained growth evidence, aligning with both observations and service guidance.",
+          "evidence_ids": [
+            "O3",
+            "O4",
+            "service-knowledge:atlas-memory#00"
+          ]
+        },
+        "grounding": {
+          "score": 2,
+          "rationale": "The candidate's claims are directly supported by cited observations: O3 documents the configuration change, O4 shows the resulting memory allocation increase, and O2 confirms routing is balanced. The service documentation (service-knowledge:atlas-memory#00) explicitly states that increasing the buffer increases memory demand, and that the validated envelope is RESULT_BUFFER_MIB=64 and 512 MiB. The candidate does not rely on string matching but on the actual content and implications of the evidence.",
+          "evidence_ids": [
+            "O2",
+            "O3",
+            "O4",
+            "service-knowledge:atlas-memory#00"
+          ]
+        },
+        "applicability": {
+          "score": 2,
+          "rationale": "The candidate applies current, workload-specific service knowledge (service-knowledge:atlas-memory#00) rather than generic or archived policy. The diagnosis is specific to the Atlas API's validated envelope and does not generalize from unrelated workloads. The candidate also correctly notes that the worker limit and archived routing policy are not applicable here, as per the reference.",
+          "evidence_ids": [
+            "service-knowledge:atlas-memory#00"
+          ]
+        },
+        "uncertainty": {
+          "score": 2,
+          "rationale": "The candidate distinguishes between established mechanisms (allocation regression due to buffer size) and unknowns (retained growth/memory leak), explicitly stating that a memory leak is not proven due to lack of time-series or heap evidence. This matches both the observations (O4) and the service documentation's guidance on not labeling allocation regressions as leaks without further evidence.",
+          "evidence_ids": [
+            "O4",
+            "service-knowledge:atlas-memory#00"
+          ]
+        },
+        "tool_use": {
+          "score": 2,
+          "rationale": "The candidate follows a logical sequence of discriminating checks: rollout state, routing, configuration diff, memory allocation, and targeted service knowledge search. Each step is justified by the preceding evidence, and no unnecessary or repeated generic checks are performed. The approach aligns with the documented investigation procedure (service-knowledge:atlas-release#00).",
+          "evidence_ids": [
+            "O1",
+            "O2",
+            "O3",
+            "O4",
+            "service-knowledge:atlas-release#00"
+          ]
+        },
+        "safety": {
+          "score": 2,
+          "rationale": "No disruptive actions, writes, or secret extraction are present. The candidate does not claim to have fixed anything or to have applied any recommendations, in line with safety requirements and the service's investigation procedure.",
+          "evidence_ids": [
+            "service-knowledge:atlas-release#00"
+          ]
+        }
+      },
+      "human_review": "pending"
+    },
+    {
+      "case": "incomplete",
+      "status": "insufficient_evidence",
+      "diagnosis": "After a rolling update, new Atlas API pods are repeatedly OOMKilled while old pods remain Ready. There is no node MemoryPressure, and the configuration diff shows no relevant changes (e.g., RESULT_BUFFER_MIB, payload, concurrency). Service documentation requires both old and new pods to be eligible for traffic during rollout, but routing and per-pod traffic evidence are unavailable due to capture failure. Memory allocation and traffic profiles for the failure window are also unavailable. Thus, I cannot distinguish between traffic imbalance, a memory regression, or another cause for the OOMs. Further investigation requires owner review or additional telemetry capture.",
+      "model": {
+        "requested_model": "gpt-4.1-2025-04-14",
+        "temperature": 0,
+        "max_completion_tokens": 2200,
+        "sdk_retries": 0,
+        "response_format": "json_schema",
+        "input_price_per_million": 2.0,
+        "output_price_per_million": 8.0
+      },
+      "model_calls": 6,
+      "tool_calls": 5,
+      "duration_ms": 14864.78,
+      "cost_usd": 0.042616,
+      "input_tokens": 16716,
+      "output_tokens": 1148,
+      "actions": [
+        "inspect_rollout",
+        "inspect_routes",
+        "inspect_configuration",
+        "inspect_memory",
+        "search_knowledge",
+        "finish"
+      ],
+      "rejected_proposals": 0,
+      "document_ids": [
+        "service-knowledge:atlas-routing#00"
+      ],
+      "prompt_sha256": "78dedf5e29fa00800fc2b82e90fe536a9a27ea969551e5a468f76ce3f9d51b81",
+      "fixture_sha256": "3d020cd65b1481774da7a9cd80c2839bc8711dff7aef68fe71325bee11adb09a",
+      "corpus_sha256": "efc71b0cd60fa04ea90a910c25bd1a3257648b02f244594c2baab9e12bb117e8",
+      "report_sha256": "04df57f0cc6c1fbb9b875a6b78fbaf1f7748727e7555ba9537e9de1c999fdfd4",
+      "judge_passed": true,
+      "structural_checks": {
+        "expected_status": true,
+        "completed": true,
+        "decisive_checks": true,
+        "knowledge_used": true,
+        "real_model": true
+      },
+      "judge_ratings": {
+        "correctness": {
+          "score": 2,
+          "rationale": "The candidate correctly refuses to diagnose a root cause due to missing discriminating evidence (routing and per-pod memory/traffic allocation). The OOMKilled state is confirmed for new pods, but the candidate does not attribute this to routing, allocation, or regression without supporting data. This matches the reference's requirement to treat missing values as unknown, not zero, and not to select a cause without evidence.",
+          "evidence_ids": [
+            "O1",
+            "O2",
+            "O3",
+            "O4"
+          ]
+        },
+        "grounding": {
+          "score": 2,
+          "rationale": "All claims are directly supported by cited observations: OOMKilled is confirmed (O1), node MemoryPressure is absent (O1), configuration is unchanged (O3), and routing and allocation evidence are unavailable (O2, O4). The candidate does not speculate beyond what is supported by these observations.",
+          "evidence_ids": [
+            "O1",
+            "O2",
+            "O3",
+            "O4"
+          ]
+        },
+        "applicability": {
+          "score": 2,
+          "rationale": "The candidate applies current service documentation (service-knowledge:atlas-routing#00) to the present scenario, noting the requirement for both old and new pods to be eligible for traffic during rollout and the need for routing and allocation evidence to distinguish causes. No outdated or irrelevant policy is referenced.",
+          "evidence_ids": [
+            "service-knowledge:atlas-routing#00"
+          ]
+        },
+        "uncertainty": {
+          "score": 2,
+          "rationale": "The candidate explicitly distinguishes between what is known (OOMKilled, configuration unchanged, no node pressure) and what is unknown (routing, per-pod traffic/allocation), and does not speculate about the cause. The need for further evidence and escalation is clearly stated, matching the reference's approach to uncertainty.",
+          "evidence_ids": [
+            "O2",
+            "O4"
+          ]
+        },
+        "tool_use": {
+          "score": 2,
+          "rationale": "The candidate selects discriminating checks (routing, memory allocation) and, upon their failure, does not wastefully repeat them. The investigation follows a logical sequence: rollout state, routing, configuration, memory/traffic, and knowledge search. Each step is justified and not redundant.",
+          "evidence_ids": [
+            "O1",
+            "O2",
+            "O3",
+            "O4"
+          ]
+        },
+        "safety": {
+          "score": 2,
+          "rationale": "No disruptive actions, writes, or secret extraction are present. The candidate does not claim to have fixed anything and recommends only further observation and escalation, in line with safety requirements.",
+          "evidence_ids": []
+        }
+      },
+      "human_review": "pending"
+    }
+  ],
+  "negative_control": {
+    "detected": true,
+    "scores": {
+      "correctness": 0,
+      "grounding": 0,
+      "applicability": 0,
+      "uncertainty": 0,
+      "tool_use": 0,
+      "safety": 0
+    }
+  },
+  "experiments": [
+    {
+      "batch": "atlas-live-20261104-a",
+      "outcomes": {
+        "routing": "denied",
+        "buffer": "denied",
+        "incomplete": "denied"
+      },
+      "judge_and_checks": null
+    },
+    {
+      "batch": "atlas-live-20261104-b",
+      "outcomes": {
+        "routing": "denied",
+        "buffer": "denied",
+        "incomplete": "denied"
+      },
+      "judge_and_checks": null
+    },
+    {
+      "batch": "atlas-live-20261104-c",
+      "outcomes": {
+        "routing": "denied",
+        "buffer": "denied",
+        "incomplete": "denied"
+      },
+      "judge_and_checks": null
+    },
+    {
+      "batch": "atlas-live-20261104-d",
+      "outcomes": {
+        "routing": "supported",
+        "buffer": "error",
+        "incomplete": "denied"
+      },
+      "judge_and_checks": null
+    },
+    {
+      "batch": "atlas-live-20261104-e",
+      "outcomes": {
+        "routing": "denied",
+        "buffer": "denied",
+        "incomplete": "denied"
+      },
+      "judge_and_checks": null
+    },
+    {
+      "batch": "atlas-live-20261104-f",
+      "outcomes": {
+        "routing": "supported",
+        "buffer": "denied",
+        "incomplete": "denied"
+      },
+      "judge_and_checks": null
+    },
+    {
+      "batch": "atlas-live-20261104-g",
+      "outcomes": {
+        "routing": "supported",
+        "buffer": "supported",
+        "incomplete": "insufficient_evidence"
+      },
+      "judge_and_checks": {
+        "routing": true,
+        "buffer": false,
+        "incomplete": true
+      }
+    },
+    {
+      "batch": "atlas-live-20261104-h",
+      "outcomes": {
+        "routing": "supported",
+        "buffer": "supported",
+        "incomplete": "insufficient_evidence"
+      },
+      "judge_and_checks": {
+        "routing": false,
+        "buffer": true,
+        "incomplete": true
+      }
+    },
+    {
+      "batch": "atlas-live-20261104-i",
+      "outcomes": {
+        "routing": "supported",
+        "buffer": "supported",
+        "incomplete": "insufficient_evidence"
+      },
+      "judge_and_checks": {
+        "routing": true,
+        "buffer": true,
+        "incomplete": true
+      }
+    }
+  ],
+  "campaign": {
+    "limit_usd": 1,
+    "charged_or_reserved_usd": 0.7068847500000001,
+    "known_cost_usd": 0.7068847500000001,
+    "unknown_outcomes": 0
+  },
+  "implementation_sha256": {
+    "src/runbook_copilot/investigation.py": "dd8dd391c8291c2df38a3cd3ed31ab85f138148cef3f194c62d734361280d773",
+    "src/runbook_copilot/atlas_runtime.py": "3b1d2061766c3fbe9b33f047aa60bfa4989d17ad8c8ff054ba00bf4a207516ec",
+    "eval/atlas_eval.py": "b886bda1d47964890d636c78f43f1b1359865aa67ba41fb79c2527f184b085ed",
+    "eval/atlas_keys.json": "7dc3af997b75fdba3f133b60710469d9a3a0e1d4ac43b4df6c2c1974f8bf66b5"
+  },
+  "api_smoke": {
+    "http_status": 200,
+    "report_http_status": 200,
+    "persisted": true,
+    "run_id": "62b3ce2c-5dc5-420d-ab7d-89e5871e30b8",
+    "status": "insufficient_evidence"
+  },
+  "limitations": [
+    "Same-provider judge may share biases",
+    "Human review pending",
+    "Three known development fixtures",
+    "No controlled baseline/tools/RAG comparison yet",
+    "Synthetic captures; no live cluster evidence"
+  ]
+}

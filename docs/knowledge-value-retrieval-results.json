@@ -1,0 +1,414 @@
+{
+  "development": {
+    "manifest": {
+      "protocol": "knowledge-value-v1",
+      "created_at": "2026-11-04T22:49:11.995940+00:00",
+      "split": "development",
+      "retrieval": "scoped",
+      "case_count": 12,
+      "corpus_count": 682,
+      "corpus_sources": {
+        "k8s-docs": 567,
+        "k8s-runbooks": 91,
+        "fictional-contracts": 24
+      },
+      "case_categories": {
+        "knowledge_changes_decision": 6,
+        "knowledge_should_not_help": 3,
+        "missing_applicable_knowledge": 3
+      },
+      "assets": {
+        "cases.json": "13dfed790903b5f13fbb5e8e544bbeab3b849d498991f90247b41093a2d343f6",
+        "documents.json": "4e720a139bd04b5b85c7baa1c88531e5deddde231a8e3ce43d8caf82194f0abc",
+        "corpus.json": "9c37c1d3e9bb4c94ca3aa9ebbe61631d18efcad98c130d1c74025a5ef1b4f3ab",
+        "prompts.json": "91cfa6055ef662640c4c725117cd04da18e9f82af2ef668a6e93347b6649881e",
+        "retrieval-audit.json": "f8b2fc5360cf1c97446073ee468ece8ab5dae77d70c48a257d1149c28396863d",
+        "judge-reference.json": "3b39a684d2b85c85343c14793737e70aa7a82b591b3b2b70cb770a7106af09d7"
+      },
+      "code_sha256": "e26380f2e91758ba93514881cade0de184d7f4c843d9e49bb4835f4eb9837b19",
+      "schema_sha256": "30f896d8b29894ee635a18877ce8854ce5cf35dbe286efcbf25e625075519bbf",
+      "judge_schema_sha256": "910fd384d9252cb6c1f959d62385d77bd33bbd8370f637ec1a7199d3b419ea09",
+      "judge_system_sha256": "62a3591f1f04ed351a09329fd32e1909898c6384a0f409870f6f2648b2d57b6e",
+      "order": [
+        [
+          "shutdown-unknown",
+          "question_only"
+        ],
+        [
+          "memory-control",
+          "evidence"
+        ],
+        [
+          "shutdown-unknown",
+          "rag"
+        ],
+        [
+          "release-control",
+          "rag"
+        ],
+        [
+          "shutdown-control",
+          "question_only"
+        ],
+        [
+          "memory-control",
+          "question_only"
+        ],
+        [
+          "release-control",
+          "evidence"
+        ],
+        [
+          "release-b",
+          "question_only"
+        ],
+        [
+          "memory-control",
+          "rag"
+        ],
+        [
+          "memory-unknown",
+          "rag"
+        ],
+        [
+          "memory-unknown",
+          "evidence"
+        ],
+        [
+          "memory-a",
+          "evidence"
+        ],
+        [
+          "shutdown-control",
+          "evidence"
+        ],
+        [
+          "shutdown-a",
+          "evidence"
+        ],
+        [
+          "shutdown-b",
+          "evidence"
+        ],
+        [
+          "memory-a",
+          "question_only"
+        ],
+        [
+          "shutdown-a",
+          "question_only"
+        ],
+        [
+          "memory-a",
+          "rag"
+        ],
+        [
+          "release-a",
+          "question_only"
+        ],
+        [
+          "memory-b",
+          "question_only"
+        ],
+        [
+          "memory-b",
+          "rag"
+        ],
+        [
+          "release-b",
+          "evidence"
+        ],
+        [
+          "release-control",
+          "question_only"
+        ],
+        [
+          "shutdown-unknown",
+          "evidence"
+        ],
+        [
+          "release-unknown",
+          "rag"
+        ],
+        [
+          "memory-b",
+          "evidence"
+        ],
+        [
+          "release-unknown",
+          "question_only"
+        ],
+        [
+          "shutdown-b",
+          "question_only"
+        ],
+        [
+          "release-b",
+          "rag"
+        ],
+        [
+          "release-a",
+          "evidence"
+        ],
+        [
+          "memory-unknown",
+          "question_only"
+        ],
+        [
+          "release-unknown",
+          "evidence"
+        ],
+        [
+          "shutdown-b",
+          "rag"
+        ],
+        [
+          "shutdown-control",
+          "rag"
+        ],
+        [
+          "shutdown-a",
+          "rag"
+        ],
+        [
+          "release-a",
+          "rag"
+        ]
+      ],
+      "limitations": [
+        "Synthetic, author-aware reserved test set; not independent production evidence.",
+        "Keys await human review. No paid model results at preparation time.",
+        "Frozen evidence isolates retrieval; this does not evaluate adaptive agent tool selection."
+      ]
+    },
+    "cost_estimate": {
+      "prediction_calls": 36,
+      "judge_calls": 12,
+      "prediction_upper_estimate_usd": 1.101,
+      "judge_upper_estimate_usd": 1.2772,
+      "total_upper_estimate_usd": 2.3783,
+      "price_assumption_per_million": {
+        "input": 2.0,
+        "output": 8.0
+      },
+      "note": "No calls made. Includes full output allowances; no retries. Runtime ledger remains authoritative."
+    },
+    "retrieval_audit": {
+      "status": "offline retrieval measurement, not model answer quality",
+      "cases": 12,
+      "corpus_count": 682,
+      "unfiltered": {
+        "decisive_document_recall_at_6": 1.0,
+        "cases_with_inapplicable_documents": 11,
+        "inapplicable_documents_returned": 34
+      },
+      "scoped": {
+        "decisive_document_recall_at_6": 1.0,
+        "cases_with_inapplicable_documents": 0,
+        "inapplicable_documents_returned": 0
+      }
+    }
+  },
+  "reserved_test": {
+    "manifest": {
+      "protocol": "knowledge-value-v1",
+      "created_at": "2026-11-04T22:49:13.420585+00:00",
+      "split": "reserved_test",
+      "retrieval": "scoped",
+      "case_count": 12,
+      "corpus_count": 682,
+      "corpus_sources": {
+        "k8s-docs": 567,
+        "k8s-runbooks": 91,
+        "fictional-contracts": 24
+      },
+      "case_categories": {
+        "knowledge_changes_decision": 6,
+        "knowledge_should_not_help": 3,
+        "missing_applicable_knowledge": 3
+      },
+      "assets": {
+        "cases.json": "221bbd9644f96bdf09a6d1e8e4bee93924467b2c07d5538a27d7f62ecbdab9ac",
+        "documents.json": "4e720a139bd04b5b85c7baa1c88531e5deddde231a8e3ce43d8caf82194f0abc",
+        "corpus.json": "9c37c1d3e9bb4c94ca3aa9ebbe61631d18efcad98c130d1c74025a5ef1b4f3ab",
+        "prompts.json": "b87bee4cf2735b13dbe1afe4198d208d3a539fdc7564744db9966f0b3db9b2aa",
+        "retrieval-audit.json": "203e5d540c44e3fb20ecdfc5762745ed387d7c3298a36cd9c546150e57c4e77e",
+        "judge-reference.json": "6848d8d148106b442eb99229076ad443f404e751006deeb96c9b98784731d88b"
+      },
+      "code_sha256": "e26380f2e91758ba93514881cade0de184d7f4c843d9e49bb4835f4eb9837b19",
+      "schema_sha256": "30f896d8b29894ee635a18877ce8854ce5cf35dbe286efcbf25e625075519bbf",
+      "judge_schema_sha256": "910fd384d9252cb6c1f959d62385d77bd33bbd8370f637ec1a7199d3b419ea09",
+      "judge_system_sha256": "62a3591f1f04ed351a09329fd32e1909898c6384a0f409870f6f2648b2d57b6e",
+      "order": [
+        [
+          "scaling-unknown",
+          "question_only"
+        ],
+        [
+          "replay-control",
+          "evidence"
+        ],
+        [
+          "scaling-unknown",
+          "rag"
+        ],
+        [
+          "certificate-control",
+          "rag"
+        ],
+        [
+          "scaling-control",
+          "question_only"
+        ],
+        [
+          "replay-control",
+          "question_only"
+        ],
+        [
+          "certificate-control",
+          "evidence"
+        ],
+        [
+          "certificate-b",
+          "question_only"
+        ],
+        [
+          "replay-control",
+          "rag"
+        ],
+        [
+          "replay-unknown",
+          "rag"
+        ],
+        [
+          "replay-unknown",
+          "evidence"
+        ],
+        [
+          "replay-a",
+          "evidence"
+        ],
+        [
+          "scaling-control",
+          "evidence"
+        ],
+        [
+          "scaling-a",
+          "evidence"
+        ],
+        [
+          "scaling-b",
+          "evidence"
+        ],
+        [
+          "replay-a",
+          "question_only"
+        ],
+        [
+          "scaling-a",
+          "question_only"
+        ],
+        [
+          "replay-a",
+          "rag"
+        ],
+        [
+          "certificate-a",
+          "question_only"
+        ],
+        [
+          "replay-b",
+          "question_only"
+        ],
+        [
+          "replay-b",
+          "rag"
+        ],
+        [
+          "certificate-b",
+          "evidence"
+        ],
+        [
+          "certificate-control",
+          "question_only"
+        ],
+        [
+          "scaling-unknown",
+          "evidence"
+        ],
+        [
+          "certificate-unknown",
+          "rag"
+        ],
+        [
+          "replay-b",
+          "evidence"
+        ],
+        [
+          "certificate-unknown",
+          "question_only"
+        ],
+        [
+          "scaling-b",
+          "question_only"
+        ],
+        [
+          "certificate-b",
+          "rag"
+        ],
+        [
+          "certificate-a",
+          "evidence"
+        ],
+        [
+          "replay-unknown",
+          "question_only"
+        ],
+        [
+          "certificate-unknown",
+          "evidence"
+        ],
+        [
+          "scaling-b",
+          "rag"
+        ],
+        [
+          "scaling-control",
+          "rag"
+        ],
+        [
+          "scaling-a",
+          "rag"
+        ],
+        [
+          "certificate-a",
+          "rag"
+        ]
+      ],
+      "limitations": [
+        "Synthetic, author-aware reserved test set; not independent production evidence.",
+        "Keys await human review. No paid model results at preparation time.",
+        "Frozen evidence isolates retrieval; this does not evaluate adaptive agent tool selection."
+      ]
+    },
+    "cost_estimate": {
+      "prediction_calls": 36,
+      "judge_calls": 12,
+      "prediction_upper_estimate_usd": 1.0249,
+      "judge_upper_estimate_usd": 1.2011,
+      "total_upper_estimate_usd": 2.2259,
+      "price_assumption_per_million": {
+        "input": 2.0,
+        "output": 8.0
+      },
+      "note": "No calls made. Includes full output allowances; no retries. Runtime ledger remains authoritative."
+    }
+  },
+  "budget": {
+    "limit_usd": 1,
+    "known_cost_usd": 0.93574075,
+    "unknown_outcomes": 0
+  },
+  "status": "Offline preparation and development retrieval audit complete; no new provider calls.",
+  "fixture_revision": "v3: memory observation approaches the cgroup limit; 768 MiB describes potential aggregate configured cache, not observed resident memory above the limit."
+}

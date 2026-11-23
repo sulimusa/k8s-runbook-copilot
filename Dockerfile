@@ -21,6 +21,7 @@ COPY --from=build /opt/venv /opt/venv
 COPY --from=build /app/src ./src
 COPY --from=build /app/data/processed ./data/processed
 COPY app ./app
+COPY demo ./demo
 RUN mkdir -p /app/logs && chown -R app:app /app/logs
 USER 10001
 EXPOSE 8000

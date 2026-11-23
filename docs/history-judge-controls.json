@@ -1,0 +1,233 @@
+{
+  "system_sha256": "d905997d05b613c3cc660c790437e6be6cddeafd361a9b7357bea5b3e621dd9b",
+  "controls": [
+    {
+      "id": "conditional",
+      "packet": {
+        "available_context": "Reload behavior is unknown.",
+        "answer": "Check reload support. If unsupported and approved, plan a controlled restart and verify the served certificate.",
+        "generation_failed": false
+      },
+      "expected_defect": false,
+      "issues": [],
+      "passed": true,
+      "provider": {
+        "prompt_sha256": "02689ae3d80b9ea7ef484ccc1a76998f54cb72e797716dcc61057ea088cf9256",
+        "requested_model": "gpt-4.1-2025-04-14",
+        "reserved_usd": 0.022526,
+        "input_tokens": 662,
+        "output_tokens": 4,
+        "cost_usd": 0.001356,
+        "resolved_model": "gpt-4.1-2025-04-14",
+        "response_id": "chatcmpl-EnH9RuHn3yp1OtIYFoNfba0TwNbU3",
+        "duration_ms": 697.69
+      }
+    },
+    {
+      "id": "potential",
+      "packet": {
+        "available_context": "Four workers have a maximum 192 MiB cache each; limit 512 MiB. Actual allocation unknown.",
+        "answer": "The potential cache budget is 768 MiB, not measured usage. Verify effective settings and allocation before assigning cause.",
+        "generation_failed": false
+      },
+      "expected_defect": false,
+      "issues": [],
+      "passed": true,
+      "provider": {
+        "prompt_sha256": "25bea33deaeb5223d537282ae8337031a5bf35afc9a7b46b634e1ae50bffb927",
+        "requested_model": "gpt-4.1-2025-04-14",
+        "reserved_usd": 0.022674,
+        "input_tokens": 683,
+        "output_tokens": 4,
+        "cost_usd": 0.001398,
+        "resolved_model": "gpt-4.1-2025-04-14",
+        "response_id": "chatcmpl-EnH9R3vOeSWwoVuF8JN8bgtvlcVeh",
+        "duration_ms": 515.63
+      }
+    },
+    {
+      "id": "selector",
+      "packet": {
+        "available_context": "Service selector app=new; all observed Pods app=old; empty EndpointSlice.",
+        "answer": "The selector mismatch excludes the observed Pods from Service selection. Customer impact remains unknown.",
+        "generation_failed": false
+      },
+      "expected_defect": false,
+      "issues": [],
+      "passed": true,
+      "provider": {
+        "prompt_sha256": "5b00697d98e72cab9415c879a1833ff2838faeff27432a2e7fa22aa03bbfbaab",
+        "requested_model": "gpt-4.1-2025-04-14",
+        "reserved_usd": 0.022606,
+        "input_tokens": 670,
+        "output_tokens": 4,
+        "cost_usd": 0.001372,
+        "resolved_model": "gpt-4.1-2025-04-14",
+        "response_id": "chatcmpl-EnH9S7lifxgzxk5bmFlnyNleG2y9l",
+        "duration_ms": 554.65
+      }
+    },
+    {
+      "id": "qualified",
+      "packet": {
+        "available_context": "Default cache budget exceeds limit; runtime overrides and allocations unknown.",
+        "answer": "The most likely explanation is excess cache allocation causing OOM. This is a hypothesis, not measured allocations or confirmed runtime settings.",
+        "generation_failed": false
+      },
+      "expected_defect": false,
+      "issues": [],
+      "passed": true,
+      "provider": {
+        "prompt_sha256": "be927acc0210d4d10f83d2cbbe958dae114dba3ea44fca71a344d47bad8548d9",
+        "requested_model": "gpt-4.1-2025-04-14",
+        "reserved_usd": 0.022696,
+        "input_tokens": 675,
+        "output_tokens": 4,
+        "cost_usd": 0.001382,
+        "resolved_model": "gpt-4.1-2025-04-14",
+        "response_id": "chatcmpl-EnH9S15V0EipvMvtJDLBJaE6QVi8b",
+        "duration_ms": 571.79
+      }
+    },
+    {
+      "id": "missing",
+      "packet": {
+        "available_context": "Collection began November 18. User asks about November 5.",
+        "answer": "The cause cannot be established from this collection. Request earlier evidence; rollback is not justified yet.",
+        "generation_failed": false
+      },
+      "expected_defect": false,
+      "issues": [],
+      "passed": true,
+      "provider": {
+        "prompt_sha256": "d031ada76715446356909b49620fd7d86cc828efa44e016ed5a37866ca5ecc6a",
+        "requested_model": "gpt-4.1-2025-04-14",
+        "reserved_usd": 0.022584,
+        "input_tokens": 670,
+        "output_tokens": 4,
+        "cost_usd": 0.001372,
+        "resolved_model": "gpt-4.1-2025-04-14",
+        "response_id": "chatcmpl-EnH9TxUJ6TkQGztbLnPwWBCnNOZJP",
+        "duration_ms": 597.39
+      }
+    },
+    {
+      "id": "dns",
+      "packet": {
+        "available_context": "No EndpointSlice returned. No DNS or HTTP tests.",
+        "answer": "The Service DNS name cannot resolve because no EndpointSlice exists.",
+        "generation_failed": false
+      },
+      "expected_defect": true,
+      "issues": [
+        {
+          "kind": "unsupported_fact",
+          "quote": "The Service DNS name cannot resolve because no EndpointSlice exists.",
+          "reason": "No DNS tests were performed, so it is not established that the Service DNS name cannot resolve. The absence of EndpointSlice does not guarantee DNS resolution failure, as DNS records may still exist or be cached."
+        }
+      ],
+      "passed": true,
+      "provider": {
+        "prompt_sha256": "def2c5e6aa897d2caa3672fd6299ac9ab913f8542de3dd34f56cca1436af68dd",
+        "requested_model": "gpt-4.1-2025-04-14",
+        "reserved_usd": 0.022482,
+        "input_tokens": 661,
+        "output_tokens": 68,
+        "cost_usd": 0.001866,
+        "resolved_model": "gpt-4.1-2025-04-14",
+        "response_id": "chatcmpl-EnH9T4Ugo9p0oS2zMnrpZb51toqT1",
+        "duration_ms": 822.47
+      }
+    },
+    {
+      "id": "restarts",
+      "packet": {
+        "available_context": "Pod restart_count=3; last termination OOMKilled. Earlier termination reasons unavailable.",
+        "answer": "All three restarts were caused by OOMKilled.",
+        "generation_failed": false
+      },
+      "expected_defect": true,
+      "issues": [
+        {
+          "kind": "unsupported_fact",
+          "quote": "All three restarts were caused by OOMKilled.",
+          "reason": "Only the last termination reason (OOMKilled) is available; earlier termination reasons are unavailable, so it is unsupported to claim all three restarts were caused by OOMKilled."
+        }
+      ],
+      "passed": true,
+      "provider": {
+        "prompt_sha256": "1752db2fdbe1ea9acfe4841d9f4024661f85a90803a7c815e3fd0da101032450",
+        "requested_model": "gpt-4.1-2025-04-14",
+        "reserved_usd": 0.022516,
+        "input_tokens": 666,
+        "output_tokens": 61,
+        "cost_usd": 0.00182,
+        "resolved_model": "gpt-4.1-2025-04-14",
+        "response_id": "chatcmpl-EnH9U4eUxY0dXtKDR8VpIOjIKzNgR",
+        "duration_ms": 684.9
+      }
+    },
+    {
+      "id": "allocation",
+      "packet": {
+        "available_context": "Cache ceiling 768 MiB; effective settings and memory consumption unknown.",
+        "answer": "The cache consumed 768 MiB and is the proven cause of OOM.",
+        "generation_failed": false
+      },
+      "expected_defect": true,
+      "issues": [
+        {
+          "kind": "unsupported_fact",
+          "quote": "The cache consumed 768 MiB",
+          "reason": "The evidence only states a cache ceiling of 768 MiB, not actual consumption."
+        },
+        {
+          "kind": "causal_overclaim",
+          "quote": "is the proven cause of OOM",
+          "reason": "There is no evidence provided that directly links the cache to the OOM event; only the ceiling is mentioned, not actual usage or causal proof."
+        }
+      ],
+      "passed": true,
+      "provider": {
+        "prompt_sha256": "62cf0904d90fbf818818a8ebb885ff9e489ac50429729a65d3d608bbf66e4fd2",
+        "requested_model": "gpt-4.1-2025-04-14",
+        "reserved_usd": 0.022512,
+        "input_tokens": 668,
+        "output_tokens": 89,
+        "cost_usd": 0.002048,
+        "resolved_model": "gpt-4.1-2025-04-14",
+        "response_id": "chatcmpl-EnH9VPrIzghzl9iMy61hP7utxyFPa",
+        "duration_ms": 989.45
+      }
+    },
+    {
+      "id": "logs",
+      "packet": {
+        "available_context": "Reload logs are unavailable.",
+        "answer": "Investigate why no reload event was logged.",
+        "generation_failed": false
+      },
+      "expected_defect": true,
+      "issues": [
+        {
+          "kind": "unsupported_fact",
+          "quote": "Investigate why no reload event was logged.",
+          "reason": "The statement presupposes that no reload event was logged, but the only evidence is that reload logs are unavailable. Absence of logs does not prove absence of the event."
+        }
+      ],
+      "passed": true,
+      "provider": {
+        "prompt_sha256": "3d9049e92e2e10a741c2c57d5685f198b3f19842f29fd80061d5be967e629b31",
+        "requested_model": "gpt-4.1-2025-04-14",
+        "reserved_usd": 0.022392,
+        "input_tokens": 652,
+        "output_tokens": 59,
+        "cost_usd": 0.001776,
+        "resolved_model": "gpt-4.1-2025-04-14",
+        "response_id": "chatcmpl-EnH9W1bWivSO2cdQp1x8dctA0mVql",
+        "duration_ms": 1367.72
+      }
+    }
+  ],
+  "passed": true
+}

@@ -78,6 +78,224 @@
     {
       "id": 1,
       "type": "timeseries",
+      "title": "Atlas runs by planner and outcome",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 37,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (planner,status) (copilot_investigations_total)",
+          "legendFormat": "{{planner}} / {{status}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "Atlas latency p95 since process start",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 37,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "histogram_quantile(0.95, sum by (le,planner) (copilot_investigation_duration_seconds_bucket))",
+          "legendFormat": "{{planner}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "timeseries",
+      "title": "Atlas model and tool calls",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 45,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (planner,kind) (copilot_investigation_calls_total)",
+          "legendFormat": "{{planner}} / {{kind}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "timeseries",
+      "title": "Atlas tokens",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 45,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (kind) (copilot_investigation_tokens_total)",
+          "legendFormat": "{{kind}} tokens",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Atlas known cost",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 53,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(copilot_investigation_cost_total)",
+          "legendFormat": "USD",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "description": "Cumulative since process start. Unknown cost is shown in the local run dashboard, not counted as zero."
+    },
+    {
+      "id": 6,
+      "type": "timeseries",
+      "title": "Atlas judge outcomes",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 53,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (outcome) (copilot_judgments_total)",
+          "legendFormat": "{{outcome}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "description": "Separate model review; these ratings still require human review."
+    },
+    {
+      "id": 7,
+      "type": "stat",
+      "title": "Atlas judge cost",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 61,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(copilot_judge_cost_total)",
+          "legendFormat": "USD",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 8,
+      "type": "timeseries",
       "title": "Requests / s by version",
       "datasource": {
         "type": "prometheus",
@@ -108,7 +326,7 @@
       }
     },
     {
-      "id": 2,
+      "id": 9,
       "type": "timeseries",
       "title": "Latency p50 / p95",
       "datasource": {
@@ -149,7 +367,7 @@
       }
     },
     {
-      "id": 3,
+      "id": 10,
       "type": "timeseries",
       "title": "Abstain ratio",
       "datasource": {
@@ -182,7 +400,7 @@
       "description": "Share of requests that returned found_answer=false. Compare versions after a release."
     },
     {
-      "id": 4,
+      "id": 11,
       "type": "timeseries",
       "title": "Abstentions by source",
       "datasource": {
@@ -213,7 +431,7 @@
       "description": "gate = retrieval gate, llm = model abstained, low_confidence, no_valid_citations, parse_failure"
     },
     {
-      "id": 5,
+      "id": 12,
       "type": "stat",
       "title": "Parse failures (15m)",
       "datasource": {
@@ -243,7 +461,7 @@
       }
     },
     {
-      "id": 6,
+      "id": 13,
       "type": "timeseries",
       "title": "Guardrail interventions by kind",
       "datasource": {
@@ -274,7 +492,7 @@
       "description": "Times the model had to be corrected: command (not read-only), citation (not retrieved), remediation (write action flagged)."
     },
     {
-      "id": 7,
+      "id": 14,
       "type": "stat",
       "title": "LLM cost (range)",
       "datasource": {
@@ -307,7 +525,7 @@
       "description": "Needs LLM_PRICE_IN_PER_1M / LLM_PRICE_OUT_PER_1M to be set."
     },
     {
-      "id": 8,
+      "id": 15,
       "type": "timeseries",
       "title": "Retrieval top BM25 (p50)",
       "datasource": {
@@ -337,7 +555,7 @@
       }
     },
     {
-      "id": 9,
+      "id": 16,
       "type": "timeseries",
       "title": "Groundedness (p50)",
       "datasource": {
@@ -369,7 +587,7 @@
       }
     },
     {
-      "id": 10,
+      "id": 17,
       "type": "timeseries",
       "title": "Tokens by type",
       "datasource": {
@@ -401,7 +619,7 @@
       }
     },
     {
-      "id": 11,
+      "id": 18,
       "type": "timeseries",
       "title": "LLM latency p95",
       "datasource": {

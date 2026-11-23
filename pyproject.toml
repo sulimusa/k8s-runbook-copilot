@@ -18,6 +18,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+kube = ["kubernetes>=32,<38"]
 api = ["fastapi>=0.110", "uvicorn>=0.29"]
 ui = ["streamlit>=1.33"]
 app = ["runbook-copilot[api,ui]"]

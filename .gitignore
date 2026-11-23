@@ -22,3 +22,12 @@ analysis/job_market/.cache/
 # agent identities (contain tokens)
 .agent/
 *.kubeconfig
+
+# private local state and credentials
+private/
+.env.*
+!.env.example
+*.key
+*.p12
+*.pfx
+.DS_Store

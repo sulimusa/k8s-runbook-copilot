@@ -1,0 +1,9 @@
+FROM python:3.12-slim
+ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
+WORKDIR /app
+COPY pyproject.toml README.md ./
+COPY src ./src
+RUN pip install --no-cache-dir '.[api,kube]' && useradd --uid 10001 --create-home app
+COPY app/history_api.py ./app/history_api.py
+USER 10001
+CMD ["uvicorn", "app.history_api:app", "--host", "0.0.0.0", "--port", "8000"]

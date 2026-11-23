@@ -1,0 +1,658 @@
+[
+  {
+    "id": "release-a",
+    "family": "release",
+    "split": "development",
+    "category": "knowledge_changes_decision",
+    "question": "Errors increased after the rollout. Should we roll this service back?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "ledger-api",
+      "version": "r3",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "At 10:00 a new release became ready; at 10:04 HTTP 500 responses rose from 0.2% to 12%."
+      },
+      {
+        "id": "E2",
+        "text": "Pods are Ready. There is no exception trace or migration execution log in this evidence."
+      }
+    ]
+  },
+  {
+    "id": "release-b",
+    "family": "release",
+    "split": "development",
+    "category": "knowledge_changes_decision",
+    "question": "Errors increased after the rollout. Should we roll this service back?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "ledger-api",
+      "version": "r2",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "At 10:00 a new release became ready; at 10:04 HTTP 500 responses rose from 0.2% to 12%."
+      },
+      {
+        "id": "E2",
+        "text": "Pods are Ready. There is no exception trace or migration execution log in this evidence."
+      }
+    ]
+  },
+  {
+    "id": "release-control",
+    "family": "release",
+    "split": "development",
+    "category": "knowledge_should_not_help",
+    "question": "Why does this Service have no endpoints?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "ledger-api",
+      "version": "r3",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "Service selector changed from app=ledger-api to app=ledger-api-typo at 10:04."
+      },
+      {
+        "id": "E2",
+        "text": "All current Pods are Ready and labelled app=ledger-api. EndpointSlice is empty."
+      }
+    ]
+  },
+  {
+    "id": "release-unknown",
+    "family": "release",
+    "split": "development",
+    "category": "missing_applicable_knowledge",
+    "question": "Errors increased after the rollout. Should we roll this service back?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "ledger-api",
+      "version": "r99",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "At 10:00 a new release became ready; at 10:04 HTTP 500 responses rose from 0.2% to 12%."
+      },
+      {
+        "id": "E2",
+        "text": "Pods are Ready. There is no exception trace or migration execution log in this evidence."
+      }
+    ]
+  },
+  {
+    "id": "memory-a",
+    "family": "memory",
+    "split": "development",
+    "category": "knowledge_changes_decision",
+    "question": "This container was OOMKilled. Does reducing CACHE_BUDGET_MB address the cause?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "cache-api",
+      "version": "r3",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "CACHE_BUDGET_MB=192 (this setting uses MiB despite its name) and WORKERS=4. Container memory limit is 512 MiB."
+      },
+      {
+        "id": "E2",
+        "text": "Working set approached the 512 MiB limit before termination. Last termination reason is OOMKilled."
+      },
+      {
+        "id": "E3",
+        "text": "There is no heap profile or breakdown of cache/native allocation."
+      }
+    ]
+  },
+  {
+    "id": "memory-b",
+    "family": "memory",
+    "split": "development",
+    "category": "knowledge_changes_decision",
+    "question": "This container was OOMKilled. Does reducing CACHE_BUDGET_MB address the cause?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "cache-api",
+      "version": "r2",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "CACHE_BUDGET_MB=192 (this setting uses MiB despite its name) and WORKERS=4. Container memory limit is 512 MiB."
+      },
+      {
+        "id": "E2",
+        "text": "Working set approached the 512 MiB limit before termination. Last termination reason is OOMKilled."
+      },
+      {
+        "id": "E3",
+        "text": "There is no heap profile or breakdown of cache/native allocation."
+      }
+    ]
+  },
+  {
+    "id": "memory-control",
+    "family": "memory",
+    "split": "development",
+    "category": "knowledge_should_not_help",
+    "question": "Why did this Pod start getting OOMKilled immediately after a resource update?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "cache-api",
+      "version": "r3",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "The only resource change was memory limit 1 GiB -> 128 MiB."
+      },
+      {
+        "id": "E2",
+        "text": "Before that change the workload used 250 MiB steadily. OOMKilled began immediately after."
+      },
+      {
+        "id": "E3",
+        "text": "No application release, worker count or cache setting changed."
+      }
+    ]
+  },
+  {
+    "id": "memory-unknown",
+    "family": "memory",
+    "split": "development",
+    "category": "missing_applicable_knowledge",
+    "question": "This container was OOMKilled. Does reducing CACHE_BUDGET_MB address the cause?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "cache-api",
+      "version": "r99",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "CACHE_BUDGET_MB=192 (this setting uses MiB despite its name) and WORKERS=4. Container memory limit is 512 MiB."
+      },
+      {
+        "id": "E2",
+        "text": "Working set approached the 512 MiB limit before termination. Last termination reason is OOMKilled."
+      },
+      {
+        "id": "E3",
+        "text": "There is no heap profile or breakdown of cache/native allocation."
+      }
+    ]
+  },
+  {
+    "id": "shutdown-a",
+    "family": "shutdown",
+    "split": "development",
+    "category": "knowledge_changes_decision",
+    "question": "Jobs are interrupted during a rollout. Should we increase terminationGracePeriodSeconds?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "batch-worker",
+      "version": "r3",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "terminationGracePeriodSeconds=30. The worker receives SIGTERM during rollout."
+      },
+      {
+        "id": "E2",
+        "text": "After 30 seconds the worker is killed while a job is still running."
+      },
+      {
+        "id": "E3",
+        "text": "The job duration and drain behavior are not established by these observations."
+      }
+    ]
+  },
+  {
+    "id": "shutdown-b",
+    "family": "shutdown",
+    "split": "development",
+    "category": "knowledge_changes_decision",
+    "question": "Jobs are interrupted during a rollout. Should we increase terminationGracePeriodSeconds?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "batch-worker",
+      "version": "r2",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "terminationGracePeriodSeconds=30. The worker receives SIGTERM during rollout."
+      },
+      {
+        "id": "E2",
+        "text": "After 30 seconds the worker is killed while a job is still running."
+      },
+      {
+        "id": "E3",
+        "text": "The job duration and drain behavior are not established by these observations."
+      }
+    ]
+  },
+  {
+    "id": "shutdown-control",
+    "family": "shutdown",
+    "split": "development",
+    "category": "knowledge_should_not_help",
+    "question": "Why is this Pod Pending?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "batch-worker",
+      "version": "r3",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "Scheduler Event reason FailedScheduling."
+      },
+      {
+        "id": "E2",
+        "text": "Pod requests 4 CPU; each eligible node has only 2 CPU allocatable."
+      },
+      {
+        "id": "E3",
+        "text": "No Pod instance has started."
+      }
+    ]
+  },
+  {
+    "id": "shutdown-unknown",
+    "family": "shutdown",
+    "split": "development",
+    "category": "missing_applicable_knowledge",
+    "question": "Jobs are interrupted during a rollout. Should we increase terminationGracePeriodSeconds?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "batch-worker",
+      "version": "r99",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "terminationGracePeriodSeconds=30. The worker receives SIGTERM during rollout."
+      },
+      {
+        "id": "E2",
+        "text": "After 30 seconds the worker is killed while a job is still running."
+      },
+      {
+        "id": "E3",
+        "text": "The job duration and drain behavior are not established by these observations."
+      }
+    ]
+  },
+  {
+    "id": "certificate-a",
+    "family": "certificate",
+    "split": "reserved_test",
+    "category": "knowledge_changes_decision",
+    "question": "The mounted TLS certificate was renewed but the endpoint still serves the old one. What next?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "edge-api",
+      "version": "r3",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "The mounted certificate has the new serial number and a valid expiry."
+      },
+      {
+        "id": "E2",
+        "text": "Five minutes later the endpoint still presents the previous expired certificate."
+      },
+      {
+        "id": "E3",
+        "text": "No certificate reload log or process-level certificate inspection is available."
+      }
+    ]
+  },
+  {
+    "id": "certificate-b",
+    "family": "certificate",
+    "split": "reserved_test",
+    "category": "knowledge_changes_decision",
+    "question": "The mounted TLS certificate was renewed but the endpoint still serves the old one. What next?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "edge-api",
+      "version": "r2",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "The mounted certificate has the new serial number and a valid expiry."
+      },
+      {
+        "id": "E2",
+        "text": "Five minutes later the endpoint still presents the previous expired certificate."
+      },
+      {
+        "id": "E3",
+        "text": "No certificate reload log or process-level certificate inspection is available."
+      }
+    ]
+  },
+  {
+    "id": "certificate-control",
+    "family": "certificate",
+    "split": "reserved_test",
+    "category": "knowledge_should_not_help",
+    "question": "Why is this Pod unable to start its container?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "edge-api",
+      "version": "r3",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "Container state ImagePullBackOff."
+      },
+      {
+        "id": "E2",
+        "text": "The image registry response is HTTP 401 Unauthorized."
+      },
+      {
+        "id": "E3",
+        "text": "The image reference points to a private repository."
+      }
+    ]
+  },
+  {
+    "id": "certificate-unknown",
+    "family": "certificate",
+    "split": "reserved_test",
+    "category": "missing_applicable_knowledge",
+    "question": "The mounted TLS certificate was renewed but the endpoint still serves the old one. What next?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "edge-api",
+      "version": "r99",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "The mounted certificate has the new serial number and a valid expiry."
+      },
+      {
+        "id": "E2",
+        "text": "Five minutes later the endpoint still presents the previous expired certificate."
+      },
+      {
+        "id": "E3",
+        "text": "No certificate reload log or process-level certificate inspection is available."
+      }
+    ]
+  },
+  {
+    "id": "replay-a",
+    "family": "replay",
+    "split": "reserved_test",
+    "category": "knowledge_changes_decision",
+    "question": "The consumer crashed after producing output but before acknowledging a job. Is replay safe?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "image-worker",
+      "version": "r3",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "The job ID is job-42. Output may already exist; acknowledgement was not recorded."
+      },
+      {
+        "id": "E2",
+        "text": "The consumer restarted. Its broker offset can be replayed."
+      },
+      {
+        "id": "E3",
+        "text": "The output registry and deduplication record have not been inspected."
+      }
+    ]
+  },
+  {
+    "id": "replay-b",
+    "family": "replay",
+    "split": "reserved_test",
+    "category": "knowledge_changes_decision",
+    "question": "The consumer crashed after producing output but before acknowledging a job. Is replay safe?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "image-worker",
+      "version": "r2",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "The job ID is job-42. Output may already exist; acknowledgement was not recorded."
+      },
+      {
+        "id": "E2",
+        "text": "The consumer restarted. Its broker offset can be replayed."
+      },
+      {
+        "id": "E3",
+        "text": "The output registry and deduplication record have not been inspected."
+      }
+    ]
+  },
+  {
+    "id": "replay-control",
+    "family": "replay",
+    "split": "reserved_test",
+    "category": "knowledge_should_not_help",
+    "question": "Why is this Pod reporting ErrImageNeverPull?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "image-worker",
+      "version": "r3",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "imagePullPolicy is Never."
+      },
+      {
+        "id": "E2",
+        "text": "The required image is absent from the scheduled node."
+      },
+      {
+        "id": "E3",
+        "text": "No application process has started."
+      }
+    ]
+  },
+  {
+    "id": "replay-unknown",
+    "family": "replay",
+    "split": "reserved_test",
+    "category": "missing_applicable_knowledge",
+    "question": "The consumer crashed after producing output but before acknowledging a job. Is replay safe?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "image-worker",
+      "version": "r99",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "The job ID is job-42. Output may already exist; acknowledgement was not recorded."
+      },
+      {
+        "id": "E2",
+        "text": "The consumer restarted. Its broker offset can be replayed."
+      },
+      {
+        "id": "E3",
+        "text": "The output registry and deduplication record have not been inspected."
+      }
+    ]
+  },
+  {
+    "id": "scaling-a",
+    "family": "scaling",
+    "split": "reserved_test",
+    "category": "knowledge_changes_decision",
+    "question": "CPU and latency are high at ten replicas. Is scaling to twenty replicas a safe next step?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "query-api",
+      "version": "r3",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "Ten ready replicas, sustained CPU utilization about 95%, request latency elevated."
+      },
+      {
+        "id": "E2",
+        "text": "The database supports at most 240 connections allocated to this service."
+      },
+      {
+        "id": "E3",
+        "text": "No node-capacity or database-load test is included."
+      }
+    ]
+  },
+  {
+    "id": "scaling-b",
+    "family": "scaling",
+    "split": "reserved_test",
+    "category": "knowledge_changes_decision",
+    "question": "CPU and latency are high at ten replicas. Is scaling to twenty replicas a safe next step?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "query-api",
+      "version": "r2",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "Ten ready replicas, sustained CPU utilization about 95%, request latency elevated."
+      },
+      {
+        "id": "E2",
+        "text": "The database supports at most 240 connections allocated to this service."
+      },
+      {
+        "id": "E3",
+        "text": "No node-capacity or database-load test is included."
+      }
+    ]
+  },
+  {
+    "id": "scaling-control",
+    "family": "scaling",
+    "split": "reserved_test",
+    "category": "knowledge_should_not_help",
+    "question": "Why is this Service returning no endpoints?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "query-api",
+      "version": "r3",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "Service selector app=query-api-v9 matches zero Pods."
+      },
+      {
+        "id": "E2",
+        "text": "Ready Pods have label app=query-api."
+      },
+      {
+        "id": "E3",
+        "text": "EndpointSlice is empty and Pod CPU is low."
+      }
+    ]
+  },
+  {
+    "id": "scaling-unknown",
+    "family": "scaling",
+    "split": "reserved_test",
+    "category": "missing_applicable_knowledge",
+    "question": "CPU and latency are high at ten replicas. Is scaling to twenty replicas a safe next step?",
+    "scope": {
+      "cluster": "fictional-capstone",
+      "namespace": "prod-capstone",
+      "service": "query-api",
+      "version": "r99",
+      "as_of": "2026-11-04T10:10:00+00:00"
+    },
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "Ten ready replicas, sustained CPU utilization about 95%, request latency elevated."
+      },
+      {
+        "id": "E2",
+        "text": "The database supports at most 240 connections allocated to this service."
+      },
+      {
+        "id": "E3",
+        "text": "No node-capacity or database-load test is included."
+      }
+    ]
+  }
+]

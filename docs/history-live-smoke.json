@@ -1,0 +1,1041 @@
+{
+  "run_id": "883364f5-6c44-45a5-9265-63b0488a7a1f",
+  "type": "cluster_history_chat",
+  "namespace": "prod-capstone",
+  "cluster_uid": "137b01dd-0cd6-4493-b1a8-85219648f20d",
+  "days": 7,
+  "coverage": {
+    "healthy": true,
+    "cluster": "runbook-capstone",
+    "cluster_uid": "137b01dd-0cd6-4493-b1a8-85219648f20d",
+    "namespace": "prod-capstone",
+    "collection_started": "2026-11-04T21:30:44.593556+00:00",
+    "history_available_since": "2026-11-04T21:30:44.593556+00:00",
+    "retention_days": 30,
+    "streams": [
+      {
+        "namespace": "prod-capstone",
+        "kind": "Deployment",
+        "rv": "1536130",
+        "started": "2026-11-04T21:30:44.616502+00:00",
+        "heartbeat": "2026-11-23T05:31:56.920444+00:00",
+        "error": null
+      },
+      {
+        "namespace": "prod-capstone",
+        "kind": "EndpointSlice",
+        "rv": "1536130",
+        "started": "2026-11-04T21:30:44.618990+00:00",
+        "heartbeat": "2026-11-23T05:31:56.871387+00:00",
+        "error": null
+      },
+      {
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "rv": "1535842",
+        "started": "2026-11-04T21:30:44.618719+00:00",
+        "heartbeat": "2026-11-23T05:31:51.803646+00:00",
+        "error": null
+      },
+      {
+        "namespace": "prod-capstone",
+        "kind": "Pod",
+        "rv": "1536132",
+        "started": "2026-11-04T21:30:44.615928+00:00",
+        "heartbeat": "2026-11-23T05:31:56.842364+00:00",
+        "error": null
+      },
+      {
+        "namespace": "prod-capstone",
+        "kind": "ReplicaSet",
+        "rv": "1536130",
+        "started": "2026-11-04T21:30:44.615792+00:00",
+        "heartbeat": "2026-11-23T05:31:56.894306+00:00",
+        "error": null
+      },
+      {
+        "namespace": "prod-capstone",
+        "kind": "Service",
+        "rv": "1536132",
+        "started": "2026-11-04T21:30:44.618375+00:00",
+        "heartbeat": "2026-11-23T05:31:56.883558+00:00",
+        "error": null
+      }
+    ],
+    "gaps": [
+      {
+        "id": 3518,
+        "namespace": "prod-capstone",
+        "kind": "ReplicaSet",
+        "at": "2026-11-23T05:30:11.630769+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3515,
+        "namespace": "prod-capstone",
+        "kind": "Deployment",
+        "at": "2026-11-23T05:30:11.615464+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3514,
+        "namespace": "prod-capstone",
+        "kind": "Service",
+        "at": "2026-11-23T05:30:11.609360+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3513,
+        "namespace": "prod-capstone",
+        "kind": "EndpointSlice",
+        "at": "2026-11-23T05:30:11.606839+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3511,
+        "namespace": "prod-capstone",
+        "kind": "EndpointSlice",
+        "at": "2026-11-23T05:30:11.477616+00:00",
+        "reason": "Collector restarted; resumed watch may catch up. Downtime is not continuous observation."
+      },
+      {
+        "id": 3510,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-23T05:30:11.477897+00:00",
+        "reason": "Collector restarted; resumed watch may catch up. Downtime is not continuous observation."
+      },
+      {
+        "id": 3509,
+        "namespace": "prod-capstone",
+        "kind": "Service",
+        "at": "2026-11-23T05:30:11.477802+00:00",
+        "reason": "Collector restarted; resumed watch may catch up. Downtime is not continuous observation."
+      },
+      {
+        "id": 3507,
+        "namespace": "prod-capstone",
+        "kind": "Pod",
+        "at": "2026-11-23T05:30:11.581669+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3506,
+        "namespace": "prod-capstone",
+        "kind": "Deployment",
+        "at": "2026-11-23T05:30:11.478015+00:00",
+        "reason": "Collector restarted; resumed watch may catch up. Downtime is not continuous observation."
+      },
+      {
+        "id": 3505,
+        "namespace": "prod-capstone",
+        "kind": "Pod",
+        "at": "2026-11-23T05:30:11.477971+00:00",
+        "reason": "Collector restarted; resumed watch may catch up. Downtime is not continuous observation."
+      },
+      {
+        "id": 3504,
+        "namespace": "prod-capstone",
+        "kind": "ReplicaSet",
+        "at": "2026-11-23T05:30:11.477833+00:00",
+        "reason": "Collector restarted; resumed watch may catch up. Downtime is not continuous observation."
+      },
+      {
+        "id": 3497,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T04:40:57.490059+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3495,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T04:30:50.684481+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3493,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T04:21:08.995174+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3491,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T04:11:02.147295+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3490,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T04:00:55.352720+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3487,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T03:51:13.615357+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3486,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T03:41:06.712952+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3483,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T03:30:59.871588+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3482,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T03:20:52.979748+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3480,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T03:11:11.184138+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3477,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T03:01:04.322875+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3475,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T02:50:57.465543+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3474,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T02:40:50.652264+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3471,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T02:31:08.825013+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3470,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T02:21:01.957285+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3467,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T02:10:54.917835+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3466,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T02:01:13.114234+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3463,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T01:51:06.254681+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3462,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T01:40:59.492195+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3460,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T01:30:52.656463+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3458,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T01:21:10.868564+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3455,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T01:11:04.012614+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3453,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T01:00:57.199995+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3451,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T00:50:50.374263+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3450,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T00:41:08.538786+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3447,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T00:31:01.730641+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3446,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T00:20:54.955039+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3443,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T00:11:13.211223+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3441,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-17T00:01:06.332749+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3440,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-16T23:50:59.464648+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3438,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-16T23:40:52.702001+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3436,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-16T23:31:10.978363+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3434,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-16T23:21:04.142283+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3432,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-16T23:10:57.268923+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3430,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-16T23:00:50.451343+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3427,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-16T22:51:08.633848+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3426,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-16T22:41:01.873105+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3423,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-16T22:30:55.120740+00:00",
+        "reason": "ApiException:410"
+      },
+      {
+        "id": 3422,
+        "namespace": "prod-capstone",
+        "kind": "Event",
+        "at": "2026-11-16T22:20:48.283139+00:00",
+        "reason": "ApiException:410"
+      }
+    ],
+    "limits": "Observation times are not audit times. No pre-collection history; gaps may miss intermediate changes. Only listed resource kinds and allowlisted fields are collected. No logs, metrics, secrets, env values or actor identities."
+  },
+  "question": "What can you establish about demo-web Service selector changes over the last seven days? Distinguish collection gaps and baseline observations from changes, and do not assume customer recovery.",
+  "trace": [
+    {
+      "step": {
+        "action": "history",
+        "kind": "Service",
+        "name": "demo-web",
+        "query": "selector",
+        "answer": null,
+        "citations": [],
+        "final": null
+      },
+      "result": {
+        "records": [],
+        "total": 0,
+        "truncated": false
+      }
+    },
+    {
+      "step": {
+        "action": "current",
+        "kind": "Service",
+        "name": "demo-web",
+        "query": null,
+        "answer": null,
+        "citations": [],
+        "final": null
+      },
+      "result": {
+        "items": [
+          {
+            "created_at": "2026-11-04T21:30:54+00:00",
+            "kind": "Service",
+            "labels": {},
+            "name": "demo-web",
+            "namespace": "prod-capstone",
+            "owners": [],
+            "ports": [
+              {
+                "name": null,
+                "port": 80,
+                "protocol": "TCP",
+                "targetPort": 80
+              }
+            ],
+            "selector": {
+              "app": "demo-web"
+            },
+            "selector_complete": true,
+            "uid": "f2065fc2-0b39-49f7-aaed-d51ebe1c6fd4",
+            "resource_version": "933",
+            "evidence_id": "C1-0"
+          }
+        ],
+        "total": 1,
+        "truncated": false
+      }
+    },
+    {
+      "step": {
+        "action": "current",
+        "kind": "Pod",
+        "name": null,
+        "query": null,
+        "answer": null,
+        "citations": [],
+        "final": null
+      },
+      "result": {
+        "items": [
+          {
+            "conditions": [
+              {
+                "reason": null,
+                "status": "True",
+                "type": "PodReadyToStartContainers"
+              },
+              {
+                "reason": null,
+                "status": "True",
+                "type": "Initialized"
+              },
+              {
+                "reason": null,
+                "status": "True",
+                "type": "Ready"
+              },
+              {
+                "reason": null,
+                "status": "True",
+                "type": "ContainersReady"
+              },
+              {
+                "reason": null,
+                "status": "True",
+                "type": "PodScheduled"
+              }
+            ],
+            "container_status": [
+              {
+                "last_termination": {
+                  "exitCode": 255,
+                  "finishedAt": "2026-11-23T05:30:02+00:00",
+                  "reason": "Unknown"
+                },
+                "name": "web",
+                "ready": true,
+                "restart_count": 2,
+                "state": {
+                  "running": {
+                    "exitCode": null,
+                    "finishedAt": null,
+                    "reason": null,
+                    "startedAt": "2026-11-23T05:30:08+00:00"
+                  }
+                }
+              }
+            ],
+            "containers": [
+              {
+                "image": "nginx:1.28-alpine",
+                "name": "web",
+                "resources": {
+                  "limits": {
+                    "cpu": "200m",
+                    "memory": "96Mi"
+                  },
+                  "requests": {
+                    "cpu": "20m",
+                    "memory": "24Mi"
+                  }
+                }
+              }
+            ],
+            "created_at": "2026-11-04T21:30:54+00:00",
+            "kind": "Pod",
+            "labels": {
+              "app": "demo-web",
+              "version": "stable"
+            },
+            "name": "demo-web-cf8655664-jqrlq",
+            "namespace": "prod-capstone",
+            "owners": [
+              {
+                "controller": true,
+                "kind": "ReplicaSet",
+                "name": "demo-web-cf8655664",
+                "uid": "1700156f-2e50-40d9-affa-f300c5a6062d"
+              }
+            ],
+            "phase": "Running",
+            "ready_replicas": null,
+            "replicas": null,
+            "uid": "e3cb6a10-56d1-46ef-8e54-43da03968f00",
+            "resource_version": "1535936",
+            "evidence_id": "C2-0"
+          }
+        ],
+        "total": 1,
+        "truncated": false
+      }
+    },
+    {
+      "step": {
+        "action": "current",
+        "kind": "EndpointSlice",
+        "name": null,
+        "query": null,
+        "answer": null,
+        "citations": [],
+        "final": null
+      },
+      "result": {
+        "items": [
+          {
+            "created_at": "2026-11-04T21:30:54+00:00",
+            "endpoints": [
+              {
+                "ready": true,
+                "target": {
+                  "kind": "Pod",
+                  "name": "demo-web-cf8655664-jqrlq",
+                  "uid": "e3cb6a10-56d1-46ef-8e54-43da03968f00"
+                }
+              }
+            ],
+            "kind": "EndpointSlice",
+            "labels": {
+              "kubernetes.io/service-name": "demo-web"
+            },
+            "name": "demo-web-bmsvx",
+            "namespace": "prod-capstone",
+            "owners": [
+              {
+                "controller": true,
+                "kind": "Service",
+                "name": "demo-web",
+                "uid": "f2065fc2-0b39-49f7-aaed-d51ebe1c6fd4"
+              }
+            ],
+            "uid": "c7ada3f9-cb75-4d4d-a741-456f5ccf9a83",
+            "resource_version": "1080437",
+            "evidence_id": "C3-0"
+          }
+        ],
+        "total": 1,
+        "truncated": false
+      }
+    },
+    {
+      "step": {
+        "action": "runbook",
+        "kind": "Service",
+        "name": "demo-web",
+        "query": "selector, endpoint, mismatch, troubleshooting",
+        "answer": null,
+        "citations": [],
+        "final": null
+      },
+      "result": [
+        {
+          "id": "D-k8s-docs:concepts/scheduling-eviction/assign-pod-node#14",
+          "title": "Assigning Pods to Nodes",
+          "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/",
+          "text": "#### mismatchLabelKeys\n\nThe `mismatchLabelKeys` field is a beta-level field and is enabled by default in\nKubernetes .\nWhen you want to disable it, you have to disable it explicitly via the\n`MatchLabelKeysInPodAffinity` [feature gate](/docs/reference/command-line-tools-reference/feature-gates/).\n\nKubernetes includes an optional `mismatchLabelKeys` field for Pod affinity\nor anti-affinity. The field specifies keys for the labels that should not match with the incoming Pod's labels,\nwhen satisfying the Pod (anti)affinity.\n\nIt's not recommended to use `mismatchLabelKeys` with labels that might be updated directly on pods.\nEven if you edit the pod's label that is specified at `mismatchLabelKeys` **directly**, (that is, not via a deployment),\nkube-apiserver doesn't reflect the label update onto the merged `labelSelector`.\n\nOne example use case is to ensure Pods go to the topology domain (node, zone, etc) where only Pods from the same tenant or team are scheduled in.\nIn other words, you want to avoid running Pods from two different tenants on the same topology domain at the same time.\n\n```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  labels:\n    # Assume that all relevant Pods have a \"tenant\" label set\n    tenant: tenant-a\n...\nspec:\n  affinity:\n    podAffinity:\n      requiredDuringSchedulingIgnoredDuringExecution:\n      # ensure that Pods associated with this tenant land on the correct node pool\n      - matchLabelKeys:\n          - tenant\n        labelSelector: {}\n        topologyKey: node-pool\n    podAntiAffinity:\n      requiredDuringSchedulingIgnoredDuringExecution:\n      # ensure that Pods associated with this tenant can't schedule to nodes used for another tenant\n      - mismatchLabelKeys:\n        - tenant # whatever the value of the \"tenant\" label for this Pod, prevent\n                 # scheduling to nodes in any pool where any Pod from a different\n                 # tenant is running.\n        labelSelector:\n          # We have to have the labelSelector which selects only Pods with the tenant label,\n          # otherwise this Pod would have anti-affinity against Pods from daemonsets as well, for example,\n          # which aren't supposed to have the tenant label.\n     ",
+          "bm25": 10.765623734949116
+        },
+        {
+          "id": "D-k8s-docs:tasks/debug/debug-cluster/topology#05",
+          "title": "Troubleshooting Topology Management",
+          "url": "https://kubernetes.io/docs/tasks/debug/debug-cluster/topology/",
+          "text": "The kubelet provides a `PodResourceLister` gRPC service to enable discovery of resources and associated metadata.\nBy using its [List gRPC endpoint](/docs/concepts/extend-kubernetes/compute-storage-net/device-plugins/#grpc-endpoint-list),\ninformation about reserved memory for each container can be retrieved, which is contained\nin protobuf `ContainerMemory` message.\n\nThis information can be retrieved solely for pods in Guaranteed QoS class.",
+          "bm25": 9.279988852598773
+        }
+      ]
+    }
+  ],
+  "attempts": [
+    {
+      "action": "history",
+      "kind": "Service",
+      "name": "demo-web",
+      "query": "selector",
+      "answer": null,
+      "citations": [],
+      "final": null
+    },
+    {
+      "action": "current",
+      "kind": "Service",
+      "name": "demo-web",
+      "query": null,
+      "answer": null,
+      "citations": [],
+      "final": null
+    },
+    {
+      "action": "finish",
+      "kind": null,
+      "name": null,
+      "query": null,
+      "answer": "No Service selector changes for demo-web were observed in the last seven days. There are no history records for selector changes, and the current Service selector is {\"app\": \"demo-web\"}. The current observation is not a baseline within the requested window, so the selector may have been unchanged since before the window began. There were recent collection gaps, but none affected Service history collection during the requested period. Customer impact and recovery status are unknown from selector evidence alone.",
+      "citations": [
+        "C1-0"
+      ],
+      "final": {
+        "assessment": "insufficient_evidence",
+        "observed_impact": "Unknown (no evidence of selector changes or customer impact).",
+        "timeline": [],
+        "observations": "No Service selector changes for demo-web were recorded in the last seven days. The current selector is {\"app\": \"demo-web\"}. No baseline or change events were observed within the window, and there were no Service collection gaps during the period.",
+        "explanation": "The absence of selector change history and the presence of a current selector indicate no observed changes during the window. However, without a baseline within the window, it is possible the selector was set before the window began and remained unchanged.",
+        "alternatives": "A selector change could have occurred before the window, or a gap in collection could have hidden a change, but there is no evidence for either scenario within the available data.",
+        "missing_evidence": "No baseline observation for the Service selector within the requested window. No evidence of customer impact or recovery.",
+        "next_check": "If further confirmation is needed, expand the history window to include the baseline observation or check for related EndpointSlice or Pod label mismatches.",
+        "mitigation_conditions": "None required based on current evidence.",
+        "verification_and_stop": "No mitigation proposed; no verification or rollback required."
+      }
+    },
+    {
+      "action": "current",
+      "kind": "Pod",
+      "name": null,
+      "query": null,
+      "answer": null,
+      "citations": [],
+      "final": null
+    },
+    {
+      "action": "current",
+      "kind": "EndpointSlice",
+      "name": null,
+      "query": null,
+      "answer": null,
+      "citations": [],
+      "final": null
+    },
+    {
+      "action": "finish",
+      "kind": null,
+      "name": null,
+      "query": null,
+      "answer": "No Service selector changes for demo-web were observed in the last seven days. The current Service selector is {\"app\": \"demo-web\"}, and there are no history records of selector changes. The Pod demo-web-cf8655664-jqrlq has matching labels (\"app\": \"demo-web\"), and the EndpointSlice for demo-web contains this Pod as a ready endpoint. There were no Service collection gaps during the requested period. The current Service observation is not a baseline within the window, so the selector may have been unchanged since before the window began. Customer impact and recovery status are unknown from selector evidence alone.",
+      "citations": [
+        "C1-0",
+        "C2-0",
+        "C3-0"
+      ],
+      "final": {
+        "assessment": "insufficient_evidence",
+        "observed_impact": "Unknown (no evidence of selector changes or customer impact).",
+        "timeline": [],
+        "observations": "- No Service selector changes for demo-web were recorded in the last seven days (C1-0).\n- The current Service selector is {\"app\": \"demo-web\"} (C1-0).\n- Pod demo-web-cf8655664-jqrlq has labels {\"app\": \"demo-web\", \"version\": \"stable\"} (C2-0).\n- EndpointSlice demo-web-bmsvx contains this Pod as a ready endpoint (C3-0).\n- No Service collection gaps during the requested period.",
+        "explanation": "The absence of selector change history and the presence of a current selector indicate no observed changes during the window. Pod labels match the Service selector, and the EndpointSlice includes the Pod as ready, confirming correct endpoint selection. However, without a baseline within the window, it is possible the selector was set before the window began and remained unchanged.",
+        "alternatives": "A selector change could have occurred before the window, or a gap in collection could have hidden a change, but there is no evidence for either scenario within the available data.",
+        "missing_evidence": "No baseline observation for the Service selector within the requested window. No evidence of customer impact or recovery.",
+        "next_check": "If further confirmation is needed, expand the history window to include the baseline observation or check for related Service, EndpointSlice, or Pod events outside the current window.",
+        "mitigation_conditions": "None required based on current evidence.",
+        "verification_and_stop": "No mitigation proposed; no verification or rollback required."
+      }
+    },
+    {
+      "action": "runbook",
+      "kind": "Service",
+      "name": "demo-web",
+      "query": "selector, endpoint, mismatch, troubleshooting",
+      "answer": null,
+      "citations": [],
+      "final": null
+    },
+    {
+      "action": "finish",
+      "kind": null,
+      "name": null,
+      "query": null,
+      "answer": "No Service selector changes for demo-web were observed in the last seven days. The current Service selector is {\"app\": \"demo-web\"}, and there are no history records of selector changes. The Pod demo-web-cf8655664-jqrlq has matching labels (\"app\": \"demo-web\"), and the EndpointSlice for demo-web contains this Pod as a ready endpoint. There were no Service collection gaps during the requested period. The current Service observation is not a baseline within the window, so the selector may have been unchanged since before the window began. Customer impact and recovery status are unknown from selector evidence alone. The operational guidance reviewed does not address Service selector or endpoint troubleshooting directly and does not resolve any remaining uncertainty in this case.",
+      "citations": [
+        "C1-0",
+        "C2-0",
+        "C3-0",
+        "D-k8s-docs:concepts/scheduling-eviction/assign-pod-node#14",
+        "D-k8s-docs:tasks/debug/debug-cluster/topology#05"
+      ],
+      "final": {
+        "assessment": "insufficient_evidence",
+        "observed_impact": "Unknown (no evidence of selector changes or customer impact).",
+        "timeline": [],
+        "observations": "- No Service selector changes for demo-web were recorded in the last seven days (C1-0).\n- The current Service selector is {\"app\": \"demo-web\"} (C1-0).\n- Pod demo-web-cf8655664-jqrlq has labels {\"app\": \"demo-web\", \"version\": \"stable\"} (C2-0).\n- EndpointSlice demo-web-bmsvx contains this Pod as a ready endpoint (C3-0).\n- No Service collection gaps during the requested period.\n- Operational guidance reviewed does not address Service selector or endpoint troubleshooting directly (D-k8s-docs:concepts/scheduling-eviction/assign-pod-node#14, D-k8s-docs:tasks/debug/debug-cluster/topology#05).",
+        "explanation": "The absence of selector change history and the presence of a current selector indicate no observed changes during the window. Pod labels match the Service selector, and the EndpointSlice includes the Pod as ready, confirming correct endpoint selection. However, without a baseline within the window, it is possible the selector was set before the window began and remained unchanged. Operational guidance did not provide additional relevant troubleshooting steps for Service selector or endpoint issues.",
+        "alternatives": "A selector change could have occurred before the window, or a gap in collection could have hidden a change, but there is no evidence for either scenario within the available data.",
+        "missing_evidence": "No baseline observation for the Service selector within the requested window. No evidence of customer impact or recovery.",
+        "next_check": "If further confirmation is needed, expand the history window to include the baseline observation or check for related Service, EndpointSlice, or Pod events outside the current window.",
+        "mitigation_conditions": "None required based on current evidence.",
+        "verification_and_stop": "No mitigation proposed; no verification or rollback required."
+      }
+    }
+  ],
+  "instruction_version": "history-sre-v4",
+  "knowledge_enabled": true,
+  "data_origin": "collected_cluster_history",
+  "as_of": "2026-11-23T05:32:16.470382+00:00",
+  "system_prompt_sha256": "03592246f3d52d6421dcfa7d7dafa7672c477da935d550251eb7962e84cb3c87",
+  "verification_note": "Evidence is collected Kubernetes state. End-to-end connectivity and application behavior have not been tested.",
+  "answer": "**Assessment**\ninsufficient evidence\n\n**Observed impact**\nUnknown (no evidence of selector changes or customer impact).\n\n**Timeline**\nNo applicable change evidence.\n\n**Observations**\n- No Service selector changes for demo-web were recorded in the last seven days (C1-0).\n- The current Service selector is {\"app\": \"demo-web\"} (C1-0).\n- Pod demo-web-cf8655664-jqrlq has labels {\"app\": \"demo-web\", \"version\": \"stable\"} (C2-0).\n- EndpointSlice demo-web-bmsvx contains this Pod as a ready endpoint (C3-0).\n- No Service collection gaps during the requested period.\n- Operational guidance reviewed does not address Service selector or endpoint troubleshooting directly (D-k8s-docs:concepts/scheduling-eviction/assign-pod-node#14, D-k8s-docs:tasks/debug/debug-cluster/topology#05).\n\n**Explanation**\nThe absence of selector change history and the presence of a current selector indicate no observed changes during the window. Pod labels match the Service selector, and the EndpointSlice includes the Pod as ready, confirming correct endpoint selection. However, without a baseline within the window, it is possible the selector was set before the window began and remained unchanged. Operational guidance did not provide additional relevant troubleshooting steps for Service selector or endpoint issues.\n\n**Alternatives**\nA selector change could have occurred before the window, or a gap in collection could have hidden a change, but there is no evidence for either scenario within the available data.\n\n**Missing evidence**\nNo baseline observation for the Service selector within the requested window. No evidence of customer impact or recovery.\n\n**Next check**\nIf further confirmation is needed, expand the history window to include the baseline observation or check for related Service, EndpointSlice, or Pod events outside the current window.\n\n**Mitigation conditions**\nNone required based on current evidence.\n\n**Verification and stop conditions**\nNo mitigation proposed; no verification or rollback required.",
+  "structured": {
+    "assessment": "insufficient_evidence",
+    "observed_impact": "Unknown (no evidence of selector changes or customer impact).",
+    "timeline": [],
+    "observations": "- No Service selector changes for demo-web were recorded in the last seven days (C1-0).\n- The current Service selector is {\"app\": \"demo-web\"} (C1-0).\n- Pod demo-web-cf8655664-jqrlq has labels {\"app\": \"demo-web\", \"version\": \"stable\"} (C2-0).\n- EndpointSlice demo-web-bmsvx contains this Pod as a ready endpoint (C3-0).\n- No Service collection gaps during the requested period.\n- Operational guidance reviewed does not address Service selector or endpoint troubleshooting directly (D-k8s-docs:concepts/scheduling-eviction/assign-pod-node#14, D-k8s-docs:tasks/debug/debug-cluster/topology#05).",
+    "explanation": "The absence of selector change history and the presence of a current selector indicate no observed changes during the window. Pod labels match the Service selector, and the EndpointSlice includes the Pod as ready, confirming correct endpoint selection. However, without a baseline within the window, it is possible the selector was set before the window began and remained unchanged. Operational guidance did not provide additional relevant troubleshooting steps for Service selector or endpoint issues.",
+    "alternatives": "A selector change could have occurred before the window, or a gap in collection could have hidden a change, but there is no evidence for either scenario within the available data.",
+    "missing_evidence": "No baseline observation for the Service selector within the requested window. No evidence of customer impact or recovery.",
+    "next_check": "If further confirmation is needed, expand the history window to include the baseline observation or check for related Service, EndpointSlice, or Pod events outside the current window.",
+    "mitigation_conditions": "None required based on current evidence.",
+    "verification_and_stop": "No mitigation proposed; no verification or rollback required."
+  },
+  "citations": {
+    "C1-0": {
+      "created_at": "2026-11-04T21:30:54+00:00",
+      "kind": "Service",
+      "labels": {},
+      "name": "demo-web",
+      "namespace": "prod-capstone",
+      "owners": [],
+      "ports": [
+        {
+          "name": null,
+          "port": 80,
+          "protocol": "TCP",
+          "targetPort": 80
+        }
+      ],
+      "selector": {
+        "app": "demo-web"
+      },
+      "selector_complete": true,
+      "uid": "f2065fc2-0b39-49f7-aaed-d51ebe1c6fd4",
+      "resource_version": "933",
+      "evidence_id": "C1-0"
+    },
+    "C2-0": {
+      "conditions": [
+        {
+          "reason": null,
+          "status": "True",
+          "type": "PodReadyToStartContainers"
+        },
+        {
+          "reason": null,
+          "status": "True",
+          "type": "Initialized"
+        },
+        {
+          "reason": null,
+          "status": "True",
+          "type": "Ready"
+        },
+        {
+          "reason": null,
+          "status": "True",
+          "type": "ContainersReady"
+        },
+        {
+          "reason": null,
+          "status": "True",
+          "type": "PodScheduled"
+        }
+      ],
+      "container_status": [
+        {
+          "last_termination": {
+            "exitCode": 255,
+            "finishedAt": "2026-11-23T05:30:02+00:00",
+            "reason": "Unknown"
+          },
+          "name": "web",
+          "ready": true,
+          "restart_count": 2,
+          "state": {
+            "running": {
+              "exitCode": null,
+              "finishedAt": null,
+              "reason": null,
+              "startedAt": "2026-11-23T05:30:08+00:00"
+            }
+          }
+        }
+      ],
+      "containers": [
+        {
+          "image": "nginx:1.28-alpine",
+          "name": "web",
+          "resources": {
+            "limits": {
+              "cpu": "200m",
+              "memory": "96Mi"
+            },
+            "requests": {
+              "cpu": "20m",
+              "memory": "24Mi"
+            }
+          }
+        }
+      ],
+      "created_at": "2026-11-04T21:30:54+00:00",
+      "kind": "Pod",
+      "labels": {
+        "app": "demo-web",
+        "version": "stable"
+      },
+      "name": "demo-web-cf8655664-jqrlq",
+      "namespace": "prod-capstone",
+      "owners": [
+        {
+          "controller": true,
+          "kind": "ReplicaSet",
+          "name": "demo-web-cf8655664",
+          "uid": "1700156f-2e50-40d9-affa-f300c5a6062d"
+        }
+      ],
+      "phase": "Running",
+      "ready_replicas": null,
+      "replicas": null,
+      "uid": "e3cb6a10-56d1-46ef-8e54-43da03968f00",
+      "resource_version": "1535936",
+      "evidence_id": "C2-0"
+    },
+    "C3-0": {
+      "created_at": "2026-11-04T21:30:54+00:00",
+      "endpoints": [
+        {
+          "ready": true,
+          "target": {
+            "kind": "Pod",
+            "name": "demo-web-cf8655664-jqrlq",
+            "uid": "e3cb6a10-56d1-46ef-8e54-43da03968f00"
+          }
+        }
+      ],
+      "kind": "EndpointSlice",
+      "labels": {
+        "kubernetes.io/service-name": "demo-web"
+      },
+      "name": "demo-web-bmsvx",
+      "namespace": "prod-capstone",
+      "owners": [
+        {
+          "controller": true,
+          "kind": "Service",
+          "name": "demo-web",
+          "uid": "f2065fc2-0b39-49f7-aaed-d51ebe1c6fd4"
+        }
+      ],
+      "uid": "c7ada3f9-cb75-4d4d-a741-456f5ccf9a83",
+      "resource_version": "1080437",
+      "evidence_id": "C3-0"
+    },
+    "D-k8s-docs:concepts/scheduling-eviction/assign-pod-node#14": {
+      "id": "D-k8s-docs:concepts/scheduling-eviction/assign-pod-node#14",
+      "title": "Assigning Pods to Nodes",
+      "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/",
+      "text": "#### mismatchLabelKeys\n\nThe `mismatchLabelKeys` field is a beta-level field and is enabled by default in\nKubernetes .\nWhen you want to disable it, you have to disable it explicitly via the\n`MatchLabelKeysInPodAffinity` [feature gate](/docs/reference/command-line-tools-reference/feature-gates/).\n\nKubernetes includes an optional `mismatchLabelKeys` field for Pod affinity\nor anti-affinity. The field specifies keys for the labels that should not match with the incoming Pod's labels,\nwhen satisfying the Pod (anti)affinity.\n\nIt's not recommended to use `mismatchLabelKeys` with labels that might be updated directly on pods.\nEven if you edit the pod's label that is specified at `mismatchLabelKeys` **directly**, (that is, not via a deployment),\nkube-apiserver doesn't reflect the label update onto the merged `labelSelector`.\n\nOne example use case is to ensure Pods go to the topology domain (node, zone, etc) where only Pods from the same tenant or team are scheduled in.\nIn other words, you want to avoid running Pods from two different tenants on the same topology domain at the same time.\n\n```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  labels:\n    # Assume that all relevant Pods have a \"tenant\" label set\n    tenant: tenant-a\n...\nspec:\n  affinity:\n    podAffinity:\n      requiredDuringSchedulingIgnoredDuringExecution:\n      # ensure that Pods associated with this tenant land on the correct node pool\n      - matchLabelKeys:\n          - tenant\n        labelSelector: {}\n        topologyKey: node-pool\n    podAntiAffinity:\n      requiredDuringSchedulingIgnoredDuringExecution:\n      # ensure that Pods associated with this tenant can't schedule to nodes used for another tenant\n      - mismatchLabelKeys:\n        - tenant # whatever the value of the \"tenant\" label for this Pod, prevent\n                 # scheduling to nodes in any pool where any Pod from a different\n                 # tenant is running.\n        labelSelector:\n          # We have to have the labelSelector which selects only Pods with the tenant label,\n          # otherwise this Pod would have anti-affinity against Pods from daemonsets as well, for example,\n          # which aren't supposed to have the tenant label.\n     ",
+      "bm25": 10.765623734949116
+    },
+    "D-k8s-docs:tasks/debug/debug-cluster/topology#05": {
+      "id": "D-k8s-docs:tasks/debug/debug-cluster/topology#05",
+      "title": "Troubleshooting Topology Management",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-cluster/topology/",
+      "text": "The kubelet provides a `PodResourceLister` gRPC service to enable discovery of resources and associated metadata.\nBy using its [List gRPC endpoint](/docs/concepts/extend-kubernetes/compute-storage-net/device-plugins/#grpc-endpoint-list),\ninformation about reserved memory for each container can be retrieved, which is contained\nin protobuf `ContainerMemory` message.\n\nThis information can be retrieved solely for pods in Guaranteed QoS class.",
+      "bm25": 9.279988852598773
+    }
+  },
+  "status": "completed",
+  "calls": [
+    {
+      "prompt_sha256": "16e37a1e30a18e92bd70601b7231c5883b9a189d0277d6c3185e63f017071a79",
+      "requested_model": "gpt-4.1-2025-04-14",
+      "reserved_usd": 0.048684,
+      "input_tokens": 2585,
+      "output_tokens": 30,
+      "cost_usd": 0.00541,
+      "resolved_model": "gpt-4.1-2025-04-14",
+      "response_id": "chatcmpl-EnGwyLuoU8zas43H6A7k3VCmoIhbB",
+      "duration_ms": 882.58
+    },
+    {
+      "prompt_sha256": "50b2cd96035e3b0b3224e2a1413d2075b37bc967f7a905f859d6f6c641b8682e",
+      "requested_model": "gpt-4.1-2025-04-14",
+      "reserved_usd": 0.049264,
+      "input_tokens": 2650,
+      "output_tokens": 30,
+      "cost_usd": 0.00554,
+      "resolved_model": "gpt-4.1-2025-04-14",
+      "response_id": "chatcmpl-EnGwzMrI54bVkOZlGeSB863jLkNuF",
+      "duration_ms": 637.36
+    },
+    {
+      "prompt_sha256": "c70f438a9df23a7c613abb9d07b6d835e311f3393c7ba436ecbe9ea09246d2da",
+      "requested_model": "gpt-4.1-2025-04-14",
+      "reserved_usd": 0.050674,
+      "input_tokens": 2855,
+      "output_tokens": 368,
+      "cost_usd": 0.008654,
+      "resolved_model": "gpt-4.1-2025-04-14",
+      "response_id": "chatcmpl-EnGx0xZYXbrCAtojPs4xH3NQRdK3D",
+      "duration_ms": 3243.08
+    },
+    {
+      "prompt_sha256": "f16a950e9c3444490a9d8eb37ae893bef8f32e2a95594b179bd3a30596c4db13",
+      "requested_model": "gpt-4.1-2025-04-14",
+      "reserved_usd": 0.055074,
+      "input_tokens": 3258,
+      "output_tokens": 29,
+      "cost_usd": 0.006748,
+      "resolved_model": "gpt-4.1-2025-04-14",
+      "response_id": "chatcmpl-EnGx3vGYcgpMDCKRSjC02rw01N3Qu",
+      "duration_ms": 760.07
+    },
+    {
+      "prompt_sha256": "b2ead4176d392d88bfc7127800bbd6a7229223b4376f85bb978866f1b2b38107",
+      "requested_model": "gpt-4.1-2025-04-14",
+      "reserved_usd": 0.058498,
+      "input_tokens": 3777,
+      "output_tokens": 30,
+      "cost_usd": 0.007794,
+      "resolved_model": "gpt-4.1-2025-04-14",
+      "response_id": "chatcmpl-EnGx4NER7WpOsc7elLzDYYHwrtJvR",
+      "duration_ms": 629.09
+    },
+    {
+      "prompt_sha256": "4c5b0469c1f1d25d4f571056ac5d6fe5738a5c1c9196d7769d2a5b9893ec92c5",
+      "requested_model": "gpt-4.1-2025-04-14",
+      "reserved_usd": 0.060272,
+      "input_tokens": 4067,
+      "output_tokens": 502,
+      "cost_usd": 0.01215,
+      "resolved_model": "gpt-4.1-2025-04-14",
+      "response_id": "chatcmpl-EnGx5d3WnOX5CpU8szSJ0POegjsjH",
+      "duration_ms": 2651.36
+    },
+    {
+      "prompt_sha256": "cc1f21af7ae3a24517f9fd46b4be7b1282252fb3e39ace5d7dd2dbb58a0ff0f1",
+      "requested_model": "gpt-4.1-2025-04-14",
+      "reserved_usd": 0.065682,
+      "input_tokens": 4611,
+      "output_tokens": 37,
+      "cost_usd": 0.009518,
+      "resolved_model": "gpt-4.1-2025-04-14",
+      "response_id": "chatcmpl-EnGx78MrL2LCSV67c4dKIBc1iHceU",
+      "duration_ms": 765.63
+    },
+    {
+      "prompt_sha256": "8ebbf1e9a24d288f5201b1b38aa8d49bbc75fa8796a132ff70b1e99f138718c2",
+      "requested_model": "gpt-4.1-2025-04-14",
+      "reserved_usd": 0.072712,
+      "input_tokens": 5412,
+      "output_tokens": 636,
+      "cost_usd": 0.015912,
+      "resolved_model": "gpt-4.1-2025-04-14",
+      "response_id": "chatcmpl-EnGx8I4EqAvKUChRQv8oI3CspDF1J",
+      "duration_ms": 2928.36
+    }
+  ]
+}

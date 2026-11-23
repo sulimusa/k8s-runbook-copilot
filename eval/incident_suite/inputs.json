@@ -1,0 +1,626 @@
+[
+  {
+    "id": "case-b8520965f8",
+    "synthetic": true,
+    "question": "Cross-node pod connections timed out after a routine maintenance window.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "09:02Z Deployment ledger-api has 4/4 Ready pods; same-node requests succeed; cross-node requests time out."
+      },
+      {
+        "id": "E2",
+        "text": "09:00Z host journal: unattended package update restarted systemd-networkd on both affected workers."
+      },
+      {
+        "id": "E3",
+        "text": "09:01Z routing snapshot: pod policy-routing rules present before maintenance are absent afterward. CNI desired configuration is unchanged."
+      }
+    ]
+  },
+  {
+    "id": "case-ba957a5308",
+    "synthetic": true,
+    "question": "Cross-node pod connections timed out after a routine maintenance window.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "09:02Z Deployment ledger-api has 4/4 Ready pods; same-node requests succeed; cross-node requests time out."
+      },
+      {
+        "id": "E2",
+        "text": "09:00Z host journal: no package updates or network service restarts. Pod policy-routing rules match the pre-incident snapshot."
+      },
+      {
+        "id": "E3",
+        "text": "09:01Z cloud flow logs: cross-node pod traffic REJECT. Firewall audit: the inter-worker allow rule was removed at 09:00Z."
+      }
+    ]
+  },
+  {
+    "id": "case-dc047a77d5",
+    "synthetic": true,
+    "question": "Cross-node pod connections timed out after a routine maintenance window.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "09:02Z Deployment ledger-api has 4/4 Ready pods; same-node requests succeed; cross-node requests time out."
+      }
+    ]
+  },
+  {
+    "id": "case-dd638bc02d",
+    "synthetic": true,
+    "question": "A node-agent rollout coincided with API timeouts and slow scheduling.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "10:10Z API p99 latency rose sharply while node-agent pods started; application deployment content was unchanged."
+      },
+      {
+        "id": "E2",
+        "text": "10:09Z runtime events: the new node-agent image was already cached on 240 nodes; their start times fall in the same 8-second interval."
+      },
+      {
+        "id": "E3",
+        "text": "10:10Z audit aggregation: node-agent issued 240 unpaginated LIST pods requests concurrently. API-server RSS then crossed its memory limit."
+      }
+    ]
+  },
+  {
+    "id": "case-ce633c6845",
+    "synthetic": true,
+    "question": "A node-agent rollout coincided with API timeouts and slow scheduling.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "10:10Z API p99 latency rose sharply while node-agent pods started; application deployment content was unchanged."
+      },
+      {
+        "id": "E2",
+        "text": "10:09Z runtime events: image pulls took several minutes; node-agent startup and LIST traffic remained at their normal rate."
+      },
+      {
+        "id": "E3",
+        "text": "10:10Z etcd fsync p99 increased from 4ms to 1800ms during a storage snapshot; API-server memory stayed below half its limit."
+      }
+    ]
+  },
+  {
+    "id": "case-a67d358923",
+    "synthetic": true,
+    "question": "A node-agent rollout coincided with API timeouts and slow scheduling.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "10:10Z API p99 latency rose sharply while node-agent pods started; application deployment content was unchanged."
+      }
+    ]
+  },
+  {
+    "id": "case-8b2777cf10",
+    "synthetic": true,
+    "question": "Services vanished from the cluster shortly after an infrastructure change.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "11:05Z gateway returns 503; several application Services are absent, but the Kubernetes API is responsive."
+      },
+      {
+        "id": "E2",
+        "text": "11:00Z GitOps render diff: previous revision contains 18 application resources; new revision contains zero after a template condition changed."
+      },
+      {
+        "id": "E3",
+        "text": "11:01Z audit events: GitOps controller DELETE requests removed those 18 resources; automated pruning was enabled."
+      }
+    ]
+  },
+  {
+    "id": "case-1bf1468007",
+    "synthetic": true,
+    "question": "Services vanished from the cluster shortly after an infrastructure change.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "11:05Z gateway returns 503; several application Services are absent, but the Kubernetes API is responsive."
+      },
+      {
+        "id": "E2",
+        "text": "11:00Z GitOps render diff is empty; desired and live configuration matched immediately before the incident."
+      },
+      {
+        "id": "E3",
+        "text": "11:01Z audit events: a cleanup service account explicitly deleted the affected namespaces; no GitOps DELETE requests occurred."
+      }
+    ]
+  },
+  {
+    "id": "case-59798af406",
+    "synthetic": true,
+    "question": "Services vanished from the cluster shortly after an infrastructure change.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "11:05Z gateway returns 503; several application Services are absent, but the Kubernetes API is responsive."
+      }
+    ]
+  },
+  {
+    "id": "case-6f530d02f9",
+    "synthetic": true,
+    "question": "A rolling update stalled while new pods repeatedly ran out of memory.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "12:10Z old ReplicaSet has 8 Ready pods; new ReplicaSet has 2 pods restarting with OOMKilled; requests return intermittent 503."
+      },
+      {
+        "id": "E2",
+        "text": "12:09Z Service selector: app=ingester, generation=next. Old pods have generation=previous; new pods have generation=next."
+      },
+      {
+        "id": "E3",
+        "text": "12:10Z EndpointSlice includes only the two new pods. Their request rate is five times the old per-pod rate; controlled equal-rate tests show no memory regression."
+      }
+    ]
+  },
+  {
+    "id": "case-f8c6aa0726",
+    "synthetic": true,
+    "question": "A rolling update stalled while new pods repeatedly ran out of memory.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "12:10Z old ReplicaSet has 8 Ready pods; new ReplicaSet has 2 pods restarting with OOMKilled; requests return intermittent 503."
+      },
+      {
+        "id": "E2",
+        "text": "12:09Z Service selector is app=ingester; EndpointSlice includes all ten pods and observed per-pod request rates are comparable."
+      },
+      {
+        "id": "E3",
+        "text": "12:10Z equal-rate load test: new image RSS rises continuously to its limit; previous image RSS stabilizes under the same workload."
+      }
+    ]
+  },
+  {
+    "id": "case-d0bcf03fda",
+    "synthetic": true,
+    "question": "A rolling update stalled while new pods repeatedly ran out of memory.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "12:10Z old ReplicaSet has 8 Ready pods; new ReplicaSet has 2 pods restarting with OOMKilled; requests return intermittent 503."
+      }
+    ]
+  },
+  {
+    "id": "case-bf47d72b56",
+    "synthetic": true,
+    "question": "Cloud API access stopped and replacement nodes failed after a quiet interval.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "13:40Z existing workers report cloud credential failures; newly requested workers fail to initialize."
+      },
+      {
+        "id": "E2",
+        "text": "12:40Z fictional IAM audit: RemoveRoleFromInstanceProfile removed the role, then DeleteInstanceProfile successfully deleted the shared profile referenced by a retired node group and active workers."
+      },
+      {
+        "id": "E3",
+        "text": "13:40Z cached worker credentials expire. Replacement provisioning reports instance profile not found; instance clock offset is 0.1 seconds."
+      }
+    ]
+  },
+  {
+    "id": "case-08f3f5f687",
+    "synthetic": true,
+    "question": "Cloud API access stopped and replacement nodes failed after a quiet interval.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "13:40Z existing workers report cloud credential failures; newly requested workers fail to initialize."
+      },
+      {
+        "id": "E2",
+        "text": "13:40Z IAM profile exists and is unchanged; provisioning successfully resolves it. No deletion event exists."
+      },
+      {
+        "id": "E3",
+        "text": "13:40Z signing errors report RequestExpired; node clock is 19 minutes behind trusted time after time synchronization stopped."
+      }
+    ]
+  },
+  {
+    "id": "case-ea27849b79",
+    "synthetic": true,
+    "question": "Cloud API access stopped and replacement nodes failed after a quiet interval.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "13:40Z existing workers report cloud credential failures; newly requested workers fail to initialize."
+      }
+    ]
+  },
+  {
+    "id": "case-d7f5448ed1",
+    "synthetic": true,
+    "question": "A running Redis pod became unreachable through its internal load balancer.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "14:02Z Redis pod is Running and Ready. Clients using the internal load-balancer address time out."
+      },
+      {
+        "id": "E2",
+        "text": "14:01Z eviction event: blocked by PodDisruptionBudget. Direct in-cluster connection to Redis pod IP still succeeds."
+      },
+      {
+        "id": "E3",
+        "text": "14:01Z load-balancer controller audit: pod endpoint removed from network endpoint group during the same scaling operation; group now has zero endpoints."
+      }
+    ]
+  },
+  {
+    "id": "case-2c974849bb",
+    "synthetic": true,
+    "question": "A running Redis pod became unreachable through its internal load balancer.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "14:02Z Redis pod is Running and Ready. Clients using the internal load-balancer address time out."
+      },
+      {
+        "id": "E2",
+        "text": "14:01Z endpoint group contains the pod and external target health is healthy. Direct pod-IP requests from the client namespace also time out."
+      },
+      {
+        "id": "E3",
+        "text": "14:01Z policy audit: a new ingress NetworkPolicy selects Redis and excludes the client namespace; flow logs show matching policy drops."
+      }
+    ]
+  },
+  {
+    "id": "case-5d826dc228",
+    "synthetic": true,
+    "question": "A running Redis pod became unreachable through its internal load balancer.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "14:02Z Redis pod is Running and Ready. Clients using the internal load-balancer address time out."
+      }
+    ]
+  },
+  {
+    "id": "case-695a822ca9",
+    "synthetic": true,
+    "question": "Newly deployed pods fail TLS calls while old pods continue serving.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "15:12Z new pods fail authentication-service calls; old pods continue using established TLS connections successfully."
+      },
+      {
+        "id": "E2",
+        "text": "15:10Z failed handshake: certificate verify failed, expired trust anchor. Leaf certificate is valid; hostname matches."
+      },
+      {
+        "id": "E3",
+        "text": "15:12Z new connections from old pods also fail. Bundled client CA store trusts only the expired root; a client using the current system CA store succeeds."
+      }
+    ]
+  },
+  {
+    "id": "case-560d7ff354",
+    "synthetic": true,
+    "question": "Newly deployed pods fail TLS calls while old pods continue serving.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "15:12Z new pods fail authentication-service calls; old pods continue using established TLS connections successfully."
+      },
+      {
+        "id": "E2",
+        "text": "15:10Z failed handshake: hostname mismatch; presented certificate SAN contains auth.internal, but the new deployment calls login.internal."
+      },
+      {
+        "id": "E3",
+        "text": "15:12Z both deployments have the same current CA store; new connections to auth.internal succeed from old and new pods."
+      }
+    ]
+  },
+  {
+    "id": "case-902b1f4597",
+    "synthetic": true,
+    "question": "Newly deployed pods fail TLS calls while old pods continue serving.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "15:12Z new pods fail authentication-service calls; old pods continue using established TLS connections successfully."
+      }
+    ]
+  },
+  {
+    "id": "case-c674299ad8",
+    "synthetic": true,
+    "question": "A stateful tool takes a long time to start after replacement.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "16:05Z replacement pod has not started its application; its PVC contains millions of small files."
+      },
+      {
+        "id": "E2",
+        "text": "16:01Z volume attachment succeeded; kubelet is walking the mounted filesystem and changing group ownership for fsGroup."
+      },
+      {
+        "id": "E3",
+        "text": "16:05Z storage reads are normal; ownership-operation count increases continuously. Application starts only after this traversal completes."
+      }
+    ]
+  },
+  {
+    "id": "case-74f6cf251d",
+    "synthetic": true,
+    "question": "A stateful tool takes a long time to start after replacement.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "16:05Z replacement pod has not started its application; its PVC contains millions of small files."
+      },
+      {
+        "id": "E2",
+        "text": "16:01Z CSI attach event: Multi-Attach error; volume is still attached to the previous node, which is NotReady."
+      },
+      {
+        "id": "E3",
+        "text": "16:05Z no successful volume mount or ownership traversal occurred on the replacement; application has never started."
+      }
+    ]
+  },
+  {
+    "id": "case-8398ec0c0c",
+    "synthetic": true,
+    "question": "A stateful tool takes a long time to start after replacement.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "16:05Z replacement pod has not started its application; its PVC contains millions of small files."
+      }
+    ]
+  },
+  {
+    "id": "case-b7b0997c31",
+    "synthetic": true,
+    "question": "Rare search latency spikes appeared after moving workloads to Kubernetes.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "17:00Z average request latency is stable, but rare requests exceed the tail-latency objective; average node CPU is not saturated."
+      },
+      {
+        "id": "E2",
+        "text": "17:01Z correlated traces: slow requests wait on a memory-map lock while the metrics collector reads process mapping information."
+      },
+      {
+        "id": "E3",
+        "text": "17:20Z controlled isolated comparison: disabling only that collector inspection removes the stalls; re-enabling reproduces them under equal request load."
+      }
+    ]
+  },
+  {
+    "id": "case-fa1f644111",
+    "synthetic": true,
+    "question": "Rare search latency spikes appeared after moving workloads to Kubernetes.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "17:00Z average request latency is stable, but rare requests exceed the tail-latency objective; average node CPU is not saturated."
+      },
+      {
+        "id": "E2",
+        "text": "17:01Z slow-request intervals do not align with collector activity; no memory-map lock contention appears in captured profiles."
+      },
+      {
+        "id": "E3",
+        "text": "17:20Z slow intervals align with stop-the-world garbage collection; allocation reduction removes stalls while collector settings remain unchanged."
+      }
+    ]
+  },
+  {
+    "id": "case-d52a13aa3d",
+    "synthetic": true,
+    "question": "Rare search latency spikes appeared after moving workloads to Kubernetes.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "17:00Z average request latency is stable, but rare requests exceed the tail-latency objective; average node CPU is not saturated."
+      }
+    ]
+  },
+  {
+    "id": "case-11d8b17898",
+    "synthetic": true,
+    "question": "Some pods have intermittent DNS timeouts after CoreDNS scaled down.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "18:03Z two CoreDNS replicas are Ready; only a subset of clients times out, and successful answers are correct."
+      },
+      {
+        "id": "E2",
+        "text": "18:02Z EndpointSlice no longer contains the removed CoreDNS IP. Failing-client UDP conntrack entries still map the DNS Service to that removed IP."
+      },
+      {
+        "id": "E3",
+        "text": "18:03Z packet capture shows timed-out queries sent to the removed IP; a fresh client flow reaches a live DNS endpoint and succeeds."
+      }
+    ]
+  },
+  {
+    "id": "case-3da36e7ddf",
+    "synthetic": true,
+    "question": "Some pods have intermittent DNS timeouts after CoreDNS scaled down.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "18:03Z two CoreDNS replicas are Ready; only a subset of clients times out, and successful answers are correct."
+      },
+      {
+        "id": "E2",
+        "text": "18:02Z EndpointSlices and conntrack destinations all point to live CoreDNS pods; no packets go to the removed IP."
+      },
+      {
+        "id": "E3",
+        "text": "18:03Z affected clients are denied DNS egress by a newly selected NetworkPolicy; policy flow logs record the dropped UDP queries."
+      }
+    ]
+  },
+  {
+    "id": "case-58f9fe24ff",
+    "synthetic": true,
+    "question": "Some pods have intermittent DNS timeouts after CoreDNS scaled down.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "18:03Z two CoreDNS replicas are Ready; only a subset of clients times out, and successful answers are correct."
+      }
+    ]
+  },
+  {
+    "id": "case-6aced99011",
+    "synthetic": true,
+    "question": "A simulation finished its workload but never completed cleanup.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "19:10Z the simulation process exited successfully, but its pod remains and the simulation controller waits for cleanup."
+      },
+      {
+        "id": "E2",
+        "text": "19:00Z webhook TLS validation failed before CA injection; failurePolicy=Ignore admitted the simulation pod onto a real node."
+      },
+      {
+        "id": "E3",
+        "text": "19:10Z after CA injection, the webhook matches UPDATE requests for both pods and pods/status. A job-controller ordinary Pod update is rejected because the webhook adds an immutable nodeSelector. Separately, the webhook adds labels to a kubelet pods/status update; with NodeRestriction enabled, admission rejects the label change from the node identity, and completion status never persists."
+      }
+    ]
+  },
+  {
+    "id": "case-25087601d4",
+    "synthetic": true,
+    "question": "A simulation finished its workload but never completed cleanup.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "19:10Z the simulation process exited successfully, but its pod remains and the simulation controller waits for cleanup."
+      },
+      {
+        "id": "E2",
+        "text": "19:00Z webhook TLS is healthy; it handles CREATE only. Simulation pod was scheduled on the intended simulated node."
+      },
+      {
+        "id": "E3",
+        "text": "19:10Z pod status is Succeeded; deletion is blocked by simulation.example/cleanup finalizer. Its owning cleanup controller is absent."
+      }
+    ]
+  },
+  {
+    "id": "case-d86046ac54",
+    "synthetic": true,
+    "question": "A simulation finished its workload but never completed cleanup.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "19:10Z the simulation process exited successfully, but its pod remains and the simulation controller waits for cleanup."
+      }
+    ]
+  },
+  {
+    "id": "case-9085887517",
+    "synthetic": true,
+    "question": "Autoscaling launched instances but application pods remain Pending.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "20:05Z cloud group has six running instances while Kubernetes lists only two nodes; Pending pods report insufficient capacity."
+      },
+      {
+        "id": "E2",
+        "text": "20:01Z bootstrap log on all four missing nodes: required package download returned HTTP 404 at a fixed repository URL; bootstrap stopped."
+      },
+      {
+        "id": "E3",
+        "text": "20:05Z image test: the package exists at a new repository path; cluster endpoint connectivity and registration identity checks succeed before package installation."
+      }
+    ]
+  },
+  {
+    "id": "case-a2915c1019",
+    "synthetic": true,
+    "question": "Autoscaling launched instances but application pods remain Pending.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "20:05Z cloud group has six running instances while Kubernetes lists only two nodes; Pending pods report insufficient capacity."
+      },
+      {
+        "id": "E2",
+        "text": "20:01Z package installation and bootstrap completed on all four missing nodes; no download failure occurred."
+      },
+      {
+        "id": "E3",
+        "text": "20:05Z kubelet registration returns Unauthorized; new instance role is missing from the cluster authentication mapping. Network connection to the API succeeds."
+      }
+    ]
+  },
+  {
+    "id": "case-0c5f4e12ee",
+    "synthetic": true,
+    "question": "Autoscaling launched instances but application pods remain Pending.",
+    "environment": "Fictional Kubernetes environment. Snippets are normalized observations, not raw command output. No cluster access is available.",
+    "evidence": [
+      {
+        "id": "E1",
+        "text": "20:05Z cloud group has six running instances while Kubernetes lists only two nodes; Pending pods report insufficient capacity."
+      }
+    ]
+  }
+]

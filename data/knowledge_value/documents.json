@@ -1,0 +1,338 @@
+[
+  {
+    "id": "KB:ledger-api:r3:operations",
+    "service": "ledger-api",
+    "environment": "prod-capstone",
+    "versions": [
+      "r3"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "ledger-api r3 operating contract",
+    "text": "Release r3 requires schema epoch 9. The previous release cannot read epoch 9. A rollback is prohibited once that migration has run. Read the migration execution record before deciding; use a forward-compatible fix if epoch 9 is present.",
+    "provenance": "Fictional service contract authored for this capstone, not a real employer system."
+  },
+  {
+    "id": "KB:ledger-api:r2:operations",
+    "service": "ledger-api",
+    "environment": "prod-capstone",
+    "versions": [
+      "r2"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "ledger-api r2 operating contract",
+    "text": "Release r2 has no schema migration. Both r2 and its previous image read schema epoch 8. The rollback procedure is to confirm the database is still at epoch 8, drain in-flight requests, then propose a rollout undo and verify errors. These compatibility facts do not establish the cause of an error spike.",
+    "provenance": "Fictional service contract authored for this capstone, not a real employer system."
+  },
+  {
+    "id": "KB:ledger-api:archived",
+    "service": "ledger-api",
+    "environment": "prod-capstone",
+    "versions": [
+      "r1"
+    ],
+    "status": "archived",
+    "valid_from": "2026-01-01T00:00:00+00:00",
+    "valid_until": "2026-09-01T00:00:00+00:00",
+    "title": "ledger-api incident operations and troubleshooting (archived)",
+    "text": "Release r2 has no schema migration. Both r2 and its previous image read schema epoch 8. The rollback procedure is to confirm the database is still at epoch 8, drain in-flight requests, then propose a rollout undo and verify errors. These compatibility facts do not establish the cause of an error spike.",
+    "provenance": "Fictional outdated contract; retained to test applicability filtering."
+  },
+  {
+    "id": "KB:ledger-api:dev",
+    "service": "ledger-api",
+    "environment": "dev-capstone",
+    "versions": [
+      "r3"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "ledger-api r3 development sandbox operating contract",
+    "text": "This development-only configuration uses the legacy behavior: Release r2 has no schema migration. Both r2 and its previous image read schema epoch 8. The rollback procedure is to confirm the database is still at epoch 8, drain in-flight requests, then propose a rollout undo and verify errors. These compatibility facts do not establish the cause of an error spike.",
+    "provenance": "Fictional different-environment contract; never applicable to prod-capstone."
+  },
+  {
+    "id": "KB:cache-api:r3:operations",
+    "service": "cache-api",
+    "environment": "prod-capstone",
+    "versions": [
+      "r3"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "cache-api r3 operating contract",
+    "text": "In release r3, CACHE_BUDGET_MB is allocated separately by each worker. Four workers may allocate four times the configured cache budget, plus runtime overhead. Size the aggregate cache below the container limit with headroom. Changing workers affects both memory and throughput; verify under representative load.",
+    "provenance": "Fictional service contract authored for this capstone, not a real employer system."
+  },
+  {
+    "id": "KB:cache-api:r2:operations",
+    "service": "cache-api",
+    "environment": "prod-capstone",
+    "versions": [
+      "r2"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "cache-api r2 operating contract",
+    "text": "In release r2, CACHE_BUDGET_MB is a process-wide shared cache budget, regardless of WORKERS. Do not multiply this value by worker count. Allocations outside the shared cache can still cause OOM. Use heap/native allocation evidence before assigning the excess memory to a cache leak.",
+    "provenance": "Fictional service contract authored for this capstone, not a real employer system."
+  },
+  {
+    "id": "KB:cache-api:archived",
+    "service": "cache-api",
+    "environment": "prod-capstone",
+    "versions": [
+      "r1"
+    ],
+    "status": "archived",
+    "valid_from": "2026-01-01T00:00:00+00:00",
+    "valid_until": "2026-09-01T00:00:00+00:00",
+    "title": "cache-api incident operations and troubleshooting (archived)",
+    "text": "In release r2, CACHE_BUDGET_MB is a process-wide shared cache budget, regardless of WORKERS. Do not multiply this value by worker count. Allocations outside the shared cache can still cause OOM. Use heap/native allocation evidence before assigning the excess memory to a cache leak.",
+    "provenance": "Fictional outdated contract; retained to test applicability filtering."
+  },
+  {
+    "id": "KB:cache-api:dev",
+    "service": "cache-api",
+    "environment": "dev-capstone",
+    "versions": [
+      "r3"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "cache-api r3 development sandbox operating contract",
+    "text": "This development-only configuration uses the legacy behavior: In release r2, CACHE_BUDGET_MB is a process-wide shared cache budget, regardless of WORKERS. Do not multiply this value by worker count. Allocations outside the shared cache can still cause OOM. Use heap/native allocation evidence before assigning the excess memory to a cache leak.",
+    "provenance": "Fictional different-environment contract; never applicable to prod-capstone."
+  },
+  {
+    "id": "KB:batch-worker:r3:operations",
+    "service": "batch-worker",
+    "environment": "prod-capstone",
+    "versions": [
+      "r3"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "batch-worker r3 operating contract",
+    "text": "Release r3 runs non-idempotent jobs lasting up to 120 seconds. On SIGTERM it stops taking new jobs and drains the active job. Set a grace period of at least 150 seconds for this service, then verify no new jobs are accepted and the active job finishes. Do not replay interrupted jobs before checking side effects.",
+    "provenance": "Fictional service contract authored for this capstone, not a real employer system."
+  },
+  {
+    "id": "KB:batch-worker:r2:operations",
+    "service": "batch-worker",
+    "environment": "prod-capstone",
+    "versions": [
+      "r2"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "batch-worker r2 operating contract",
+    "text": "Release r2 runs idempotent jobs bounded to 10 seconds; its SIGTERM handler normally drains within 15 seconds. A 30-second grace period should cover the documented behavior. A process still blocked at 30 seconds requires drain-handler, dependency and thread evidence; increasing the timeout can conceal that defect.",
+    "provenance": "Fictional service contract authored for this capstone, not a real employer system."
+  },
+  {
+    "id": "KB:batch-worker:archived",
+    "service": "batch-worker",
+    "environment": "prod-capstone",
+    "versions": [
+      "r1"
+    ],
+    "status": "archived",
+    "valid_from": "2026-01-01T00:00:00+00:00",
+    "valid_until": "2026-09-01T00:00:00+00:00",
+    "title": "batch-worker incident operations and troubleshooting (archived)",
+    "text": "Release r2 runs idempotent jobs bounded to 10 seconds; its SIGTERM handler normally drains within 15 seconds. A 30-second grace period should cover the documented behavior. A process still blocked at 30 seconds requires drain-handler, dependency and thread evidence; increasing the timeout can conceal that defect.",
+    "provenance": "Fictional outdated contract; retained to test applicability filtering."
+  },
+  {
+    "id": "KB:batch-worker:dev",
+    "service": "batch-worker",
+    "environment": "dev-capstone",
+    "versions": [
+      "r3"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "batch-worker r3 development sandbox operating contract",
+    "text": "This development-only configuration uses the legacy behavior: Release r2 runs idempotent jobs bounded to 10 seconds; its SIGTERM handler normally drains within 15 seconds. A 30-second grace period should cover the documented behavior. A process still blocked at 30 seconds requires drain-handler, dependency and thread evidence; increasing the timeout can conceal that defect.",
+    "provenance": "Fictional different-environment contract; never applicable to prod-capstone."
+  },
+  {
+    "id": "KB:edge-api:r3:operations",
+    "service": "edge-api",
+    "environment": "prod-capstone",
+    "versions": [
+      "r3"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "edge-api r3 operating contract",
+    "text": "Release r3 watches the certificate mount and reloads it within 60 seconds without a restart. Verify reload events, the watched path and which process/replica serves the endpoint if the old certificate persists. Do not assume a Pod restart is normally required.",
+    "provenance": "Fictional service contract authored for this capstone, not a real employer system."
+  },
+  {
+    "id": "KB:edge-api:r2:operations",
+    "service": "edge-api",
+    "environment": "prod-capstone",
+    "versions": [
+      "r2"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "edge-api r2 operating contract",
+    "text": "Release r2 loads its certificate once at process startup and has no hot reload. After verifying the mounted certificate and affected replicas, propose a controlled rolling restart, preserving availability, and verify the served serial on every replica.",
+    "provenance": "Fictional service contract authored for this capstone, not a real employer system."
+  },
+  {
+    "id": "KB:edge-api:archived",
+    "service": "edge-api",
+    "environment": "prod-capstone",
+    "versions": [
+      "r1"
+    ],
+    "status": "archived",
+    "valid_from": "2026-01-01T00:00:00+00:00",
+    "valid_until": "2026-09-01T00:00:00+00:00",
+    "title": "edge-api incident operations and troubleshooting (archived)",
+    "text": "Release r2 loads its certificate once at process startup and has no hot reload. After verifying the mounted certificate and affected replicas, propose a controlled rolling restart, preserving availability, and verify the served serial on every replica.",
+    "provenance": "Fictional outdated contract; retained to test applicability filtering."
+  },
+  {
+    "id": "KB:edge-api:dev",
+    "service": "edge-api",
+    "environment": "dev-capstone",
+    "versions": [
+      "r3"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "edge-api r3 development sandbox operating contract",
+    "text": "This development-only configuration uses the legacy behavior: Release r2 loads its certificate once at process startup and has no hot reload. After verifying the mounted certificate and affected replicas, propose a controlled rolling restart, preserving availability, and verify the served serial on every replica.",
+    "provenance": "Fictional different-environment contract; never applicable to prod-capstone."
+  },
+  {
+    "id": "KB:image-worker:r3:operations",
+    "service": "image-worker",
+    "environment": "prod-capstone",
+    "versions": [
+      "r3"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "image-worker r3 operating contract",
+    "text": "Release r3 writes output to a deterministic content-addressed object key and records the job ID in a durable registry. Reprocessing the same input/job ID reuses the same output key. Before a bounded replay, verify job identity, input hash and registry state; verify one logical output after replay.",
+    "provenance": "Fictional service contract authored for this capstone, not a real employer system."
+  },
+  {
+    "id": "KB:image-worker:r2:operations",
+    "service": "image-worker",
+    "environment": "prod-capstone",
+    "versions": [
+      "r2"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "image-worker r2 operating contract",
+    "text": "Release r2 allocates a fresh output identifier per attempt and keeps deduplication only in process memory. Restart loses that memory. A replay may create duplicate logical outputs; reconcile the output registry against the job before deciding whether to replay or repair acknowledgement state.",
+    "provenance": "Fictional service contract authored for this capstone, not a real employer system."
+  },
+  {
+    "id": "KB:image-worker:archived",
+    "service": "image-worker",
+    "environment": "prod-capstone",
+    "versions": [
+      "r1"
+    ],
+    "status": "archived",
+    "valid_from": "2026-01-01T00:00:00+00:00",
+    "valid_until": "2026-09-01T00:00:00+00:00",
+    "title": "image-worker incident operations and troubleshooting (archived)",
+    "text": "Release r2 allocates a fresh output identifier per attempt and keeps deduplication only in process memory. Restart loses that memory. A replay may create duplicate logical outputs; reconcile the output registry against the job before deciding whether to replay or repair acknowledgement state.",
+    "provenance": "Fictional outdated contract; retained to test applicability filtering."
+  },
+  {
+    "id": "KB:image-worker:dev",
+    "service": "image-worker",
+    "environment": "dev-capstone",
+    "versions": [
+      "r3"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "image-worker r3 development sandbox operating contract",
+    "text": "This development-only configuration uses the legacy behavior: Release r2 allocates a fresh output identifier per attempt and keeps deduplication only in process memory. Restart loses that memory. A replay may create duplicate logical outputs; reconcile the output registry against the job before deciding whether to replay or repair acknowledgement state.",
+    "provenance": "Fictional different-environment contract; never applicable to prod-capstone."
+  },
+  {
+    "id": "KB:query-api:r3:operations",
+    "service": "query-api",
+    "environment": "prod-capstone",
+    "versions": [
+      "r3"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "query-api r3 operating contract",
+    "text": "Release r3 opens a pool of 20 database connections per replica. The service budget is 240 connections. Twenty replicas can demand 400 connections, exceeding the budget; twelve replicas reach the budget before any reserve. Review pool sizing and database headroom before scaling. CPU alone does not establish the bottleneck.",
+    "provenance": "Fictional service contract authored for this capstone, not a real employer system."
+  },
+  {
+    "id": "KB:query-api:r2:operations",
+    "service": "query-api",
+    "environment": "prod-capstone",
+    "versions": [
+      "r2"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "query-api r2 operating contract",
+    "text": "Release r2 opens a pool of 8 database connections per replica. Twenty replicas can demand 160 connections, within the 240-connection budget. That budget does not prove node capacity or database throughput. A bounded scale/load experiment requires those checks and latency/error monitoring.",
+    "provenance": "Fictional service contract authored for this capstone, not a real employer system."
+  },
+  {
+    "id": "KB:query-api:archived",
+    "service": "query-api",
+    "environment": "prod-capstone",
+    "versions": [
+      "r1"
+    ],
+    "status": "archived",
+    "valid_from": "2026-01-01T00:00:00+00:00",
+    "valid_until": "2026-09-01T00:00:00+00:00",
+    "title": "query-api incident operations and troubleshooting (archived)",
+    "text": "Release r2 opens a pool of 8 database connections per replica. Twenty replicas can demand 160 connections, within the 240-connection budget. That budget does not prove node capacity or database throughput. A bounded scale/load experiment requires those checks and latency/error monitoring.",
+    "provenance": "Fictional outdated contract; retained to test applicability filtering."
+  },
+  {
+    "id": "KB:query-api:dev",
+    "service": "query-api",
+    "environment": "dev-capstone",
+    "versions": [
+      "r3"
+    ],
+    "status": "active",
+    "valid_from": "2026-10-01T00:00:00+00:00",
+    "valid_until": null,
+    "title": "query-api r3 development sandbox operating contract",
+    "text": "This development-only configuration uses the legacy behavior: Release r2 opens a pool of 8 database connections per replica. Twenty replicas can demand 160 connections, within the 240-connection budget. That budget does not prove node capacity or database throughput. A bounded scale/load experiment requires those checks and latency/error monitoring.",
+    "provenance": "Fictional different-environment contract; never applicable to prod-capstone."
+  }
+]

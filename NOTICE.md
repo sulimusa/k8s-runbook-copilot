@@ -13,3 +13,12 @@ and `data/SOURCES.md`.
 
 Kubernetes is a registered trademark of The Linux Foundation. This project is not affiliated with or endorsed by
 the Kubernetes project, the CNCF, or any other source owner.
+
+## Incident-study material
+
+`data/incident_patterns.json` contains original short synopses with links to company and
+engineer reports. The source articles retain their respective copyrights; this repository
+does not include their full text or claim an open license for those articles.
+`eval/incident_suite/inputs.json` contains original fictional observations inspired by reported
+mechanisms. It is not company telemetry. Counterfactual and missing-evidence cases are
+invented exercises, and none of the fixtures establishes a live reproduction.

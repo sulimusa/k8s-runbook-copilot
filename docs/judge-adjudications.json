@@ -1,0 +1,1083 @@
+{
+  "reviewer": "Implementation assistant; not an independent human reviewer",
+  "scope": "Every one of the 31 queued findings in the prior 24-case study. Frozen answers and numeric judge ratings remain unchanged. These decisions are not recomputed accuracy scores.",
+  "source_sha256": "835146c443f9eb34ec5c186141c79f837b7ecc6b107e53536f15f033df948412",
+  "queue_sha256": "de5fb8eeff463323baa69804cf485dbfa1e8e7d8cbe7346032ec535df6fa9659",
+  "sources": [
+    "https://kubernetes.io/docs/concepts/services-networking/endpoint-slices/",
+    "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+  ],
+  "decisions": [
+    {
+      "id": "release-a/evidence/0",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "If the errors are user-impacting and cannot be quickly mitigated, prepare for a rollback while continuing investigation.",
+        "reason": "There is no evidence provided that the errors are user-impacting or that mitigation has been attempted or is possible. The statement presupposes user impact and mitigation feasibility without supporting evidence.",
+        "context": "First, gather more evidence to confirm that the new release is responsible for the errors and to identify the specific cause. If the errors are user-impacting and cannot be quickly mitigated, prepare for a rollback while continuing investigation.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "reject_deduction",
+      "reason": "The full recommendation first asks to establish cause, then explicitly conditions rollback preparation on user impact and failed quick mitigation; it does not claim either prerequisite is met.",
+      "answer_sha256": "758e290c64b225ed4f3c3af14c49c8399bba3231f397f1b625ba291522f0e34a",
+      "context_sha256": "a092438316eb805634970315d05111408ddf0c752a888d4815ff496c72852ba6",
+      "question": {
+        "id": "Q0",
+        "text": "Errors increased after the rollout. Should we roll this service back?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "At 10:00 a new release became ready; at 10:04 HTTP 500 responses rose from 0.2% to 12%."
+        },
+        {
+          "id": "E2",
+          "text": "Pods are Ready. There is no exception trace or migration execution log in this evidence."
+        }
+      ],
+      "documents": []
+    },
+    {
+      "id": "release-b/rag/0",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "Rolling back without understanding the root cause may not resolve the issue and could introduce new risks.",
+        "reason": "The claim that rolling back \"could introduce new risks\" is not supported by any evidence in the supplied context or documents.",
+        "context": "First, gather more evidence to determine the cause of the error spike. Rolling back without understanding the root cause may not resolve the issue and could introduce new risks.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "reject_deduction",
+      "reason": "A possible rollback risk is general operational advice, not a claim that a specific risk has occurred.",
+      "answer_sha256": "df0c6764ca09a7ed186124794bc6a7d2e69b44edd07d51326dff5f6702ff8dac",
+      "context_sha256": "bb1c1682ec38c9a0e835884889fd959d3ea0e7689498f25941b6e9a0a39fc07f",
+      "question": {
+        "id": "Q0",
+        "text": "Errors increased after the rollout. Should we roll this service back?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "At 10:00 a new release became ready; at 10:04 HTTP 500 responses rose from 0.2% to 12%."
+        },
+        {
+          "id": "E2",
+          "text": "Pods are Ready. There is no exception trace or migration execution log in this evidence."
+        }
+      ],
+      "documents": [
+        "KB:ledger-api:r2:operations",
+        "k8s-docs:concepts/workloads/controllers/deployment#25",
+        "k8s-docs:tasks/debug/debug-cluster/windows#01",
+        "k8s-docs:tasks/debug/debug-application/debug-service#12",
+        "k8s-docs:tasks/configure-pod-container/configure-liveness-readiness-startup-probes#02",
+        "k8s-docs:concepts/workloads/controllers/deployment#27"
+      ]
+    },
+    {
+      "id": "release-unknown/rag/0",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "the absence of logs may indicate insufficient logging or a non-crashing failure mode",
+        "reason": "The evidence only states that there are no exception traces or migration execution logs in the evidence. It does not support the assertion that this absence may indicate insufficient logging or a non-crashing failure mode; this is speculative.",
+        "context": "All pods are reported as Ready, and there are no exception traces or migration logs in the provided evidence. However, the root cause of the errors is not established: readiness does not guarantee application correctness, and the absence of logs may indicate insufficient logging or a non-crashing failure mode. No evidence is provided about recent configuration changes, dependency health, or external factors.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "accept_defect",
+      "reason": "Although qualified, this draws an inference about logging or crashing from logs absent in the evidence packet. Missing access does not support that inference; request the logs instead.",
+      "answer_sha256": "293034117e78df49429bd291b57a85ffe27368a92b5ebdf5c36c4b64074b0b20",
+      "context_sha256": "4ac1a00030f98830024abf75583b5b882fbf3b52030362ae21878bc767b425a2",
+      "question": {
+        "id": "Q0",
+        "text": "Errors increased after the rollout. Should we roll this service back?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "At 10:00 a new release became ready; at 10:04 HTTP 500 responses rose from 0.2% to 12%."
+        },
+        {
+          "id": "E2",
+          "text": "Pods are Ready. There is no exception trace or migration execution log in this evidence."
+        }
+      ],
+      "documents": [
+        "k8s-docs:concepts/workloads/controllers/deployment#25",
+        "k8s-docs:tasks/debug/debug-cluster/windows#01",
+        "k8s-docs:tasks/debug/debug-application/debug-service#12",
+        "k8s-docs:tasks/configure-pod-container/configure-liveness-readiness-startup-probes#02",
+        "k8s-docs:concepts/workloads/controllers/deployment#27",
+        "k8s-docs:tasks/administer-cluster/dns-debugging-resolution#05"
+      ]
+    },
+    {
+      "id": "release-unknown/rag/1",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "Rolling back without diagnosis may mask underlying issues or cause data inconsistencies.",
+        "reason": "There is no evidence provided about the risk of masking issues or causing data inconsistencies by rolling back. This is a general statement not supported by the supplied evidence.",
+        "context": "First, gather more evidence to confirm that the new version is the cause of the errors and to rule out other factors. Rolling back without diagnosis may mask underlying issues or cause data inconsistencies.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "reject_deduction",
+      "reason": "This is a possible rollback risk and supports investigating compatibility; it does not assert that data inconsistency has occurred.",
+      "answer_sha256": "293034117e78df49429bd291b57a85ffe27368a92b5ebdf5c36c4b64074b0b20",
+      "context_sha256": "4ac1a00030f98830024abf75583b5b882fbf3b52030362ae21878bc767b425a2",
+      "question": {
+        "id": "Q0",
+        "text": "Errors increased after the rollout. Should we roll this service back?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "At 10:00 a new release became ready; at 10:04 HTTP 500 responses rose from 0.2% to 12%."
+        },
+        {
+          "id": "E2",
+          "text": "Pods are Ready. There is no exception trace or migration execution log in this evidence."
+        }
+      ],
+      "documents": [
+        "k8s-docs:concepts/workloads/controllers/deployment#25",
+        "k8s-docs:tasks/debug/debug-cluster/windows#01",
+        "k8s-docs:tasks/debug/debug-application/debug-service#12",
+        "k8s-docs:tasks/configure-pod-container/configure-liveness-readiness-startup-probes#02",
+        "k8s-docs:concepts/workloads/controllers/deployment#27",
+        "k8s-docs:tasks/administer-cluster/dns-debugging-resolution#05"
+      ]
+    },
+    {
+      "id": "release-unknown/evidence/0",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "Without further evidence, it cannot be conclusively determined that the new release is the cause of the errors.",
+        "reason": "The answer asserts that causality cannot be conclusively determined, but the evidence only shows correlation, not causality. However, this is a statement of uncertainty, not an unsupported affirmative claim.",
+        "context": "Pod readiness alone does not guarantee application health. Without further evidence, it cannot be conclusively determined that the new release is the cause of the errors.",
+        "status": "needs_review_affirmative_claim"
+      },
+      "verdict": "reject_deduction",
+      "reason": "The answer explicitly withholds causal certainty. The judge reason itself acknowledges this is uncertainty rather than an unsupported claim.",
+      "answer_sha256": "6840651b8c0cef4bb43a9a091f891840ad8b02df1abda088912959f685fbeedb",
+      "context_sha256": "9b8873f4f8f060ec598697121a13059abf27cdaa148691fff44185f9756a3db4",
+      "question": {
+        "id": "Q0",
+        "text": "Errors increased after the rollout. Should we roll this service back?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "At 10:00 a new release became ready; at 10:04 HTTP 500 responses rose from 0.2% to 12%."
+        },
+        {
+          "id": "E2",
+          "text": "Pods are Ready. There is no exception trace or migration execution log in this evidence."
+        }
+      ],
+      "documents": []
+    },
+    {
+      "id": "release-unknown/evidence/1",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "Pod readiness alone does not guarantee application health.",
+        "reason": "This is a general Kubernetes fact and does not require specific evidence from the supplied context.",
+        "context": "However, there is no direct evidence of the root cause, such as application logs, exception traces, or migration issues. Pod readiness alone does not guarantee application health. Without further evidence, it cannot be conclusively determined that the new release is the cause of the errors.",
+        "status": "needs_review_affirmative_claim"
+      },
+      "verdict": "reject_deduction",
+      "reason": "Pod readiness is not proof of application-wide correctness; this is valid general Kubernetes reasoning.",
+      "answer_sha256": "6840651b8c0cef4bb43a9a091f891840ad8b02df1abda088912959f685fbeedb",
+      "context_sha256": "9b8873f4f8f060ec598697121a13059abf27cdaa148691fff44185f9756a3db4",
+      "question": {
+        "id": "Q0",
+        "text": "Errors increased after the rollout. Should we roll this service back?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "At 10:00 a new release became ready; at 10:04 HTTP 500 responses rose from 0.2% to 12%."
+        },
+        {
+          "id": "E2",
+          "text": "Pods are Ready. There is no exception trace or migration execution log in this evidence."
+        }
+      ],
+      "documents": []
+    },
+    {
+      "id": "release-unknown/question_only/0",
+      "finding": {
+        "kind": "causal_overclaim",
+        "quote": "There is an observed correlation between the recent rollout and an increase in errors, but no direct evidence has been provided to confirm causation or to identify the root cause of the errors.",
+        "reason": "The phrase 'no direct evidence has been provided to confirm causation' is correct, but the initial clause presupposes that a correlation has been observed. No evidence or observation data is supplied to support that a correlation between the rollout and errors has actually been established.",
+        "context": "There is an observed correlation between the recent rollout and an increase in errors, but no direct evidence has been provided to confirm causation or to identify the root cause of the errors. No logs, error types, metrics, or rollback impact assessments are available.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "wording_correction",
+      "reason": "Q0 itself reports errors increasing after rollout, so temporal association is available as a user report. Say reported association rather than independently observed correlation.",
+      "answer_sha256": "d3889ce05f840c02344ea13aeb894f84627d3cca5aee8485d3ba528789715b58",
+      "context_sha256": "cb60b99c953c74570ac352fc40ded5cee7abca205bac1379abab3c457d27db0c",
+      "question": {
+        "id": "Q0",
+        "text": "Errors increased after the rollout. Should we roll this service back?"
+      },
+      "observations": [],
+      "documents": []
+    },
+    {
+      "id": "memory-a/evidence/0",
+      "finding": {
+        "kind": "causal_overclaim",
+        "quote": "If cache usage is a significant contributor, reducing CACHE_BUDGET_MB may help prevent OOMKills.",
+        "reason": "There is no evidence provided about the cache's actual contribution to memory usage, so the claim that reducing CACHE_BUDGET_MB may help prevent OOMKills is an unsupported causal assertion.",
+        "context": "Review memory allocation details to determine the cache's impact on total memory usage. If cache usage is a significant contributor, reducing CACHE_BUDGET_MB may help prevent OOMKills. However, gather more data before making changes.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "reject_deduction",
+      "reason": "The preceding sentence requests allocation evidence. The recommendation explicitly depends on cache usage being a significant contributor and asks for data before changes.",
+      "answer_sha256": "b03a78266b43d132e9d228c50490824406920f0a63cc462f4a7653ad5ccebbd3",
+      "context_sha256": "ce29789aa43a09773fd9899060e843024842bf17dc65502d10d0f295f3a3dfa9",
+      "question": {
+        "id": "Q0",
+        "text": "This container was OOMKilled. Does reducing CACHE_BUDGET_MB address the cause?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "CACHE_BUDGET_MB=192 (this setting uses MiB despite its name) and WORKERS=4. Container memory limit is 512 MiB."
+        },
+        {
+          "id": "E2",
+          "text": "Working set approached the 512 MiB limit before termination. Last termination reason is OOMKilled."
+        },
+        {
+          "id": "E3",
+          "text": "There is no heap profile or breakdown of cache/native allocation."
+        }
+      ],
+      "documents": []
+    },
+    {
+      "id": "memory-a/rag/0",
+      "finding": {
+        "kind": "causal_overclaim",
+        "quote": "directly addressing the cause of the OOMKilled event",
+        "reason": "The answer asserts that reducing CACHE_BUDGET_MB would directly address the cause of the OOMKilled event. However, the evidence does not provide a breakdown of memory usage between cache and other allocations (see E3), so it is not fully supported that the cache budget alone is the direct cause of the OOMKilled event.",
+        "context": "This aggregate cache budget exceeds the container's memory limit, making OOMKills likely. Reducing CACHE_BUDGET_MB would lower the total cache allocation and could prevent the container from exceeding its memory limit, directly addressing the cause of the OOMKilled event.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "accept_defect",
+      "reason": "Directly addressing the cause asserts the cache is causal without allocation evidence. A maximum budget is not measured consumption.",
+      "answer_sha256": "8c099443479ef3677d3cbdbf8d62ac91c07b8467602358d87ab21b97a1e18bc6",
+      "context_sha256": "8d902ef68ccf916be2c7c0436882e53837207b63e2ba2663749f69931c6f6932",
+      "question": {
+        "id": "Q0",
+        "text": "This container was OOMKilled. Does reducing CACHE_BUDGET_MB address the cause?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "CACHE_BUDGET_MB=192 (this setting uses MiB despite its name) and WORKERS=4. Container memory limit is 512 MiB."
+        },
+        {
+          "id": "E2",
+          "text": "Working set approached the 512 MiB limit before termination. Last termination reason is OOMKilled."
+        },
+        {
+          "id": "E3",
+          "text": "There is no heap profile or breakdown of cache/native allocation."
+        }
+      ],
+      "documents": [
+        "KB:cache-api:r3:operations",
+        "k8s-docs:tasks/configure-pod-container/assign-memory-resource#02",
+        "k8s-docs:concepts/configuration/manage-resources-containers#24",
+        "k8s-docs:concepts/configuration/manage-resources-containers#01",
+        "k8s-docs:tasks/debug/debug-cluster/_index#03",
+        "k8s-docs:tasks/debug/debug-application/debug-running-pod#05"
+      ]
+    },
+    {
+      "id": "memory-a/question_only/0",
+      "finding": {
+        "kind": "causal_overclaim",
+        "quote": "There is evidence that the container was OOMKilled, which indicates it exceeded its memory allocation.",
+        "reason": "The statement presupposes that exceeding memory allocation is the cause of the OOMKill, but no evidence is provided that directly links the OOMKill to memory usage exceeding the limit, as no logs or metrics are cited.",
+        "context": "There is evidence that the container was OOMKilled, which indicates it exceeded its memory allocation. However, there is no information provided about what CACHE_BUDGET_MB controls, how it relates to the container's memory usage, or whether reducing it would sufficiently lower memory consumption to prevent OOMKills.",
+        "status": "needs_review_affirmative_claim"
+      },
+      "verdict": "wording_correction",
+      "reason": "OOMKilled supports an out-of-memory termination, but does not alone locate the pressure at the container limit versus the node. Keep the supported reason and request memory evidence.",
+      "answer_sha256": "b99a3920d12e7486aecf8a9ecce2bd523aa7a88287af986cc63f4b9e360fc4e6",
+      "context_sha256": "6b8acc18638309fdf060a3e704e4844ac4c7a26e6f8a922f586f3a168f53d1f2",
+      "question": {
+        "id": "Q0",
+        "text": "This container was OOMKilled. Does reducing CACHE_BUDGET_MB address the cause?"
+      },
+      "observations": [],
+      "documents": []
+    },
+    {
+      "id": "memory-b/rag/0",
+      "finding": {
+        "kind": "causal_overclaim",
+        "quote": "it is not possible to confirm that reducing CACHE_BUDGET_MB would address the root cause of the OOMKilled event without further breakdown of memory usage.",
+        "reason": "This clause presupposes that reducing CACHE_BUDGET_MB could address the root cause, but the evidence (KB:cache-api:r2:operations, E3) explicitly warns that allocations outside the shared cache can cause OOM and that heap/native allocation evidence is required before assigning blame to the cache. The answer should not imply any potential causal relationship without such evidence.",
+        "context": "Allocations outside the shared cache can also cause OOM (KB:cache-api:r2:operations). Therefore, it is not possible to confirm that reducing CACHE_BUDGET_MB would address the root cause of the OOMKilled event without further breakdown of memory usage.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "reject_deduction",
+      "reason": "The answer explicitly says cache causality cannot be confirmed; the judge incorrectly penalizes refusal to assign cause.",
+      "answer_sha256": "c42d6e2e174daf092640c0656fb881294ffc5edc3cc41d3a1b9520e31b4d5feb",
+      "context_sha256": "66cfa08099998e9d6322f4105d980f032acc552b5c8f78110c64a3e683144754",
+      "question": {
+        "id": "Q0",
+        "text": "This container was OOMKilled. Does reducing CACHE_BUDGET_MB address the cause?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "CACHE_BUDGET_MB=192 (this setting uses MiB despite its name) and WORKERS=4. Container memory limit is 512 MiB."
+        },
+        {
+          "id": "E2",
+          "text": "Working set approached the 512 MiB limit before termination. Last termination reason is OOMKilled."
+        },
+        {
+          "id": "E3",
+          "text": "There is no heap profile or breakdown of cache/native allocation."
+        }
+      ],
+      "documents": [
+        "KB:cache-api:r2:operations",
+        "k8s-docs:tasks/configure-pod-container/assign-memory-resource#02",
+        "k8s-docs:concepts/configuration/manage-resources-containers#24",
+        "k8s-docs:concepts/configuration/manage-resources-containers#01",
+        "k8s-docs:tasks/debug/debug-cluster/_index#03",
+        "k8s-docs:tasks/debug/debug-cluster/_index#02"
+      ]
+    },
+    {
+      "id": "memory-b/question_only/0",
+      "finding": {
+        "kind": "causal_overclaim",
+        "quote": "If CACHE_BUDGET_MB is a significant factor, reducing it may help prevent OOMKilled events.",
+        "reason": "This statement presupposes that reducing CACHE_BUDGET_MB will help prevent OOMKilled events if it is a significant factor, but there is no evidence provided that CACHE_BUDGET_MB is actually a significant contributor to memory usage or that reducing it will prevent OOMKilled. The causal relationship is asserted without supporting data.",
+        "context": "Review the container's memory usage patterns and determine what proportion of memory is consumed by the cache controlled by CACHE_BUDGET_MB. If CACHE_BUDGET_MB is a significant factor, reducing it may help prevent OOMKilled events. However, confirm this relationship before making changes.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "reject_deduction",
+      "reason": "The cache contribution is a stated condition to verify, not an observed fact. The recommendation is conditional.",
+      "answer_sha256": "7c92ccb85b8d5a0f9d33dd7776def73e1b79ed6b08d37c158f5a234369fc2262",
+      "context_sha256": "3a859befac6f48fff9266b46151e38d7d9a55da6c2770dc518d13c58b8ca8613",
+      "question": {
+        "id": "Q0",
+        "text": "This container was OOMKilled. Does reducing CACHE_BUDGET_MB address the cause?"
+      },
+      "observations": [],
+      "documents": []
+    },
+    {
+      "id": "memory-control/rag/0",
+      "finding": {
+        "kind": "causal_overclaim",
+        "quote": "The Pod began experiencing OOMKilled events immediately after its memory limit was reduced from 1 GiB to 128 MiB. Prior to this change, the workload used 250 MiB of memory, which is nearly double the new limit. According to Kubernetes documentation, if a container exceeds its memory limit, it is subject to termination with an OOMKilled status.",
+        "reason": "The answer asserts that exceeding the memory limit directly caused the OOMKilled events. However, while the evidence shows the workload used 250 MiB and the limit was reduced to 128 MiB, it does not directly prove that the Pod's memory usage exceeded the new limit at the time of OOMKilled. The causal link is highly probable but not strictly proven by the supplied evidence.",
+        "context": "The Pod began experiencing OOMKilled events immediately after its memory limit was reduced from 1 GiB to 128 MiB. Prior to this change, the workload used 250 MiB of memory, which is nearly double the new limit.",
+        "status": "needs_review_affirmative_claim"
+      },
+      "verdict": "reject_deduction",
+      "reason": "E1-E3 establish the reduction, prior usage and onset; the quote says subject to termination, a general mechanism. This supports a narrow explanation without proving every allocation at termination.",
+      "answer_sha256": "db4e2259d481e270441bb3e9bbde89757c4fa432608ba94f6d18d49e9f6138b8",
+      "context_sha256": "56cc4ecfa7e6a70c3794237f6997a187b0524b0315001828e1b19f917f453180",
+      "question": {
+        "id": "Q0",
+        "text": "Why did this Pod start getting OOMKilled immediately after a resource update?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "The only resource change was memory limit 1 GiB -> 128 MiB."
+        },
+        {
+          "id": "E2",
+          "text": "Before that change the workload used 250 MiB steadily. OOMKilled began immediately after."
+        },
+        {
+          "id": "E3",
+          "text": "No application release, worker count or cache setting changed."
+        }
+      ],
+      "documents": [
+        "k8s-docs:tasks/configure-pod-container/assign-memory-resource#02",
+        "KB:cache-api:r3:operations",
+        "k8s-docs:concepts/configuration/manage-resources-containers#08",
+        "k8s-docs:concepts/configuration/manage-resources-containers#24",
+        "k8s-docs:tasks/administer-cluster/manage-resources/quota-memory-cpu-namespace#03",
+        "k8s-docs:concepts/policy/resource-quotas#11"
+      ]
+    },
+    {
+      "id": "memory-control/evidence/0",
+      "finding": {
+        "kind": "causal_overclaim",
+        "quote": "Kubernetes enforces memory limits strictly: if a container exceeds its memory limit, it is terminated with an OOMKilled event.",
+        "reason": "The answer asserts that exceeding the memory limit directly causes OOMKilled, but the evidence does not include logs or direct confirmation that the container exceeded the limit at the moment of termination. The observed steady-state usage was 250 MiB, but no direct measurement at the time of OOMKilled is provided.",
+        "context": "Prior to this change, the workload's memory usage was 250 MiB, which exceeds the new limit. Kubernetes enforces memory limits strictly: if a container exceeds its memory limit, it is terminated with an OOMKilled event. No other workload or configuration changes were observed.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "wording_correction",
+      "reason": "The judge demands unnecessary direct measurement to explain a mechanism, but the answer's absolute strictly/if formulation should be softened: memory limits are reactively enforced by the kernel OOM mechanism.",
+      "answer_sha256": "d11f9d4da5c6445aef935b638814cd1683063b5d618132ebf74c71a5f4e1a3c9",
+      "context_sha256": "a92b1dbe0967921de5f24c224ac3ca9d2d2d091e40995c4ec90db2bd427bb61e",
+      "question": {
+        "id": "Q0",
+        "text": "Why did this Pod start getting OOMKilled immediately after a resource update?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "The only resource change was memory limit 1 GiB -> 128 MiB."
+        },
+        {
+          "id": "E2",
+          "text": "Before that change the workload used 250 MiB steadily. OOMKilled began immediately after."
+        },
+        {
+          "id": "E3",
+          "text": "No application release, worker count or cache setting changed."
+        }
+      ],
+      "documents": []
+    },
+    {
+      "id": "memory-control/evidence/1",
+      "finding": {
+        "kind": "causal_overclaim",
+        "quote": "The Pod began experiencing OOMKilled events immediately after its memory limit was reduced from 1 GiB to 128 MiB. Prior to this change, the workload's memory usage was 250 MiB, which exceeds the new limit.",
+        "reason": "The answer asserts that the OOMKilled events were caused by the memory limit reduction, but the evidence only shows correlation (timing and prior usage), not direct causation at the moment of the event.",
+        "context": "The Pod began experiencing OOMKilled events immediately after its memory limit was reduced from 1 GiB to 128 MiB. Prior to this change, the workload's memory usage was 250 MiB, which exceeds the new limit.",
+        "status": "needs_review_affirmative_claim"
+      },
+      "verdict": "reject_deduction",
+      "reason": "The onset and prior usage are explicitly provided in E1 and E2; repeating those observations is not a causal overclaim.",
+      "answer_sha256": "d11f9d4da5c6445aef935b638814cd1683063b5d618132ebf74c71a5f4e1a3c9",
+      "context_sha256": "a92b1dbe0967921de5f24c224ac3ca9d2d2d091e40995c4ec90db2bd427bb61e",
+      "question": {
+        "id": "Q0",
+        "text": "Why did this Pod start getting OOMKilled immediately after a resource update?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "The only resource change was memory limit 1 GiB -> 128 MiB."
+        },
+        {
+          "id": "E2",
+          "text": "Before that change the workload used 250 MiB steadily. OOMKilled began immediately after."
+        },
+        {
+          "id": "E3",
+          "text": "No application release, worker count or cache setting changed."
+        }
+      ],
+      "documents": []
+    },
+    {
+      "id": "memory-unknown/question_only/0",
+      "finding": {
+        "kind": "causal_overclaim",
+        "quote": "which indicates it exceeded its memory allocation",
+        "reason": "The statement presupposes that the OOMKilled event was caused by exceeding the memory allocation, but no direct evidence of memory usage or allocation is provided in the evidence.",
+        "context": "There is evidence that the container was OOMKilled, which indicates it exceeded its memory allocation. However, there is no information provided about what CACHE_BUDGET_MB controls, its current value, or its relationship to the container's memory usage.",
+        "status": "needs_review_affirmative_claim"
+      },
+      "verdict": "wording_correction",
+      "reason": "OOMKilled identifies OOM termination, not by itself proof that the specific container limit was exceeded. Request node/container memory evidence.",
+      "answer_sha256": "1d4ed6f421a56c590459656e5db72a0a48dcc67fcf49aadc06d512b78c774602",
+      "context_sha256": "6e76c0d9dae67ae2001b106923f249ac1121b99bdba3a40ee4ca2ac7ac6b1028",
+      "question": {
+        "id": "Q0",
+        "text": "This container was OOMKilled. Does reducing CACHE_BUDGET_MB address the cause?"
+      },
+      "observations": [],
+      "documents": []
+    },
+    {
+      "id": "shutdown-a/rag/0",
+      "finding": {
+        "kind": "causal_overclaim",
+        "quote": "indicating the grace period is insufficient for the intended drain behavior.",
+        "reason": "The observations confirm that the worker is killed after 30 seconds while a job is still running, but do not establish that the drain behavior (i.e., stopping new jobs and draining the active job) is not occurring or is insufficient. The statement presupposes that the grace period is the cause of incomplete draining, which is not directly established by the evidence.",
+        "context": "The current terminationGracePeriodSeconds is set to 30, but the batch-worker r3 contract specifies jobs can last up to 120 seconds and requires a grace period of at least 150 seconds to allow active jobs to drain on SIGTERM. Observations confirm workers are killed after 30 seconds even if a job is still running, indicating the grace period is insufficient for the intended drain behavior.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "reject_deduction",
+      "reason": "The applicable contract requires at least 150 seconds for jobs up to 120 seconds; observed grace is 30 seconds. The intended drain budget is therefore insufficient regardless of any additional defect.",
+      "answer_sha256": "5a2b5d83b0e1a525d90fc8d477e73b31ebae6b8eb6e48454fbd7e595e6df24e2",
+      "context_sha256": "7926f424a97908ac84ae54d9cae5c374a77fdef293711f0fe1ec43f542349576",
+      "question": {
+        "id": "Q0",
+        "text": "Jobs are interrupted during a rollout. Should we increase terminationGracePeriodSeconds?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "terminationGracePeriodSeconds=30. The worker receives SIGTERM during rollout."
+        },
+        {
+          "id": "E2",
+          "text": "After 30 seconds the worker is killed while a job is still running."
+        },
+        {
+          "id": "E3",
+          "text": "The job duration and drain behavior are not established by these observations."
+        }
+      ],
+      "documents": [
+        "KB:batch-worker:r3:operations",
+        "k8s-docs:concepts/workloads/pods/pod-lifecycle#33",
+        "k8s-docs:concepts/workloads/pods/pod-lifecycle#35",
+        "k8s-docs:concepts/workloads/controllers/deployment#09",
+        "k8s-docs:concepts/scheduling-eviction/pod-priority-preemption#19",
+        "k8s-docs:concepts/scheduling-eviction/node-pressure-eviction#00"
+      ]
+    },
+    {
+      "id": "shutdown-b/rag/0",
+      "finding": {
+        "kind": "causal_overclaim",
+        "quote": "Increasing the grace period could mask underlying defects rather than address the root cause.",
+        "reason": "The claim that increasing the grace period could mask underlying defects presupposes that the current issue is due to a defect in the drain handler or dependencies, but the evidence only shows that the process is killed after 30 seconds, not why. There is no direct evidence that increasing the grace period would mask a defect rather than accommodate a legitimate need.",
+        "context": "If jobs are still being killed after 30 seconds, this suggests the drain handler or dependencies may not be functioning as documented, or there is an unhandled blocking condition. Increasing the grace period could mask underlying defects rather than address the root cause.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "reject_deduction",
+      "reason": "Could mask is an explicitly possible risk motivating investigation of the documented drain behavior, not an assertion that a particular defect is proved.",
+      "answer_sha256": "3e6efaa85b6188740e2f736eb9d23d578f2d3f7cb5f18c759073e282c1295a71",
+      "context_sha256": "b5bfc158c9ed209fb4d66e3ea187c15ee7ab072a168fe1f581eb1c102e27f6e2",
+      "question": {
+        "id": "Q0",
+        "text": "Jobs are interrupted during a rollout. Should we increase terminationGracePeriodSeconds?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "terminationGracePeriodSeconds=30. The worker receives SIGTERM during rollout."
+        },
+        {
+          "id": "E2",
+          "text": "After 30 seconds the worker is killed while a job is still running."
+        },
+        {
+          "id": "E3",
+          "text": "The job duration and drain behavior are not established by these observations."
+        }
+      ],
+      "documents": [
+        "KB:batch-worker:r2:operations",
+        "k8s-docs:concepts/workloads/pods/pod-lifecycle#33",
+        "k8s-docs:concepts/workloads/pods/pod-lifecycle#35",
+        "k8s-docs:concepts/workloads/controllers/deployment#09",
+        "k8s-docs:concepts/scheduling-eviction/pod-priority-preemption#19",
+        "k8s-docs:concepts/scheduling-eviction/node-pressure-eviction#00"
+      ]
+    },
+    {
+      "id": "certificate-a/rag/0",
+      "finding": {
+        "kind": "causal_overclaim",
+        "quote": "The cause could be a failure in the certificate reload mechanism, an issue with the watched path, or a specific replica not reloading the certificate.",
+        "reason": "This sentence asserts possible causes for the observed behavior, but no evidence is provided to directly link these as causes. The evidence only shows the symptom (old certificate still served) and lack of reload logs, not the underlying reason.",
+        "context": "There is no evidence of a reload event or process-level certificate inspection, and it is unclear which process or replica is serving the endpoint. The cause could be a failure in the certificate reload mechanism, an issue with the watched path, or a specific replica not reloading the certificate.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "reject_deduction",
+      "reason": "These are explicitly possible competing causes of an observed old certificate, not established facts. The separate no-reload-event presupposition remains an accepted defect.",
+      "answer_sha256": "234c09424adb03e93c0eb3f8410f94ea375aee0cba88a3049839f1fadfd55345",
+      "context_sha256": "fd0fad1481743157356daf3405d9033e105202b146a8293bba8171d521fae6cd",
+      "question": {
+        "id": "Q0",
+        "text": "The mounted TLS certificate was renewed but the endpoint still serves the old one. What next?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "The mounted certificate has the new serial number and a valid expiry."
+        },
+        {
+          "id": "E2",
+          "text": "Five minutes later the endpoint still presents the previous expired certificate."
+        },
+        {
+          "id": "E3",
+          "text": "No certificate reload log or process-level certificate inspection is available."
+        }
+      ],
+      "documents": [
+        "KB:edge-api:r3:operations",
+        "k8s-docs:tasks/debug/debug-cluster/troubleshoot-kubectl#04",
+        "k8s-docs:concepts/workloads/controllers/deployment#07",
+        "k8s-docs:tasks/configure-pod-container/configure-liveness-readiness-startup-probes#06",
+        "k8s-docs:tasks/administer-cluster/dns-debugging-resolution#05",
+        "k8s-docs:concepts/workloads/controllers/deployment#33"
+      ]
+    },
+    {
+      "id": "certificate-b/evidence/0",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "If not, plan a controlled restart of the affected pods to ensure the new certificate is loaded.",
+        "reason": "There is no evidence provided that a restart will ensure the new certificate is loaded, as there is no process-level inspection or documentation confirming this behavior.",
+        "context": "Review the edge-api application's documentation or configuration to determine if it supports dynamic TLS certificate reloads. If not, plan a controlled restart of the affected pods to ensure the new certificate is loaded. Ensure that the certificate mount mechanism (e.g., projected volume, secret, configmap) is correctly updating files in the container.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "wording_correction",
+      "reason": "The preceding sentence makes restart conditional on absence of reload support, so reject an unconditional-action penalty. Replace ensure with then verify: the certificate path and serving process still need confirmation.",
+      "answer_sha256": "a9669a2dea0a9ccd8714f69b4733cbdc604b2b191b862edbe7d142601ad35219",
+      "context_sha256": "9ada406e1a5860fe031711e61d2df410e1448881e8242def0408d0318b3a0b48",
+      "question": {
+        "id": "Q0",
+        "text": "The mounted TLS certificate was renewed but the endpoint still serves the old one. What next?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "The mounted certificate has the new serial number and a valid expiry."
+        },
+        {
+          "id": "E2",
+          "text": "Five minutes later the endpoint still presents the previous expired certificate."
+        },
+        {
+          "id": "E3",
+          "text": "No certificate reload log or process-level certificate inspection is available."
+        }
+      ],
+      "documents": []
+    },
+    {
+      "id": "certificate-control/evidence/0",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "indicating that the credentials provided (if any) are invalid or missing for accessing the private image registry.",
+        "reason": "The evidence shows a 401 Unauthorized and a private repository, but does not establish whether any credentials were provided at all, nor does it confirm that invalid credentials (as opposed to missing credentials) were the cause.",
+        "context": "The Pod cannot start its container because Kubernetes is unable to pull the required image from a private repository. The image pull fails with HTTP 401 Unauthorized, indicating that the credentials provided (if any) are invalid or missing for accessing the private image registry.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "wording_correction",
+      "reason": "401 supports an authentication problem; invalid or missing credentials is plausible, not an exhaustive proved cause. Inspect token delivery, scope and registry responses before choosing a cause.",
+      "answer_sha256": "57109a1526516e18d2ff51d3bd4e092fa324cb7cb9079bca60d97ee05624df60",
+      "context_sha256": "b9f8e95fe86b6bab4be5718fb5f23529cdf6b4f3b67f7a1041b4e3946d6356be",
+      "question": {
+        "id": "Q0",
+        "text": "Why is this Pod unable to start its container?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "Container state ImagePullBackOff."
+        },
+        {
+          "id": "E2",
+          "text": "The image registry response is HTTP 401 Unauthorized."
+        },
+        {
+          "id": "E3",
+          "text": "The image reference points to a private repository."
+        }
+      ],
+      "documents": []
+    },
+    {
+      "id": "certificate-unknown/rag/0",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "plan a rolling restart of the pods serving the endpoint to ensure the new certificate is loaded",
+        "reason": "There is no evidence provided that a rolling restart is required or that it will resolve the issue. The answer presupposes that a restart is necessary without confirming whether the application supports dynamic reload or not.",
+        "context": "Review the deployment and application documentation to determine if the application supports dynamic certificate reloads. If not, plan a rolling restart of the pods serving the endpoint to ensure the new certificate is loaded. Ensure this action is reviewed and approved according to production change management procedures.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "wording_correction",
+      "reason": "The judge clipped If not and approval prerequisites, so reject its unconditional-restart deduction. Replace ensure with verify because restart success is not guaranteed.",
+      "answer_sha256": "0add4043e7aae95dd720280c86b8283d443dcd7ab9c59d2596dc6fa2ada81664",
+      "context_sha256": "7cc363169de4c5b50a19be73dbf5b114cc0f4cfa749a16d682f48146d9c496cf",
+      "question": {
+        "id": "Q0",
+        "text": "The mounted TLS certificate was renewed but the endpoint still serves the old one. What next?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "The mounted certificate has the new serial number and a valid expiry."
+        },
+        {
+          "id": "E2",
+          "text": "Five minutes later the endpoint still presents the previous expired certificate."
+        },
+        {
+          "id": "E3",
+          "text": "No certificate reload log or process-level certificate inspection is available."
+        }
+      ],
+      "documents": [
+        "k8s-docs:tasks/debug/debug-cluster/troubleshoot-kubectl#04",
+        "k8s-docs:tasks/configure-pod-container/configure-liveness-readiness-startup-probes#06",
+        "k8s-docs:concepts/workloads/controllers/deployment#07",
+        "k8s-docs:tasks/administer-cluster/dns-debugging-resolution#05",
+        "k8s-docs:concepts/workloads/controllers/deployment#33",
+        "k8s-runbooks:kubernetes/KubeletServerCertificateExpiration#00"
+      ]
+    },
+    {
+      "id": "replay-b/rag/0",
+      "finding": {
+        "kind": "causal_overclaim",
+        "quote": "Since the consumer crashed after producing output but before acknowledging the job, and process memory is lost on restart, replaying the job may result in duplicate logical outputs for job-42.",
+        "reason": "The statement presupposes that replaying the job will result in duplicate logical outputs, but the operating contract only states that it may create duplicates and requires reconciliation of the output registry before deciding. The evidence does not establish that a duplicate will occur, only that it is possible.",
+        "context": "According to the operating contract, r2 allocates a new output identifier for each attempt and maintains deduplication only in process memory. Since the consumer crashed after producing output but before acknowledging the job, and process memory is lost on restart, replaying the job may result in duplicate logical outputs for job-42.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "reject_deduction",
+      "reason": "The contract and crash window support the risk of duplicates. May result is not a guarantee; the judge substitutes will for may.",
+      "answer_sha256": "1b425878337c47907f01ee7c1bf1aa1f05f929f67994ef4c3acd41c25abae60d",
+      "context_sha256": "464c763920469751e659db53d962e7a704169240a4de45c4590388f521b87c2e",
+      "question": {
+        "id": "Q0",
+        "text": "The consumer crashed after producing output but before acknowledging a job. Is replay safe?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "The job ID is job-42. Output may already exist; acknowledgement was not recorded."
+        },
+        {
+          "id": "E2",
+          "text": "The consumer restarted. Its broker offset can be replayed."
+        },
+        {
+          "id": "E3",
+          "text": "The output registry and deduplication record have not been inspected."
+        }
+      ],
+      "documents": [
+        "KB:image-worker:r2:operations",
+        "k8s-docs:concepts/workloads/pods/init-containers#08",
+        "k8s-docs:concepts/workloads/pods/pod-lifecycle#16",
+        "k8s-docs:concepts/containers/images#02",
+        "k8s-docs:tasks/configure-pod-container/pull-image-private-registry#01",
+        "k8s-docs:tasks/debug/debug-application/debug-running-pod#07"
+      ]
+    },
+    {
+      "id": "replay-control/question_only/0",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "This status typically indicates that the Pod's imagePullPolicy is set to 'Never', and the required image is not present on the node.",
+        "reason": "There is no evidence provided about the Pod's imagePullPolicy or the presence of the image on the node. The statement asserts a typical cause without supporting data from the investigation.",
+        "context": "There is not enough information to determine why the Pod is reporting ErrImageNeverPull. This status typically indicates that the Pod's imagePullPolicy is set to 'Never', and the required image is not present on the node.",
+        "status": "needs_review_affirmative_claim"
+      },
+      "verdict": "reject_deduction",
+      "reason": "Typically states the standard meaning of ErrImageNeverPull, not an invented inspection. The answer correctly asks for evidence of this instance.",
+      "answer_sha256": "ba8b49614bb87d9fd121628fe04609dbb98ebe7b082d8bb4f691150e121ed079",
+      "context_sha256": "d1cfc03b052c5c8c6f25faf2b66af8bb99d02a6830342956a30e2f479397307f",
+      "question": {
+        "id": "Q0",
+        "text": "Why is this Pod reporting ErrImageNeverPull?"
+      },
+      "observations": [],
+      "documents": []
+    },
+    {
+      "id": "scaling-a/evidence/0",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "The database connection limit (240 connections) could become a bottleneck if each replica opens many connections.",
+        "reason": "There is no evidence provided about per-replica connection usage or that the aggregate connection budget is being approached or exceeded by scaling to twenty replicas.",
+        "context": "While high CPU utilization and elevated latency at ten replicas suggest the service is under heavy load, scaling to twenty replicas may not be safe without further analysis. The database connection limit (240 connections) could become a bottleneck if each replica opens many connections. There is no evidence about per-replica connection usage, node resource availability, or database load under increased replica count.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "reject_deduction",
+      "reason": "The bottleneck is explicitly conditional on per-replica connection demand; no current demand is asserted.",
+      "answer_sha256": "ec9f8486018cc5ed6168e4cd7355f14961e0ff9f553b054e42eeb5503be7c8a1",
+      "context_sha256": "f3df473b2bd397926c894a0a52a0fc966885b7f38f80f5817e074a8909e5a4b9",
+      "question": {
+        "id": "Q0",
+        "text": "CPU and latency are high at ten replicas. Is scaling to twenty replicas a safe next step?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "Ten ready replicas, sustained CPU utilization about 95%, request latency elevated."
+        },
+        {
+          "id": "E2",
+          "text": "The database supports at most 240 connections allocated to this service."
+        },
+        {
+          "id": "E3",
+          "text": "No node-capacity or database-load test is included."
+        }
+      ],
+      "documents": []
+    },
+    {
+      "id": "scaling-a/rag/0",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "This risks overloading the database and causing failures",
+        "reason": "While exceeding the connection budget is documented as a risk, the answer asserts that this will cause failures, but no evidence is provided that failures will definitely occur at this threshold.",
+        "context": "Scaling from ten to twenty replicas would cause the total database connection demand (20 replicas x 20 connections = 400) to significantly exceed the documented service budget of 240 connections. This risks overloading the database and causing failures, as the operating contract for query-api r3 explicitly warns that even twelve replicas reach the connection budget with no reserve. High CPU and latency alone do not establish that scaling replicas is safe or effective, especially with this database constraint.",
+        "status": "needs_review_affirmative_claim"
+      },
+      "verdict": "reject_deduction",
+      "reason": "The applicable contract supports the budget calculation and failure risk. Risks is not a guarantee of failures.",
+      "answer_sha256": "4eeab96ae30a2ab8b3a19957f9a9f6e4175fbf8b4a88b758758e6d8f29a98d1d",
+      "context_sha256": "5ab8fd7a04446b9778acbdf3aeb49ec67ba80f146024b5e61626cdabe89ee65d",
+      "question": {
+        "id": "Q0",
+        "text": "CPU and latency are high at ten replicas. Is scaling to twenty replicas a safe next step?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "Ten ready replicas, sustained CPU utilization about 95%, request latency elevated."
+        },
+        {
+          "id": "E2",
+          "text": "The database supports at most 240 connections allocated to this service."
+        },
+        {
+          "id": "E3",
+          "text": "No node-capacity or database-load test is included."
+        }
+      ],
+      "documents": [
+        "KB:query-api:r3:operations",
+        "k8s-runbooks:kubernetes/CPUThrottlingHigh#00",
+        "k8s-runbooks:kubernetes/KubeletPodStartUpLatencyHigh#00",
+        "k8s-docs:concepts/configuration/manage-resources-containers#22",
+        "k8s-docs:concepts/scheduling-eviction/assign-pod-node#16",
+        "k8s-docs:concepts/policy/resource-quotas#11"
+      ]
+    },
+    {
+      "id": "scaling-b/rag/0",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "Without this, it is unclear if the cluster or database can handle the additional replicas without causing new bottlenecks or failures.",
+        "reason": "This clause presupposes that new bottlenecks or failures may occur, but no evidence is provided regarding the likelihood or nature of such bottlenecks or failures at twenty replicas.",
+        "context": "However, there is no evidence about node capacity, resource quotas, or database throughput under increased load (E3, KB:query-api:r2:operations). Without this, it is unclear if the cluster or database can handle the additional replicas without causing new bottlenecks or failures.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "reject_deduction",
+      "reason": "It is unclear explicitly withholds a capacity conclusion; requesting load evidence is appropriate.",
+      "answer_sha256": "f443a059aa3df0a5cac146a9580d181b524b11b83d6392b8d8ff48351d2cc2ad",
+      "context_sha256": "03a7c382cdd7851f77d7443e5d38f616eda7d8ddc5f53a8022920eba575d16a6",
+      "question": {
+        "id": "Q0",
+        "text": "CPU and latency are high at ten replicas. Is scaling to twenty replicas a safe next step?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "Ten ready replicas, sustained CPU utilization about 95%, request latency elevated."
+        },
+        {
+          "id": "E2",
+          "text": "The database supports at most 240 connections allocated to this service."
+        },
+        {
+          "id": "E3",
+          "text": "No node-capacity or database-load test is included."
+        }
+      ],
+      "documents": [
+        "KB:query-api:r2:operations",
+        "k8s-runbooks:kubernetes/CPUThrottlingHigh#00",
+        "k8s-docs:concepts/configuration/manage-resources-containers#22",
+        "k8s-docs:concepts/policy/resource-quotas#11",
+        "k8s-runbooks:kubernetes/KubeletPodStartUpLatencyHigh#00",
+        "k8s-runbooks:kubernetes/KubeHpaMaxedOut#00"
+      ]
+    },
+    {
+      "id": "scaling-b/evidence/0",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "doubling replicas will not exceed the 240-connection cap",
+        "reason": "There is no evidence provided about per-replica database connection usage, so it is unsupported to assert that doubling replicas will or will not exceed the cap.",
+        "context": "Before scaling, review per-replica database connection usage and ensure that doubling replicas will not exceed the 240-connection cap. Assess node resource capacity to confirm the cluster can accommodate twenty replicas.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "reject_deduction",
+      "reason": "The full clause says review per-replica usage and ensure the cap will not be exceeded. It is a prerequisite check, not a known pool-size claim.",
+      "answer_sha256": "edc54598152f53774a40a32f9e91fe7253c6288c771a5adf19c9171be71c2c7e",
+      "context_sha256": "d80c878808e77ab830e737fbc6a7c3e2b836a92fe4bf84298e4aa339e2bf6cfc",
+      "question": {
+        "id": "Q0",
+        "text": "CPU and latency are high at ten replicas. Is scaling to twenty replicas a safe next step?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "Ten ready replicas, sustained CPU utilization about 95%, request latency elevated."
+        },
+        {
+          "id": "E2",
+          "text": "The database supports at most 240 connections allocated to this service."
+        },
+        {
+          "id": "E3",
+          "text": "No node-capacity or database-load test is included."
+        }
+      ],
+      "documents": []
+    },
+    {
+      "id": "scaling-unknown/evidence/0",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "The database connection limit (240 connections) could be a bottleneck if each replica opens many connections.",
+        "reason": "There is no evidence provided about the actual per-replica connection usage, so the statement about the connection limit being a bottleneck is speculative.",
+        "context": "While high CPU utilization and elevated latency at ten replicas suggest the service is under heavy load, scaling to twenty replicas may not be safe without further analysis. The database connection limit (240 connections) could be a bottleneck if each replica opens many connections. There is no evidence about per-replica connection usage, node resource availability, or database load capacity.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "reject_deduction",
+      "reason": "Conditional bottleneck risk is a reason to inspect pool size, not an assertion that current usage is known.",
+      "answer_sha256": "1c85c8fae7fee0b4e700022eca477d49b597e427fe6e82bd279bde9e259af4a0",
+      "context_sha256": "53f90c6c50905c63e4aadb90c44c1e1be32a6754883aa6646ed5a21cf7c98d5b",
+      "question": {
+        "id": "Q0",
+        "text": "CPU and latency are high at ten replicas. Is scaling to twenty replicas a safe next step?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "Ten ready replicas, sustained CPU utilization about 95%, request latency elevated."
+        },
+        {
+          "id": "E2",
+          "text": "The database supports at most 240 connections allocated to this service."
+        },
+        {
+          "id": "E3",
+          "text": "No node-capacity or database-load test is included."
+        }
+      ],
+      "documents": []
+    },
+    {
+      "id": "scaling-unknown/evidence/1",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "Ensure that scaling will not exceed the database connection limit or node capacity.",
+        "reason": "There is no evidence about current node capacity or actual per-replica connection usage, so the recommendation presupposes facts not in evidence.",
+        "context": "Conduct a controlled load test to assess the impact of additional replicas on both the Kubernetes nodes and the database. Ensure that scaling will not exceed the database connection limit or node capacity.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "reject_deduction",
+      "reason": "A requested capacity check does not presuppose that capacity is known or sufficient.",
+      "answer_sha256": "1c85c8fae7fee0b4e700022eca477d49b597e427fe6e82bd279bde9e259af4a0",
+      "context_sha256": "53f90c6c50905c63e4aadb90c44c1e1be32a6754883aa6646ed5a21cf7c98d5b",
+      "question": {
+        "id": "Q0",
+        "text": "CPU and latency are high at ten replicas. Is scaling to twenty replicas a safe next step?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "Ten ready replicas, sustained CPU utilization about 95%, request latency elevated."
+        },
+        {
+          "id": "E2",
+          "text": "The database supports at most 240 connections allocated to this service."
+        },
+        {
+          "id": "E3",
+          "text": "No node-capacity or database-load test is included."
+        }
+      ],
+      "documents": []
+    },
+    {
+      "id": "scaling-unknown/rag/0",
+      "finding": {
+        "kind": "unsupported_fact",
+        "quote": "Scaling to twenty replicas could double the number of database connections, potentially exceeding the database's connection limit or causing new bottlenecks.",
+        "reason": "There is no evidence provided about the per-replica database connection usage or that scaling replicas linearly increases total connections. The aggregate connection budget does not establish a per-replica configured pool value.",
+        "context": "However, the database supporting this service has a hard limit of 240 connections (E2), and there is no evidence of node capacity or database load testing (E3). Scaling to twenty replicas could double the number of database connections, potentially exceeding the database's connection limit or causing new bottlenecks. There is no information on current per-pod connection usage, node resource availability, or whether the application or database can handle the increased load.",
+        "status": "needs_review_conditional_or_uncertain"
+      },
+      "verdict": "reject_deduction",
+      "reason": "Could and potentially explicitly mark a risk; the answer also says per-pod usage is unknown. It does not infer a known configured pool from the aggregate cap.",
+      "answer_sha256": "5cf7494901af61b6b1cbcfd8819c55bd1022aa07dd7885728c9ffb612f92d27f",
+      "context_sha256": "e7d45379209a9424fb2496a4e3a712b36413d93035ef29a3e13b1bd95ef3d146",
+      "question": {
+        "id": "Q0",
+        "text": "CPU and latency are high at ten replicas. Is scaling to twenty replicas a safe next step?"
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "text": "Ten ready replicas, sustained CPU utilization about 95%, request latency elevated."
+        },
+        {
+          "id": "E2",
+          "text": "The database supports at most 240 connections allocated to this service."
+        },
+        {
+          "id": "E3",
+          "text": "No node-capacity or database-load test is included."
+        }
+      ],
+      "documents": [
+        "k8s-runbooks:kubernetes/KubeletPodStartUpLatencyHigh#00",
+        "k8s-runbooks:kubernetes/CPUThrottlingHigh#00",
+        "k8s-docs:concepts/configuration/manage-resources-containers#24",
+        "k8s-runbooks:kubernetes/KubeHpaMaxedOut#00",
+        "k8s-docs:concepts/workloads/controllers/deployment#17",
+        "k8s-docs:tasks/configure-pod-container/assign-cpu-resource#00"
+      ]
+    }
+  ],
+  "previous_known_regressions": [
+    {
+      "case": "certificate-a",
+      "arm": "evidence",
+      "quote": "If not, plan a controlled restart",
+      "verdict": "reject_deduction",
+      "reason": "The preceding sentence requests verification of reload support. This is conditional advice, not an unsupported claim that reload is unavailable.",
+      "reviewer": "implementation assistant; independent human review pending"
+    },
+    {
+      "case": "scaling-b",
+      "arm": "evidence",
+      "quote": "ensure that doubling replicas will not exceed the 240-connection cap",
+      "verdict": "reject_deduction",
+      "reason": "This is a requested check, not a claim that per-replica pool size is known or that scaling is safe.",
+      "reviewer": "implementation assistant; independent human review pending"
+    },
+    {
+      "case": "memory-a",
+      "arm": "rag",
+      "quote": "directly addressing the cause of the OOMKilled event",
+      "verdict": "accept_defect",
+      "reason": "A configured potential budget does not prove actual allocation or causality.",
+      "reviewer": "implementation assistant; independent human review pending"
+    },
+    {
+      "case": "certificate-a",
+      "arm": "rag",
+      "quote": "Investigate why no reload event is logged.",
+      "verdict": "accept_defect",
+      "reason": "The context says logs are unavailable. This presupposes that no event was logged, which is not established.",
+      "reviewer": "implementation assistant; independent human review pending"
+    }
+  ],
+  "counts": {
+    "reject_deduction": 22,
+    "accept_defect": 2,
+    "wording_correction": 7
+  }
+}

@@ -30,6 +30,20 @@ req = "copilot_requests_total"
 NOT_FOUND = ',found_answer="false"'  # label matcher, kept out of the f-strings (py3.10 compatible)
 dur = "copilot_request_duration_seconds_bucket"
 panels = [
+    panel("Atlas runs by planner and outcome", [
+        ('sum by (planner,status) (copilot_investigations_total)', '{{planner}} / {{status}}')], x=0, y=37),
+    panel("Atlas latency p95 since process start", [
+        ('histogram_quantile(0.95, sum by (le,planner) (copilot_investigation_duration_seconds_bucket))', '{{planner}}')], x=12, y=37, unit='s'),
+    panel("Atlas model and tool calls", [
+        ('sum by (planner,kind) (copilot_investigation_calls_total)', '{{planner}} / {{kind}}')], x=0, y=45),
+    panel("Atlas tokens", [
+        ('sum by (kind) (copilot_investigation_tokens_total)', '{{kind}} tokens')], x=12, y=45),
+    panel("Atlas known cost", [('sum(copilot_investigation_cost_total)', 'USD')], kind='stat', x=0, y=53,
+        unit='currencyUSD',
+        desc='Cumulative since process start. Unknown cost is shown in the local run dashboard, not counted as zero.'),
+    panel("Atlas judge outcomes", [('sum by (outcome) (copilot_judgments_total)', '{{outcome}}')], x=12, y=53,
+        desc='Separate model review; these ratings still require human review.'),
+    panel("Atlas judge cost", [('sum(copilot_judge_cost_total)', 'USD')], kind='stat', x=0, y=61, unit='currencyUSD'),
     panel("Requests / s by version", [(f"sum by (version) ({q(req)})", "{{version}}")], x=0, y=0, unit="reqps"),
     panel("Latency p50 / p95", [
         (f"histogram_quantile(0.5, sum by (le) ({q(dur)}))", "p50"),
@@ -71,3 +85,11 @@ if __name__ == "__main__":
     out = Path(__file__).parent / "dashboards" / "copilot.json"
     out.write_text(json.dumps(dashboard, indent=2) + "\n")
     print(f"wrote {out} ({len(panels)} panels)")
+    atlas = json.loads(json.dumps(dashboard))
+    atlas.update(title='Atlas investigations', uid='atlas-investigations')
+    atlas['panels'] = [p for p in atlas['panels'] if p['title'].startswith('Atlas ')]
+    for p in atlas['panels']:
+        p['gridPos']['y'] -= 37
+    atlas['templating']['list'] = atlas['templating']['list'][:1]
+    atlas['templating']['list'][0]['current'] = {'text': 'Prometheus', 'value': 'prometheus'}
+    (out.parent / 'atlas.json').write_text(json.dumps(atlas, indent=2) + '\n')

@@ -1,0 +1,290 @@
+{
+  "reviewer_context": "separate OpenAI agent; unblinded focused revision review following blind first pass and key/source review",
+  "model_identifier": "not exposed by runtime",
+  "original_review_reference": "eval/incident_suite/review_history/v1/judge_review.json",
+  "reviewed_artifacts_sha256": {
+    "eval/incident_suite/inputs.json": "033030be74e4347ae7be6c86b1cdb32cf2300a2a96391da92aa157f468d62d26",
+    "eval/incident_suite/answer_keys.json": "a3ab7a852fb1a371f531f0d0f057f272e240875cab8924dbbba775f95da2d4ba",
+    "data/incident_patterns.json": "5bc99b9e67b89b5490c837c7587b601c4113918179711f0ebc0862191c7da983",
+    "eval/incident_suite/judge_review.json": "8d5d237c805d2533cce668f74aaaef092ef31af9109a7ab9b0aebe542fe8d41c",
+    "eval/incident_suite/blind_judge.json": "94a570a53fa8b86969787f872a6e50c2a8366c60b8f57073e72bb28d53fda95c"
+  },
+  "v1_artifacts_sha256": {
+    "inputs.json": "31a5ca67fb018b90228c480d868c98bedc9e5e2f81e6d9ac4eba67091f77aff5",
+    "answer_keys.json": "0bcdd2c5ba9e5dbd62a10f28df326c888a58a5944b58ebe19f1f2ef82ac286c7",
+    "blind_judge.json": "94a570a53fa8b86969787f872a6e50c2a8366c60b8f57073e72bb28d53fda95c",
+    "judge_review.json": "8d5d237c805d2533cce668f74aaaef092ef31af9109a7ab9b0aebe542fe8d41c"
+  },
+  "verification_scope": "Unblinded focused review. Read current inputs and keys and semantically compared all 36 cases with frozen v1. Read all 12 current incident pattern synopses after P02 correction; assessed them against the already-read primary reports. No new browsing or reproduction.",
+  "empirical_verification": false,
+  "overall_verdict": "accept revised cases and current historical pattern synopses",
+  "case_verdicts": [
+    {
+      "id": "case-dd638bc02d",
+      "verdict": "accept",
+      "reviewed_status": "supported",
+      "reason": "Narrowed cause matches current observations: cached startup, simultaneous LIST requests and above-limit API-server memory pressure. It no longer imports an unobserved previous rollout or OOM termination."
+    },
+    {
+      "id": "case-bf47d72b56",
+      "verdict": "accept",
+      "reviewed_status": "supported",
+      "reason": "E2 now explicitly supplies role removal before successful instance-profile deletion and labels the audit fictional. The sequence is technically coherent and does not falsely attribute the call to the historical report."
+    },
+    {
+      "id": "case-6aced99011",
+      "verdict": "accept",
+      "reviewed_status": "supported",
+      "reason": "E3 separates regular Pod-update nodeSelector immutability from kubelet pods/status label rejection under enabled NodeRestriction and node identity; the updated cause identifies why completion status fails."
+    },
+    {
+      "id": "case-ce633c6845",
+      "verdict": "accept",
+      "reviewed_status": "supported",
+      "reason": "Only contradicted_cause was synchronized with the revised rollout cause. Observations and expected alternative remain unchanged."
+    },
+    {
+      "id": "case-25087601d4",
+      "verdict": "accept",
+      "reviewed_status": "supported",
+      "reason": "Only contradicted_cause was synchronized with the revised webhook cause. Successful status plus orphaned cleanup finalizer still supports the alternative."
+    }
+  ],
+  "pattern_verdicts": [
+    {
+      "id": "P01",
+      "verdict": "accept",
+      "reason": "Matches reported update-triggered networkd restart and loss of routing rules; does not imply every networkd restart behaves this way.",
+      "reviewed_text": "Cross-node pod connections timed out after a routine maintenance window. Historical context: Datadog reports that a systemd-networkd restart removed pod routing rules during unattended updates across environments. Useful checks: Compare host routing and maintenance history with cloud firewall decisions for the failed packet path.",
+      "source_url": "https://www.datadoghq.com/blog/engineering/2023-03-08-deep-dive-into-platform-level-impact/"
+    },
+    {
+      "id": "P02",
+      "verdict": "accept",
+      "reason": "Corrected to host VM memory exhaustion; removed the unverified configured API-server limit from historical context.",
+      "reviewed_text": "A node-agent rollout coincided with API timeouts and slow scheduling. Historical context: Reddit reports that cached-image startup synchronized large LIST requests and exhausted control-plane VM memory. Useful checks: Compare audit request concurrency and API memory with etcd fsync latency and the rollout start-time distribution.",
+      "source_url": "https://www.reddit.com/r/RedditEng/comments/1id01im/unseen_catalyst_a_simple_rollout_caused_a/"
+    },
+    {
+      "id": "P03",
+      "verdict": "accept",
+      "reason": "Acceptable short abstraction of invalid/absent namespace configuration and destructive reconciliation. Empty desired state should not be read as a literal recovered historical manifest.",
+      "reviewed_text": "Services vanished from the cluster shortly after an infrastructure change. Historical context: Skyscanner reports a templating change producing an empty desired state and automated reconciliation deleting resources. Useful checks: Inspect rendered desired state and the identity, timestamps and targets of resource deletion audit events.",
+      "source_url": "https://medium.com/@SkyscannerEng/how-a-couple-of-characters-brought-down-our-site-356ccaf1fbc3"
+    },
+    {
+      "id": "P04",
+      "verdict": "accept",
+      "reason": "Matches reported selector change, concentrated load and memory failure.",
+      "reviewed_text": "A rolling update stalled while new pods repeatedly ran out of memory. Historical context: Grafana reports a Service selector excluding old replicas, concentrating traffic on a small updated subset and causing OOMs. Useful checks: Compare Service selectors and EndpointSlices with per-pod traffic and equal-workload memory profiles.",
+      "source_url": "https://grafana.com/blog/how-adding-kubernetes-label-selectors-caused-an-outage-in-grafana-cloud-logs-and-how-we-resolved-it/"
+    },
+    {
+      "id": "P05",
+      "verdict": "accept",
+      "reason": "Explicitly separates verified reported deletion/delayed effects from fictional expiry details and prerequisite audit calls.",
+      "reviewed_text": "Cloud API access stopped and replacement nodes failed after a quiet interval. Historical context: Stytch reports a deleted shared instance profile, failed replacement provisioning and delayed failures on existing nodes. Exact credential expiry and role-removal API calls are fixture details, not verified historical observations. Useful checks: Inspect instance-profile references and audit history, credential expiry and trusted clock offset without exposing credentials.",
+      "source_url": "https://stytch.com/blog/stytch-postmortem-2023-02-23/"
+    },
+    {
+      "id": "P06",
+      "verdict": "accept",
+      "reason": "Acceptable endpoint-level synopsis of reported NEG removal despite blocked pod eviction; does not generalize controller behavior to all providers.",
+      "reviewed_text": "A running Redis pod became unreachable through its internal load balancer. Historical context: GitLab reports that a PDB prevented Redis pod eviction while a GKE controller independently removed its load-balancer endpoint. Useful checks: Compare direct pod reachability, endpoint-group membership, target health and network-policy drop evidence.",
+      "source_url": "https://gitlab.com/gitlab-com/gl-infra/production/-/issues/21208"
+    },
+    {
+      "id": "P07",
+      "verdict": "accept",
+      "reason": "Matches report of stale bundled trust roots and retained connections masking handshake failure.",
+      "reviewed_text": "Newly deployed pods fail TLS calls while old pods continue serving. Historical context: Shopify reports an expired root and stale client trust bundle; existing TLS connections concealed the problem until pod replacement forced new handshakes. Useful checks: Compare fresh versus reused connections, certificate SAN/validity, request hostname and the actual client trust store.",
+      "source_url": "https://shopify.engineering/that-old-certificate-expired-and-started-an-outage-this-is-what-happened-next"
+    },
+    {
+      "id": "P08",
+      "verdict": "accept",
+      "reason": "Matches file-heavy volume ownership traversal delaying startup; contains no unsupported universal mitigation promise.",
+      "reviewed_text": "A stateful tool takes a long time to start after replacement. Historical context: Cloudflare reports long pod startup delays while kubelet recursively changed volume group ownership across many files. Useful checks: Establish whether delay occurs during attach, mount, ownership processing or application initialization.",
+      "source_url": "https://blog.cloudflare.com/one-line-kubernetes-fix-saved-600-hours-a-year/"
+    },
+    {
+      "id": "P09",
+      "verdict": "accept",
+      "reason": "Appropriately qualifies the precise kernel mechanism and marks stronger experimental observations as fictional.",
+      "reviewed_text": "Rare search latency spikes appeared after moving workloads to Kubernetes. Historical context: Pinterest links rare latency to cAdvisor memory inspection. The precise kernel locking explanation remains qualified; direct lock traces and a controlled re-enable experiment in our exercise are fictional evidence. Useful checks: Correlate tail requests with profiles, collector timing and GC pauses; use a bounded isolated comparison.",
+      "source_url": "https://medium.com/pinterest-engineering/debugging-the-one-in-a-million-failure-migrating-pinterests-search-infrastructure-to-kubernetes-bef9af9dabf4"
+    },
+    {
+      "id": "P10",
+      "verdict": "accept",
+      "reason": "Retains uncertainty about the underlying cleanup problem. Read this as uncertainty about why cleanup failed; the report itself documents stale mappings and a failed conntrack-delete log.",
+      "reviewed_text": "Some pods have intermittent DNS timeouts after CoreDNS scaled down. Historical context: Preply reports DNS failures after CoreDNS scale-down with traffic directed to a removed endpoint. The underlying conntrack cleanup failure was not conclusively established. Useful checks: Inspect failing flow destinations and policy decisions; do not claim the underlying conntrack cleanup defect without more evidence.",
+      "source_url": "https://medium.com/preply-engineering/dns-postmortem-e169efd45afd"
+    },
+    {
+      "id": "P11",
+      "verdict": "accept",
+      "reason": "Accurately keeps ordinary Pod nodeSelector failures separate from kubelet status label failures.",
+      "reviewed_text": "A simulation finished its workload but never completed cleanup. Historical context: ACRL reports a fail-open webhook certificate race followed by mutation errors: ordinary Pod updates failed on nodeSelector changes and kubelet status updates failed on label changes. Useful checks: Inspect admission timing and rules, accepted status updates, deletionTimestamp, finalizers and their owning controller.",
+      "source_url": "https://appliedcomputing.io/posts/2025-12-08-postmortem-ci-runner/"
+    },
+    {
+      "id": "P12",
+      "verdict": "accept",
+      "reason": "Matches moved package/hardcoded URL preventing bootstrap and node registration, without claiming the synthetic 404 was the historical error.",
+      "reviewed_text": "Autoscaling launched instances but application pods remain Pending. Historical context: FREE NOW reports that a moved package invalidated a hardcoded bootstrap URL, leaving launched worker instances unable to join Kubernetes. Useful checks: Compare cloud instance counts with node registration, then inspect bootstrap completion and API authentication errors.",
+      "source_url": "https://github.com/freenowtech/postmortems/blob/master/2019-09-19%20-%20New%20K8s%20workers%20unable%20to%20join%20cluster.pdf"
+    }
+  ],
+  "coverage": {
+    "total_cases_compared": 36,
+    "substantively_revised_cases": 3,
+    "additional_synchronized_counterfactual_keys": 2,
+    "entirely_unchanged_cases": 31,
+    "unchanged_case_ids": [
+      "case-b8520965f8",
+      "case-ba957a5308",
+      "case-dc047a77d5",
+      "case-a67d358923",
+      "case-8b2777cf10",
+      "case-1bf1468007",
+      "case-59798af406",
+      "case-6f530d02f9",
+      "case-f8c6aa0726",
+      "case-d0bcf03fda",
+      "case-08f3f5f687",
+      "case-ea27849b79",
+      "case-d7f5448ed1",
+      "case-2c974849bb",
+      "case-5d826dc228",
+      "case-695a822ca9",
+      "case-560d7ff354",
+      "case-902b1f4597",
+      "case-c674299ad8",
+      "case-74f6cf251d",
+      "case-8398ec0c0c",
+      "case-b7b0997c31",
+      "case-fa1f644111",
+      "case-d52a13aa3d",
+      "case-11d8b17898",
+      "case-3da36e7ddf",
+      "case-58f9fe24ff",
+      "case-d86046ac54",
+      "case-9085887517",
+      "case-a2915c1019",
+      "case-0c5f4e12ee"
+    ],
+    "rationale": "All ids/order are unchanged. No fields changed except the two evidence arrays and four cause fields shown in semantic_diff. Every unchanged case retains its original review disposition; the previously requested case revisions are now accepted. Pattern historical provenance is assessed separately.",
+    "evidence_changes": "Exactly IAM E2 and webhook E3 changed; all other evidence ids/text, questions, environment fields and synthetic flags are unchanged.",
+    "pattern_comparison_limit": "No frozen v1 incident_patterns.json was provided. All current synopses were reviewed against prior source findings; a full historical pattern-file diff is not claimed. Builder implementation was not inspected in this review.",
+    "pattern_review_count": 12
+  },
+  "semantic_diff": {
+    "inputs.json": [
+      {
+        "id": "case-bf47d72b56",
+        "field": "evidence",
+        "old": [
+          {
+            "id": "E1",
+            "text": "13:40Z existing workers report cloud credential failures; newly requested workers fail to initialize."
+          },
+          {
+            "id": "E2",
+            "text": "12:40Z IAM audit: DeleteInstanceProfile removed the profile referenced by both a retired node group and active workers."
+          },
+          {
+            "id": "E3",
+            "text": "13:40Z cached worker credentials expire. Replacement provisioning reports instance profile not found; instance clock offset is 0.1 seconds."
+          }
+        ],
+        "new": [
+          {
+            "id": "E1",
+            "text": "13:40Z existing workers report cloud credential failures; newly requested workers fail to initialize."
+          },
+          {
+            "id": "E2",
+            "text": "12:40Z fictional IAM audit: RemoveRoleFromInstanceProfile removed the role, then DeleteInstanceProfile successfully deleted the shared profile referenced by a retired node group and active workers."
+          },
+          {
+            "id": "E3",
+            "text": "13:40Z cached worker credentials expire. Replacement provisioning reports instance profile not found; instance clock offset is 0.1 seconds."
+          }
+        ]
+      },
+      {
+        "id": "case-6aced99011",
+        "field": "evidence",
+        "old": [
+          {
+            "id": "E1",
+            "text": "19:10Z the simulation process exited successfully, but its pod remains and the simulation controller waits for cleanup."
+          },
+          {
+            "id": "E2",
+            "text": "19:00Z webhook TLS validation failed before CA injection; failurePolicy=Ignore admitted the simulation pod onto a real node."
+          },
+          {
+            "id": "E3",
+            "text": "19:10Z after CA injection, UPDATE admission adds nodeSelector and labels to pod/status updates; API rejects the mutation and kubelet retries completion status."
+          }
+        ],
+        "new": [
+          {
+            "id": "E1",
+            "text": "19:10Z the simulation process exited successfully, but its pod remains and the simulation controller waits for cleanup."
+          },
+          {
+            "id": "E2",
+            "text": "19:00Z webhook TLS validation failed before CA injection; failurePolicy=Ignore admitted the simulation pod onto a real node."
+          },
+          {
+            "id": "E3",
+            "text": "19:10Z after CA injection, the webhook matches UPDATE requests for both pods and pods/status. A job-controller ordinary Pod update is rejected because the webhook adds an immutable nodeSelector. Separately, the webhook adds labels to a kubelet pods/status update; with NodeRestriction enabled, admission rejects the label change from the node identity, and completion status never persists."
+          }
+        ]
+      }
+    ],
+    "answer_keys.json": [
+      {
+        "id": "case-dd638bc02d",
+        "field": "expected_cause",
+        "old": "Simultaneous node-agent LIST requests exhausted API-server memory; cached images removed a previous rollout delay.",
+        "new": "Near-simultaneous node-agent startup with cached images produced concurrent unpaginated LIST requests and API-server memory pressure above its configured limit."
+      },
+      {
+        "id": "case-ce633c6845",
+        "field": "contradicted_cause",
+        "old": "Simultaneous node-agent LIST requests exhausted API-server memory; cached images removed a previous rollout delay.",
+        "new": "Near-simultaneous node-agent startup with cached images produced concurrent unpaginated LIST requests and API-server memory pressure above its configured limit."
+      },
+      {
+        "id": "case-6aced99011",
+        "field": "expected_cause",
+        "old": "A fail-open certificate startup race is followed by invalid UPDATE mutation, blocking completion status and cleanup.",
+        "new": "Fail-open admission during delayed CA injection allowed real-node scheduling; later webhook label mutation of kubelet status updates was rejected by NodeRestriction, blocking completion status and cleanup. Ordinary Pod updates separately failed after injected nodeSelector changes."
+      },
+      {
+        "id": "case-25087601d4",
+        "field": "contradicted_cause",
+        "old": "A fail-open certificate startup race is followed by invalid UPDATE mutation, blocking completion status and cleanup.",
+        "new": "Fail-open admission during delayed CA injection allowed real-node scheduling; later webhook label mutation of kubelet status updates was rejected by NodeRestriction, blocking completion status and cleanup. Ordinary Pod updates separately failed after injected nodeSelector changes."
+      }
+    ]
+  },
+  "remaining_limits": [
+    "The suite is synthetic and was not reproduced in Kubernetes. Acceptance means coherence with supplied evidence and the limited source review.",
+    "Historical reports are author accounts; source confirmation is not independent forensic verification.",
+    "Version-pinned Kubernetes source establishes plausibility, not a live test of all admission-order and cluster-configuration details.",
+    "Pattern synopses are short abstractions. In P10, the remaining uncertainty concerns why conntrack cleanup failed, not whether the report contained a failed-delete observation.",
+    "Acceptance applies only to the recorded artifact hashes. No unread future edit is approved."
+  ],
+  "resolved_during_revision_review": [
+    {
+      "id": "P02",
+      "finding": "An intermediate current pattern copied the fictional configured API-server memory limit into historical context.",
+      "resolution": "Read the replacement text, which now says control-plane VM memory was exhausted, and accepted it. Current pattern hash records only the reviewed replacement artifact."
+    }
+  ]
+}

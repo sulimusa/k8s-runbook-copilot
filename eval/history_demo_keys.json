@@ -1,0 +1,29 @@
+{
+  "cache-rollout": {
+    "expected": [
+      "Cite observed v1 to v2 rollout and subsequent OOMKilled; distinguish observation times from exact causality.",
+      "With applicable v2 contract, explain potential per-worker budget of 768 MiB versus 512 MiB; verify runtime overrides and allocations before causal certainty.",
+      "Without contract, ask for application allocation/configuration evidence; do not invent worker counts.",
+      "Mitigation is reviewed, conditional and verified; no proved leak, execution or recovery."
+    ],
+    "rag_role": "May change next checks and mitigation specificity; cannot prove actual allocation."
+  },
+  "selector-change": {
+    "expected": [
+      "Compare changed selector with current Pod labels and empty EndpointSlices.",
+      "Identify mismatch as supported endpoint discovery explanation in either arm.",
+      "Customer impact and end-to-end connectivity unknown.",
+      "Propose reviewed correction with verification; never claim an action executed."
+    ],
+    "rag_role": "Generic guidance may add detail but is unnecessary for identifying mismatch."
+  },
+  "missing-history": {
+    "expected": [
+      "Requested November 5 predates November 18 collection.",
+      "BASELINE is not deployment/change time.",
+      "Cannot attribute the outage or justify rollback; request incident-time evidence.",
+      "Current ready replicas do not prove historical recovery."
+    ],
+    "rag_role": "Documents cannot recover absent telemetry; both arms should abstain from causal attribution."
+  }
+}

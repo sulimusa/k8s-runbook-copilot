@@ -1,0 +1,12 @@
+{
+  "case": "cache-rollout",
+  "arm": "rag",
+  "run_id": "774a6750-6144-4bc3-8eb7-b1f18c253fa7",
+  "answer_sha256": "bdabcc7240defea50fd6ad5177330e311288fd3aa338bb638046ab5fcc720afc",
+  "reviewer": "Project owner via chat",
+  "question": "Does the RAG answer\u2019s worker-count/cache-budget check help you decide what to investigate next?",
+  "verbatim_response": "yes, its helpful",
+  "rating": "Useful",
+  "recorded_at": "2026-11-23T05:59:16.241358+00:00",
+  "scope": "One usefulness observation. Not blind, independent domain review, a correctness label, time-saving measurement or a controlled comparison."
+}

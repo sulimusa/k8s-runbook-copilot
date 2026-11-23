@@ -1,15 +1,59 @@
 # ☸️ Kubernetes Runbook Copilot
 
-A **read-only, retrieval-grounded** assistant for Kubernetes incident triage. Ask it why a pod is crash-looping and it
-retrieves evidence from public Kubernetes docs and community runbooks, then returns a **structured, source-cited**
-answer with **safe diagnostic commands**, or **abstains** when the evidence is not good enough.
+[Capstone submission guide](docs/submission.md) · [Course criteria](docs/course-alignment.md) · [Five-minute walkthrough](docs/demo-script.md)
 
-Built entirely on public/openly licensed data plus self-generated lab evidence. No private runbooks, no production data.
+## Main workflow: investigate cluster history
 
-> **The triage API never executes anything.** No kubectl client, no shell, no credentials: it recommends read-only commands,
-> enforced by a deterministic allowlist. **Agent mode** (a separate CLI) can apply fixes automatically in **dev** only, through
-> typed bounded actions, a per-environment policy and an RBAC-scoped identity; **prod is advise-only**. See
-> [docs/agent-mode.md](docs/agent-mode.md) and [docs/safety-model.md](docs/safety-model.md).
+Ask **“What changed before this failure, and what evidence supports the next step?”**
+The assistant reads retained Kubernetes changes, compares current collected state, and retrieves
+operational knowledge when needed. It returns a cited timeline, observations versus hypotheses,
+missing evidence and a reviewed next step. This is the AI Buildcamp capstone, not a general
+cluster-management platform.
+
+Open [historical investigation chat](http://127.0.0.1:8501). Choose **Live cluster history** for the
+isolated `runbook-capstone` collector, or **Three capstone demos** for reproducible synthetic
+snapshots. The demo uses the same investigation agent and read-tool interface as live chat.
+It never contacts Kubernetes and exposes no repair controls.
+
+| Demo | Question | What we test |
+|---|---|---|
+| Rollout and OOM | Why did cache-api restart after the rollout? | Version-specific cache semantics may improve next checks; budgets do not prove actual allocation. |
+| Selector change | Why did demo-web lose endpoints? | Before/after selector and current Pod labels can establish mismatch without RAG. |
+| Earlier outage | What caused the outage before collection began? | Neither retrieval nor a model can recover absent history; request evidence. |
+
+Each demo can run **history only** or **history + RAG**. Recorded answers can be inspected without
+an API key. New model runs use the existing shared budget; they are explicitly triggered.
+The current recorded comparison includes developer-reviewed judge disputes and explicit failure/retry provenance. See the [three-case walkthrough and results](docs/history-demo.md),
+[collector setup and limits](docs/cluster-history.md), and
+[course alignment](docs/course-alignment.md).
+
+Production chat is read-only. Live dev repair remains a separate explicit button for one bounded
+Service-selector restoration, with checks and verification. Endpoint readiness is not proof of
+HTTP success or customer recovery. Collection times are observation times, not audit timestamps.
+
+The [earlier rollout/OOM demo](docs/rollout-investigation.md), generic triage API and 36-case suite
+remain supporting regression material. They are not the main user journey. The historical
+[24-case comparison](docs/knowledge-value-results.md) is separate from the new demonstration.
+
+## Start the capstone UI
+
+From the repository root, after creating a virtual environment:
+
+```sh
+uv sync --locked --all-extras
+make capstone-demo
+```
+
+The app defaults to **Three capstone demos** to show recorded answers with no cluster, corpus download or API
+key. To run a new model investigation, configure `.env` as described in `.env.example`, including
+an explicit shared API budget and verified token prices. Live history additionally requires the
+[dedicated collector](docs/cluster-history.md#reproduce-locally). Nothing connects to another
+project's cluster as a fallback.
+
+## Supporting triage and regression interfaces
+
+The sections below document the original public-runbook triage API and separate CLI agent.
+Their output schemas and evaluation results do not describe the historical chat's performance.
 
 ## Why this exists
 Most RAG demos stop at "retrieve and summarise". Incident triage needs the opposite instincts: **say "I don't know"**,
@@ -79,9 +123,9 @@ make test
 
 cp .env.example .env            # add LLM_API_KEY (any OpenAI-compatible endpoint; Ollama works too)
 make eval                       # full-pipeline evaluation
-make ui                         # Streamlit demo  (or: make serve  -> http://localhost:8000/docs)
+streamlit run app/runbook_ui.py  # Original public-runbook demo  (or: make serve  -> http://localhost:8000/docs)
 ```
-Without an API key the UI and `/search` still work in retrieval-only mode.
+Without an API key, `/search` works in retrieval-only mode. The history UI can display saved demo answers; generating new answers requires a configured model.
 
 ### API
 ```bash
@@ -122,6 +166,29 @@ Eight disposable failure scenarios for kind/k3d/minikube (`labs/`), one per inci
 records read-only `kubectl` output as additional evidence. `make lab SCENARIO=crashloop`. See [labs/README.md](labs/README.md).
 
 ## Evaluation
+The [service-knowledge value study](docs/knowledge-value-evaluation.md) compares question-only,
+evidence-only and evidence-plus-RAG investigations on **24 fictional cases**. It includes
+version-dependent decisions, cases where retrieval should add nothing, and missing-contract
+cases. A frozen development retrieval audit found wrong-scope contracts in 11/12 unfiltered
+searches; scope filtering removed them while preserving 6/6 decisive contracts. This is
+**document-selection evidence**. The [live comparison](docs/knowledge-value-results.md) is now complete:
+72 model answers, with higher judge-rated usefulness in 11/12 service-specific cases and ties
+on generic/missing-contract cases. Judge defects and answer overconfidence are documented;
+factual accuracy superiority is not established. Answer keys remain outside retrieval.
+
+The [Atlas rollout/OOM investigation demo](docs/rollout-investigation.md) searches the broad
+131-document corpus and exposes a read-only, multi-step investigation with three contrasting
+synthetic scenarios. Open `/demo/rollout-oom` on the API server. The browser version uses an
+explicitly labeled offline rule-based planner, plus an opt-in real-model button and batch runner. The final three-case model batch passed the judge and deterministic checks; earlier failures are retained.
+It does not inject cluster failures, execute remediation or claim measured LLM improvement.
+
+An additional [evidence-first incident study](docs/incident-study.md) provides 36 synthetic
+scenarios across 12 report-inspired families, including counterfactuals and missing-evidence
+variants. Its offline harness exports baseline and pattern-assisted prompts with separate
+answer keys. The comparison workflow freezes both arms, checks response provenance, prepares
+randomized A/B judge packets and reports ratings by family and scenario type. This is a
+candidate study, not a measured model-quality result or live reproduction.
+
 40 cases across 8 incident categories plus abstention and safety cases. Measured retrieval results on the pinned corpus:
 
 | Setup | hit@1 | hit@3 | hit@5 | MRR |
