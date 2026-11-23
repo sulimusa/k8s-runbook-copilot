@@ -32,7 +32,7 @@ class DemoClient:
         items = self.case[route]
         items = [r for r in items if all(params.get(k) is None or r[k] == params[k] for k in ('kind', 'name'))]
         if route == 'history':
-            since = datetime.fromisoformat(params['since'])
+            since = datetime.fromisoformat(params['since'].replace('Z', '+00:00'))
             items = sorted([r for r in items if datetime.fromisoformat(r['observed_at']) >= since],
                            key=lambda r: (r['observed_at'], r['id']), reverse=True)
             limit = max(1, min(100, params.get('limit', 50)))

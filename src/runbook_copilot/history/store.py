@@ -196,7 +196,7 @@ class Store:
 
     def query(self, namespace, since, kind=None, name=None, limit=50):
         self.scope(namespace, kind)
-        parsed = datetime.fromisoformat(since)
+        parsed = datetime.fromisoformat(since.replace('Z', '+00:00'))
         if parsed.tzinfo is None:
             raise ValueError('Timezone required')
         since = parsed.astimezone(timezone.utc).isoformat()
