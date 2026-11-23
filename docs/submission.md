@@ -8,7 +8,7 @@ The first user is the project owner, a DevOps engineer. Their [recorded feedback
 
 ## Run the demo without a key or cluster
 
-Prerequisites: Python 3.10+ (3.12 recommended), Git and [uv](https://docs.astral.sh/uv/). Installation downloads dependencies; once installed, recorded demos need no API key, corpus download or Kubernetes cluster.
+Prerequisites: Python 3.11+ (3.12 recommended), Git and [uv](https://docs.astral.sh/uv/). Installation downloads dependencies; once installed, recorded demos need no API key, corpus download or Kubernetes cluster.
 
 ```sh
 git clone https://github.com/sulimusa/k8s-runbook-copilot.git

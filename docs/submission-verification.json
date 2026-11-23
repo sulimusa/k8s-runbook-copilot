@@ -54,5 +54,9 @@
     "docs/history-demo-results.json": "13e0c6bf63debaa7022fa1ccf0536b740f32f593ed1bff34989619f0904e7a43",
     "docs/user-feedback.json": "cf418895e81ebaadc082715f806ba8c93558c9ecab7836c91fbff16787118968",
     "docs/submission-model-smoke.json": "e887b430065725494fe95673da85e68baf369fc6182bdb471fc577620cd392a9"
+  },
+  "release_follow_up": {
+    "reason": "Python 3.10 resolves vulnerable dependencies whose patched versions require Python >=3.11. Supported minimum raised to 3.11; hosted CI verifies 3.11 and 3.12.",
+    "updated_lock_sha256": "e0268d12ac3246805df3c87358756edcb6878562144f39fb84ab2ad4cf7c2f56"
   }
 }

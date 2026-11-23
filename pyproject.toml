@@ -7,7 +7,7 @@ name = "runbook-copilot"
 version = "0.1.0"
 description = "Read-only, retrieval-grounded Kubernetes incident triage assistant built on public data."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = { text = "Apache-2.0" }
 dependencies = [
   "pydantic>=2.5",
