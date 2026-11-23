@@ -1,11 +1,11 @@
 # Cluster history → conversational investigations
 
-This is the capstone's live-cluster path. The Atlas cases remain regression fixtures, not a substitute for collected cluster evidence.
+This is the live-cluster investigation workflow. The Atlas cases remain regression fixtures, not a substitute for collected cluster evidence.
 
 ## Scope and isolation
 
 - Dedicated kind cluster: `runbook-capstone`, one control-plane and one worker.
-- Separate Kubernetes API, kubeconfigs, service accounts and history PVC. Nothing mounts or queries the financial project or `sre-ai-mvp`.
+- Separate Kubernetes API, kubeconfigs, service accounts and history PVC. No access to unrelated clusters.
 - Namespaces: `dev-capstone` and `prod-capstone`. Both contain synthetic demo workloads; `prod-capstone` is a production-mode policy demonstration, not a real production environment.
 - Collector in `copilot-system`, one replica, SQLite WAL on a 1 GiB PVC. History is retained for 30 days. Keep the cluster running to accumulate history; stopping the laptop/cluster interrupts collection. Deleting the cluster destroys this local volume.
 - Chat: <http://127.0.0.1:8501>. Read-only history API: <http://127.0.0.1:8011/docs>.
@@ -105,11 +105,11 @@ Ask: “Why does demo-web have no endpoints? Compare recent Service changes, cur
 
 This is a single-user loopback lab, not a hosted multi-tenant product. It has no user authentication, remote access controls, external backups or high availability. Kubernetes RBAC limits the dev credential to patching one named Service, but RBAC cannot limit patch fields; the application enforces selector-only patches. Keep the restricted token private and do not expose Streamlit or the history API publicly.
 
-The next capstone increments are independent human review of the recorded investigations and judge disputes, and a few new held-out history cases. Richer provenance, logs/metrics and additional repairs are intentionally deferred. Do not expand to the financial project.
+Further work includes independent human review and new held-out history cases. Richer provenance, logs/metrics and additional repairs are not implemented.
 
 ## Verification for this milestone
 
-The live exercise created a selector mismatch in `dev-capstone/demo-web`, recorded its change, investigated it with the real model and RAG, restored the selector through the restricted dev identity, and observed ready endpoints return. A collector restart preserved the same Service-history IDs without duplicates. Kubernetes authorization checks denied production patches, Secret reads and Pod deletion. Both capstone nodes and the collector were healthy at verification.
+The live exercise created a selector mismatch in `dev-capstone/demo-web`, recorded its change, investigated it with the real model and RAG, restored the selector through the restricted dev identity, and observed ready endpoints return. A collector restart preserved the same Service-history IDs without duplicates. Kubernetes authorization checks denied production patches, Secret reads and Pod deletion. Both lab nodes and the collector were healthy at verification.
 
 235 local tests passed, including scope isolation, persistence/deduplication, timestamp normalization, missing-history limits, invalid tools/citations, conditional repairs and rollback. Ruff and Bandit checks passed. See [machine-readable verification](cluster-history-verification.json).
 

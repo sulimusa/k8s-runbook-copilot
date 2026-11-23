@@ -76,7 +76,7 @@ def atlas_model_run(case: str, request: Request):
     if not secrets.compare_digest(request.headers.get('x-atlas-token', ''), state['atlas_token']):
         raise HTTPException(403, 'Open the local demo page to start a model run')
     if os.environ.get('ATLAS_MODEL_RUNS_ENABLED') != 'true':
-        raise HTTPException(503, 'Model runs are disabled; configure the local capstone key and budget first')
+        raise HTTPException(503, 'Model runs are disabled; configure the local model key and budget first')
     if case not in ('routing', 'buffer', 'incomplete'):
         raise HTTPException(400, 'Unknown replay case')
     try:

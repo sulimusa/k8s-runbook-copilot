@@ -1,4 +1,4 @@
-# Atlas rollout/OOM capstone demonstration
+# Atlas rollout/OOM investigation demonstration
 
 Question: **does operational knowledge plus adaptive evidence collection improve
 investigations?** The demo implements a testable workflow; it has not yet established
@@ -6,7 +6,6 @@ an LLM performance improvement.
 
 ## Scope and knowledge
 
-This is the Kubernetes Buildcamp capstone, not the financial consulting project.
 The fictional Atlas API provides a concrete incident without needing private company
 documents. Its service contracts describe normal operation, not an answer to a test case.
 

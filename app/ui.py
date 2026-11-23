@@ -1,4 +1,4 @@
-"""Loopback-only chat for one isolated capstone cluster; production never has write credentials."""
+"""Loopback-only chat for one isolated investigation cluster; production never has write credentials."""
 import hashlib
 import json
 from datetime import datetime, timedelta, timezone
@@ -16,7 +16,7 @@ from runbook_copilot.retrieval.search import Retriever
 
 st.set_page_config(page_title='Cluster History Copilot', page_icon='☸️', layout='wide')
 st.title('☸️ Cluster History Copilot')
-st.caption('Ask what changed, inspect the evidence, and investigate with runbooks. Dedicated capstone lab.')
+st.caption('Ask what changed, inspect the evidence, and investigate with runbooks. Dedicated investigation lab.')
 api = HistoryClient()
 
 
@@ -27,17 +27,17 @@ def knowledge():
 
 with st.sidebar:
     st.header('Investigation scope')
-    st.write('Cluster: **runbook-capstone**')
-    source = st.radio('Evidence source', ['Live cluster history', 'Three capstone demos', 'Monitoring & feedback'], index=1)
+    st.write('Cluster: **Dedicated investigation lab**')
+    source = st.radio('Evidence source', ['Live cluster history', 'Recorded investigations', 'Monitoring & feedback'], index=1)
     demo = None
     if source == 'Monitoring & feedback':
         demo = None
-    elif source == 'Three capstone demos':
+    elif source == 'Recorded investigations':
         demo = st.selectbox('Historical investigation', cases(), format_func=lambda c: c['title'])
         namespace, days = demo['namespace'], demo['days']
         api = DemoClient(demo)
     else:
-        namespace = st.selectbox('Environment', ['prod-capstone', 'dev-capstone'])
+        namespace = st.selectbox('Environment', ['prod-capstone', 'dev-capstone'], format_func=lambda value: 'Production (read-only)' if value == 'prod-capstone' else 'Development')
         days = st.selectbox('Look back', [7, 30, 1], format_func=lambda n: f'Last {n} days')
     use_rag = st.toggle('Retrieve operational knowledge', value=True)
     st.caption('Turn retrieval off to compare an investigation using the same history tools.')
@@ -63,7 +63,7 @@ try:
     since = (clock - timedelta(days=days)).isoformat()
     history = api.get('history', namespace=namespace, since=since, limit=100)
 except Exception:
-    st.error('History service is unavailable. Start the dedicated capstone collector; no other cluster is used as a fallback.')
+    st.error('History service is unavailable. Start the dedicated history collector; no other cluster is used as a fallback.')
     st.stop()
 if demo:
     st.warning('Synthetic history snapshot at '+demo['as_of']+'. This is not a live cluster incident. Repairs are disabled.')

@@ -1,1 +1,1 @@
-"""Cluster-scoped, sanitized operational history for the capstone."""
+"""Cluster-scoped, sanitized operational history for investigations."""

@@ -1,4 +1,4 @@
-"""Bounded, auditable provider calls for the capstone, separate from generic triage."""
+"""Bounded, auditable provider calls for investigations, separate from generic triage."""
 from __future__ import annotations
 
 import hashlib
@@ -89,9 +89,9 @@ class BoundedModel:
     def __init__(self, schema, *, model, key, budget, input_price, output_price,
                  client=None, max_output=2200):
         if not key:
-            raise LLMNotConfigured('Configure the capstone LLM_API_KEY locally')
+            raise LLMNotConfigured('Configure the LLM_API_KEY locally')
         if not 128 <= max_output <= 4096:
-            raise ValueError('Output limit outside capstone bounds')
+            raise ValueError('Output limit outside configured bounds')
         if not all(math.isfinite(p) and p > 0 for p in (input_price, output_price)):
             raise ValueError('Configure positive, verified token prices')
         self.client = client or OpenAI(api_key=key, max_retries=0, timeout=45)
@@ -107,7 +107,7 @@ class BoundedModel:
         # Text-only messages. UTF-8 byte count + framing reserve intentionally overestimates tokens.
         upper_input = len(payload.encode()) + 4096
         if upper_input > 200000:
-            raise ValueError('Model context exceeds the capstone input bound')
+            raise ValueError('Model context exceeds the configured input bound')
         reserve = (upper_input * self.prices[0] + self.max_output * self.prices[1]) / 1e6
         ident = self.budget.reserve(reserve)
         record = {'prompt_sha256': hashlib.sha256(payload.encode()).hexdigest(),
@@ -120,7 +120,7 @@ class BoundedModel:
                 model=self.model, messages=messages, temperature=0,
                 max_completion_tokens=self.max_output,
                 response_format={'type': 'json_schema', 'json_schema': {
-                    'name': 'capstone_response', 'strict': True, 'schema': self.schema}})
+                    'name': 'investigation_response', 'strict': True, 'schema': self.schema}})
             record.update(resolved_model=response.model, response_id=response.id)
             usage = response.usage
             if usage is None:

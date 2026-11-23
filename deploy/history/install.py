@@ -1,8 +1,8 @@
-"""Install ONLY in the explicitly named local capstone cluster. Never uses the default context."""
+"""Install ONLY in the explicitly named local investigation cluster. Never uses the default context."""
 import copy
 import json
 import os
-import subprocess  # nosec B404: fixed argv, explicit capstone kubeconfig, no shell
+import subprocess  # nosec B404: fixed argv, explicit lab kubeconfig, no shell
 from pathlib import Path
 
 import yaml
@@ -32,7 +32,7 @@ def resource(kind, name, namespace=None, **fields):
 def main():
     nodes = json.loads(command(['get', 'nodes', '-o', 'json']))['items']
     if not nodes or any(not n['metadata']['name'].startswith('runbook-capstone-') for n in nodes):
-        raise SystemExit('Refusing installation: not the dedicated capstone cluster')
+        raise SystemExit('Refusing installation: not the dedicated investigation cluster')
     uid = json.loads(command(['get', 'namespace', 'kube-system', '-o', 'json']))['metadata']['uid']
     for ns in ('copilot-system', 'dev-capstone', 'prod-capstone'):
         obj = resource('Namespace', ns)
@@ -94,7 +94,7 @@ def main():
     with os.fdopen(fd, 'w') as f:
         yaml.safe_dump(cfg, f)
     os.chmod(KUBECONFIG, 0o600)
-    print('Capstone history installed; restricted dev access refreshed (8 hours). No default context used.')
+    print('Cluster history installed; restricted dev access refreshed (8 hours). No default context used.')
 
 
 if __name__ == '__main__':

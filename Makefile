@@ -1,4 +1,4 @@
-.PHONY: atlas-run atlas-judge atlas-monitoring agent-access agent agent-eval install fetch ingest index search test eval-retrieval eval serve ui lab market audit lint dashboard \
+.PHONY: atlas-run atlas-judge atlas-monitoring agent-access agent agent-eval install fetch ingest index search test eval-retrieval eval serve ui lab audit lint dashboard \
 	image obs-up platform-up promote rollback platform-down helm-lint incident-validate incident-export incident-prepare rollout-demo
 
 atlas-run: ## actual model runs; explicit configured key/prices/budget; use a NEW RUN_DIR
@@ -57,14 +57,11 @@ lab:              ## make lab SCENARIO=crashloop  (needs a kind/k3d/minikube clu
 	bash labs/capture.sh $(SCENARIO)
 
 lint:
-	ruff check src app eval tests analysis observability
+	ruff check src app eval tests observability
 
 audit:            ## security: static analysis + dependency vulnerabilities
-	bandit -q -r src app eval analysis -x tests
+	bandit -q -r src app eval -x tests
 	pip-audit .
-
-market:           ## regenerate docs/market-analysis.md from the pinned open dataset
-	python analysis/job_market/analyze.py --fetch
 
 dashboard:        ## regenerate the Grafana dashboard JSON
 	python observability/build_dashboard.py
@@ -105,7 +102,7 @@ HISTORY_IMAGE ?= runbook-history:capstone-v4
 history-image: ## build the isolated collector; no credentials or corpus bundled
 	docker build -f Dockerfile.history -t $(HISTORY_IMAGE) .
 
-history-install: ## dedicated capstone kubeconfig only; also refreshes 8-hour dev access
+history-install: ## dedicated lab kubeconfig only; also refreshes 8-hour dev access
 	kind load docker-image $(HISTORY_IMAGE) --name runbook-capstone
 	HISTORY_IMAGE=$(HISTORY_IMAGE) python deploy/history/install.py
 
@@ -135,11 +132,11 @@ history-compare: ## six paid investigations; use a new RUN_DIR; preserves previo
 history-demo-test: ## offline controls and isolation checks
 	pytest -q tests/test_history.py tests/test_history_demo.py
 
-.PHONY: submission-check capstone-demo
-capstone-demo: ## locked install first: uv sync --locked --all-extras
+.PHONY: demo-check demo
+demo: ## locked install first: uv sync --locked --all-extras
 	uv run --frozen --all-extras streamlit run app/ui.py --server.address 127.0.0.1 --server.port 8501 --browser.gatherUsageStats false
 
-submission-check: ## offline checks; no API calls or Kubernetes access
-	uv run --frozen --all-extras ruff check src app eval tests analysis observability scripts
+demo-check: ## offline checks; no API calls or Kubernetes access
+	uv run --frozen --all-extras ruff check src app eval tests observability scripts
 	uv run --frozen --all-extras pytest -q
-	uv run --frozen --all-extras python scripts/check_submission.py
+	uv run --frozen --all-extras python scripts/check_demo.py

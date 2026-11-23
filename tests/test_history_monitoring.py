@@ -59,7 +59,7 @@ def test_default_ui_and_monitoring_need_neither_corpus_nor_cluster(monkeypatch,t
     monkeypatch.setattr('runbook_copilot.history.ui_monitoring.read_feedback',lambda:reader(tmp_path/'feedback.sqlite'))
     app=AppTest.from_file(str(ROOT/'app/ui.py'),default_timeout=30).run()
     assert not app.exception
-    assert app.sidebar.radio[0].value=='Three capstone demos'
+    assert app.sidebar.radio[0].value=='Recorded investigations'
     app.sidebar.radio[0].set_value('Monitoring & feedback').run()
     assert not app.exception
     assert app.metric[0].value=='6'

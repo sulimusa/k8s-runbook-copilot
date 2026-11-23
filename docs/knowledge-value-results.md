@@ -108,7 +108,7 @@ large document bundle to every generic problem.
 
 | Spending | Tracked USD |
 |---|---:|
-| Earlier capstone calls | 0.93574075 |
+| Earlier investigation calls | 0.93574075 |
 | 72 predictions | 0.352832 |
 | Original 24 judge reviews | 0.353084 |
 | Two calibration calls | 0.054608 |
@@ -121,7 +121,7 @@ rates; the eventual invoice may be lower due to caching. The configured $2 input
 per million token rates were checked against the [official model page](https://developers.openai.com/api/docs/models/gpt-4.1).
 The ledger was backed up and its cap explicitly raised; earlier spend was not reset.
 
-## What this means for the capstone
+## What the results support
 
 Keep RAG for service-specific behavior, safe-change constraints and historical operational
 knowledge. Keep direct observation tools for facts about the cluster. Generic failures may
@@ -136,7 +136,7 @@ This is one run per arm, on fictional services in an author-aware family-disjoin
 The reserved set is not independently authored or sealed. The study does not establish
 performance on real incident logs, adaptive live tool selection, month-long history, a newer
 model, or another agent equipped with the same tools and knowledge. It does provide a
-reproducible capstone example of building, measuring, finding evaluation defects, and
+reproducible investigation example of building, measuring, finding evaluation defects, and
 reporting limitations honestly.
 
 ## Review the evidence

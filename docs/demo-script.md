@@ -1,4 +1,4 @@
-# Five-minute capstone walkthrough
+# Five-minute walkthrough
 
 **0:00–0:40 — Problem.** “I need to investigate what changed before a Kubernetes failure. A generic model may know Kubernetes, but it does not know my retained cluster history or the operating contract for this service version.” Explain that the demo snapshots are fictional and fixed; the recorded answers came from actual model calls.
 

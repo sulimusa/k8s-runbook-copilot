@@ -104,5 +104,5 @@ The expected outcomes in `eval/agent_eval.py` (OOM, rollout, selector, probes: f
 ## Limits
 Deployment-managed workloads only, one namespace per run, a fixed observation set, no approval channel (`needs_approval` just stops and records the proposal), lexical (not semantic) check that the quoted evidence exists, no memory across runs.
 
-## Lab vs consulting
+## Lab and production boundaries
 Everything here is the lab reference implementation (public repo, disposable kind cluster, your throwaway credentials). For a client, reuse the policy engine and typed actions with the client's own policy file and identities, in a private repo, and only enable `act` where their change-management and contract allow it. Default to advise everywhere else.

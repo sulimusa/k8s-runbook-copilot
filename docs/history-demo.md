@@ -1,8 +1,8 @@
-# Historical investigation: three capstone demonstrations
+# Historical investigation: three recorded demonstrations
 
 The main question is: **What changed before this failure, and does operational knowledge improve the investigation?**
 
-Run `make history-chat` and open <http://127.0.0.1:8501>. Select **Three capstone demos** in the sidebar. Expand **Recorded model comparison — no API call** to read the same scenario with history tools alone and with operational retrieval. Each column includes the actual tool trace and citations. Selecting a case does not spend API credits. **Investigate this demo with the model** starts a new paid run using the shared cap.
+Run `make history-chat` and open <http://127.0.0.1:8501>. Select **Recorded investigations** in the sidebar. Expand **Recorded model comparison — no API call** to read the same scenario with history tools alone and with operational retrieval. Each column includes the actual tool trace and citations. Selecting a case does not spend API credits. **Investigate this demo with the model** starts a new paid run using the shared cap.
 
 The snapshots are fictional and fixed at November 20, 2026. They use the same `investigate` function and read interface as live cluster chat, with an injected read-only snapshot client and clock. There is no Kubernetes connection or repair button in demo mode. They do not demonstrate a live fault injection, real customer impact, or a month of actual collection.
 

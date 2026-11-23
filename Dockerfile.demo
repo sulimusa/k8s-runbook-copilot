@@ -1,4 +1,4 @@
-# Reviewer demo: bundled synthetic snapshots and actual saved model answers; no corpus fetch.
+# Recorded demo: bundled synthetic snapshots and actual saved model answers; no corpus fetch.
 FROM python:3.12-slim
 RUN apt-get update && apt-get install -y --no-install-recommends --only-upgrade zlib1g \
     && rm -rf /var/lib/apt/lists/*

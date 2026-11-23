@@ -1,4 +1,4 @@
-"""Read-only, loopback-exposed capstone history API. No model credentials or write routes."""
+"""Read-only, loopback-exposed cluster history API. No model credentials or write routes."""
 import os
 from contextlib import asynccontextmanager
 

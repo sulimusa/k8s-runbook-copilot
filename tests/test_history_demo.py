@@ -113,7 +113,7 @@ def test_ui_demo_cases_render_without_cluster_or_model_calls(monkeypatch):
     monkeypatch.setattr('runbook_copilot.retrieval.search.Retriever.load',lambda *a,**k: retriever(cases()[0]))
     monkeypatch.setattr('runbook_copilot.history.chat.configured_model',lambda *a,**k: (_ for _ in ()).throw(AssertionError('No paid calls while browsing')))
     app=AppTest.from_file(str(ROOT/'app/ui.py'),default_timeout=30).run()
-    app.sidebar.radio[0].set_value('Three capstone demos').run()
+    app.sidebar.radio[0].set_value('Recorded investigations').run()
     for case in cases():
         app.selectbox[0].set_value(case).run()
         assert not app.exception

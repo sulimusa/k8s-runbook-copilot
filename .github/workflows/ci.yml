@@ -19,16 +19,16 @@ jobs:
       - run: uv sync --locked --all-extras --python "${{ matrix.python }}"
       - name: Use the locked environment
         run: echo "$PWD/.venv/bin" >> "$GITHUB_PATH"
-      - run: ruff check src app eval tests analysis observability scripts
+      - run: ruff check src app eval tests observability scripts
       - run: pytest -q
-      - run: python scripts/check_submission.py
+      - run: python scripts/check_demo.py
       - name: Validate evidence-first incident fixtures (offline)
         run: |
           python -m eval.incident_eval validate
           python -m eval.incident_eval review-status
       - name: Static analysis and dependency audit
         run: |
-          bandit -q -r src app eval analysis -x tests
+          bandit -q -r src app eval -x tests
           pip-audit --local --skip-editable
       - name: Build corpus and run the retrieval eval gate (no LLM needed)
         run: |
@@ -71,20 +71,20 @@ jobs:
           docker run --rm -v "$PWD:/w" -w /w aquasec/trivy:0.75.0 config \
             --ignorefile .trivyignore.yaml --exit-code 1 --severity MEDIUM,HIGH,CRITICAL deploy/rbac
 
-  capstone-demo:
+  demo:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build the no-key reviewer image
-        run: docker build -f Dockerfile.capstone -t capstone-review .
+      - name: Build the no-key demo image
+        run: docker build -f Dockerfile.demo -t runbook-demo .
       - name: Verify loopback health without credentials or a cluster
         run: |
-          docker run -d --name capstone-review -p 127.0.0.1:18501:8501 capstone-review
+          docker run -d --name runbook-demo -p 127.0.0.1:18501:8501 runbook-demo
           for n in $(seq 1 30); do
             if curl -fsS http://127.0.0.1:18501/_stcore/health; then exit 0; fi
             sleep 2
           done
-          docker logs capstone-review
+          docker logs runbook-demo
           exit 1
       - if: always()
-        run: docker rm -f capstone-review || true
+        run: docker rm -f runbook-demo || true

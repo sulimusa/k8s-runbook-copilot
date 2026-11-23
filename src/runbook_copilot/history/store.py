@@ -120,7 +120,7 @@ class Store:
     @staticmethod
     def scope(namespace, kind=None):
         if namespace not in NAMESPACES or (kind is not None and kind not in KINDS):
-            raise ValueError('Scope is outside the capstone allowlist')
+            raise ValueError('Scope is outside the configured namespace allowlist')
 
     def stream(self, namespace, kind):
         self.scope(namespace, kind)

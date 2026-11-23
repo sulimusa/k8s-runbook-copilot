@@ -1,4 +1,4 @@
-"""Offline integrity checks for reviewer-facing capstone artifacts; never calls a model."""
+"""Offline integrity checks for recorded investigation artifacts; never calls a model."""
 import json
 from pathlib import Path
 
@@ -27,7 +27,7 @@ assert len(reports)==6
 cases=json.loads((root/'eval/knowledge_value/cases.json').read_text())
 keys=json.loads((root/'eval/knowledge_value/answer_keys.json').read_text())
 assert len(cases)==24 and {c['id'] for c in cases}=={c['id'] for c in keys}
-for path in ('uv.lock','Dockerfile.capstone','docs/submission.md','docs/demo-script.md','docs/judge-adjudications.json'):
+for path in ('uv.lock','Dockerfile.demo','docs/getting-started.md','docs/demo-script.md','docs/judge-adjudications.json'):
     assert (root/path).is_file(),f'Missing {path}'
 print(json.dumps({'status':'passed','recorded_model_runs':len(reports),'broader_evaluation_cases':len(cases),
                   'recorded_investigation_cost_usd':summarize(reports)['known_cost_usd'],
