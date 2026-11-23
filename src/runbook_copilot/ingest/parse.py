@@ -24,6 +24,9 @@ class Document:
 
 
 def _clean(text: str) -> str:
+    # Public docs can contain realistic credential examples; do not index their payloads.
+    text = re.sub(r'(\.dockerconfigjson["\']?\s*:\s*["\']?)[A-Za-z0-9+/=]{20,}',
+                  r'\1<REDACTED_EXAMPLE>', text)
     text = _HTML_COMMENT.sub("", text)
     text = _GLOSSARY.sub(r"\1", text)
     text = _SHORTCODE.sub("", text)

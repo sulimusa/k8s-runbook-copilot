@@ -51,3 +51,22 @@ def test_big_section_is_split():
     cs = chunk_document(d, source_id="s", url="u", license="l", commit_sha="c", max_words=250)
     assert len(cs) >= 3
     assert all(len(c.text.split()) <= 500 for c in cs)
+
+
+
+def test_registry_credential_examples_are_redacted_before_chunking():
+    import base64
+    import json
+
+    payload = base64.b64encode(json.dumps({'auths': {'example.invalid': {'auth': 'fixture-only'}}}).encode()).decode()
+    raw = ('## Registry instructions\n' + 'safe guidance ' * 45 +
+           f'\n```yaml\ndata:\n  .dockerconfigjson: {payload}\n```\n' +
+           json.dumps({'.dockerconfigjson': payload}) + '\nUse imagePullSecrets.')
+    doc = parse_markdown(raw, 'registry.md')
+    chunks = chunk_document(doc, source_id='public', url='https://example.invalid/registry',
+                            license='CC-BY-4.0', commit_sha='fixture')
+    assert payload not in doc.body
+    assert doc.body.count('<REDACTED_EXAMPLE>') == 2
+    assert chunks and all(payload not in c.text for c in chunks)
+    assert 'Use imagePullSecrets.' in doc.body
+    assert all(c.url == 'https://example.invalid/registry' for c in chunks)

@@ -12,6 +12,8 @@ RUN PYTHONPATH=/app/src /opt/venv/bin/python -m runbook_copilot.ingest.run \
  && rm -rf data/raw
 
 FROM python:3.12-slim AS runtime
+RUN apt-get update && apt-get install -y --no-install-recommends --only-upgrade zlib1g \
+    && rm -rf /var/lib/apt/lists/*
 ARG APP_VERSION=dev
 ENV PATH=/opt/venv/bin:$PATH PYTHONPATH=/app/src PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 \
     APP_VERSION=${APP_VERSION} APP_ENV=prod
