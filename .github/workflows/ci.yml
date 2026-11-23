@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: { python-version: "${{ matrix.python }}", cache: pip }
+        with: { python-version: "${{ matrix.python }}" }
       - uses: astral-sh/setup-uv@v7
         with: { version: "0.13.9", enable-cache: true }
       - run: uv sync --locked --all-extras --python "${{ matrix.python }}"
