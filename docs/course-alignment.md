@@ -1,6 +1,6 @@
 # Capstone criteria: current evidence map
 
-Reviewed November 23, 2026. **The local historical-investigation capstone covers the core course criteria.** The submission still needs the tested release published to GitHub and the course form submitted. The [submission guide](submission.md) is the current checklist; the [earlier audit](course-alignment-2026-11-04.md) is historical, not current status.
+Reviewed November 23, 2026. **The local historical-investigation capstone covers the core course criteria.** The capstone is published to GitHub; confirm the exact revision’s hosted CI before submitting the course form. The [submission guide](submission.md) is the current checklist; the [earlier audit](course-alignment-2026-11-04.md) is historical, not current status.
 
 The course source is [AI Engineering Buildcamp code](https://github.com/alexeygrigorev/ai-engineering-buildcamp-code). Its [evaluation guide](https://github.com/alexeygrigorev/ai-engineering-buildcamp-code/blob/main/documentation-agent/evals/README.md) distinguishes human-label and synthetic workflows; this project makes that distinction too. Point ceilings below are from the rubric supplied by the student, not independently inferred from the public code. This is a self-assessment, not a grading promise.
 

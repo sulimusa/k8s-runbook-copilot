@@ -62,10 +62,10 @@ Then inspect [judge reliability](judge-reliability.md). All raw ratings are pres
 - [Owner usefulness feedback](user-feedback.json)
 - [Local verification report](submission-verification.json), updated after final checks
 
-## Remaining release actions
+## Before submitting
 
-- Publish this tested local revision to the GitHub repository; remote `main` was still the initial import during this audit.
-- Confirm CI on the exact published commit, then use that commit link in the course form.
+- The capstone is published on `main`. Use a specific commit link when submitting, so reviewers can reproduce the same revision.
+- Confirm [GitHub Actions](https://github.com/sulimusa/k8s-runbook-copilot/actions) is green for that exact commit. The local verification report records pre-publication checks and does not replace hosted CI.
 - Submit the course form and any required video through the student's account. This task does not submit the form or invent portal requirements/deadlines.
 
 Optional strengthening: independent peer labels on new cases and a short recorded walkthrough. The included script and recorded demo make a live presentation possible without additional model spending. Independent human correctness validation and cloud deployment are not claimed.
